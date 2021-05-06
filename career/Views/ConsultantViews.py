@@ -42,7 +42,7 @@ class ConsultantApi(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "company is created"}, status=status.HTTP_200_OK)
+            return Response({"message": "consultant is created"}, status=status.HTTP_200_OK)
         else:
             errors_dict = dict()
             for key, value in serializer.errors.items():

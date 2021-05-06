@@ -37,7 +37,7 @@ class ConsultantSerializer(serializers.Serializer):
                 user.set_password('oxit2016')
                 user.save()
 
-                group = Group.objects.get(name='Company')
+                group = Group.objects.get(name='Consultant')
                 user.groups.add(group)
                 user.save()
                 profile = Profile.objects.create(user=user)
