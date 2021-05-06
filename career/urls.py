@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
 from career.Views.CompanyViews import CompanyApi
+from career.Views.ConsultantViews import ConsultantApi
 from career.Views.InitViews import InitDataApi
 from career.Views.StudentViews import StudentApi
 
@@ -11,16 +12,15 @@ urlpatterns = [
     url(r'student-api/$', StudentApi.as_view()),
     url(r'initial-data-api/$', InitDataApi.as_view()),
 
-    #----------------admin api---------------------------
-    #student
+    # ----------------admin api---------------------------
+    # student
 
     url(r'student-api/$', StudentApi.as_view()),
 
-    #company
+    # company
     url(r'company-api/$', CompanyApi.as_view()),
 
-
-
-
+    # consultant
+    url(r'consultant-api/$', ConsultantApi.as_view()),
 
 ]
