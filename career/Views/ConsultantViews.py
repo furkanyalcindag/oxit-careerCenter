@@ -54,22 +54,22 @@ class ConsultantApi(APIView):
 
     def delete(self, request, format=None):
         try:
-            company = Company.objects.get(uuid=request.GET.get('id'))
-            profile = company.profile
+            consultant = Consultant.objects.get(uuid=request.GET.get('id'))
+            profile = consultant.profile
             user = profile.user
             if request.GET.get('makeActive') == 'true':
-                company.isDeleted = False
+                consultant.isDeleted = False
                 user.is_active = True
                 profile.isDeleted = False
-                company.save()
+                consultant.save()
                 profile.save()
                 user.save()
                 return Response(status=status.HTTP_200_OK)
             elif request.GET.get('makeActive') == 'false':
-                company.isDeleted = True
+                consultant.isDeleted = True
                 user.is_active = False
                 profile.isDeleted = True
-                company.save()
+                consultant.save()
                 profile.save()
                 user.save()
                 return Response(status=status.HTTP_200_OK)
