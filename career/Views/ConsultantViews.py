@@ -14,7 +14,25 @@ class ConsultantApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Consultant.objects.all().order_by('-id')
+
+        active_page = 1
+        consultant_name = ''
+        consultant_surname = ''
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('consultantName') is not None:
+            x = str(request.GET.get('consultantName')).split(' ')
+            if len(x) > 1:
+                consultant_name = x[0]
+                consultant_surname = [1]
+
+        lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
+        lim_end = lim_start + int(request.GET.get('count'))
+
+        data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
+                                         profile__user__last_name__icontains=consultant_surname).order_by('-id')[
+               lim_start:lim_end]
         arr = []
         for x in data:
             api_data = dict()
@@ -29,7 +47,7 @@ class ConsultantApi(APIView):
         api_object = APIObject()
         api_object.data = arr
         api_object.recordsFiltered = data.count()
-        api_object.recordsTotal = data.count()
+        api_object.recordsTotal = Consultant.objects.count()
         api_object.activePage = 1
 
         serializer = ConsultantPageableSerializer(
@@ -50,7 +68,6 @@ class ConsultantApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def delete(self, request, format=None):
         try:

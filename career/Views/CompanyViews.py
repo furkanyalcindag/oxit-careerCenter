@@ -14,7 +14,19 @@ class CompanyApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Company.objects.all().order_by('-id')
+
+        active_page = 1
+        company_name = ''
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('companyName') is not None:
+            company_name = request.GET.get('companyName')
+
+        lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
+        lim_end = lim_start + int(request.GET.get('count'))
+
+        data = Company.objects.filter(name__icontains=company_name).order_by('-id')[lim_start:lim_end]
         arr = []
         for x in data:
             api_data = dict()
@@ -30,7 +42,7 @@ class CompanyApi(APIView):
         api_object = APIObject()
         api_object.data = arr
         api_object.recordsFiltered = data.count()
-        api_object.recordsTotal = data.count()
+        api_object.recordsTotal = Company.objects.count()
         api_object.activePage = 1
 
         serializer = CompanyPageableSerializer(
