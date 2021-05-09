@@ -14,7 +14,20 @@ class StudentApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Student.objects.all().order_by('-id')
+
+        active_page = 1
+        student_number = ''
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('studentNumber') is not None:
+            student_number = request.GET.get('studentNumber')
+
+        lim_start = request.GET.get('count') * (active_page - 1)
+        lim_end = lim_start + request.GET.get('count')
+
+
+        data = Student.objects.filter(studentNumber__icontains=student_number).order_by('-id')[lim_start:lim_end]
         arr = []
         for x in data:
             api_data = dict()
@@ -29,8 +42,8 @@ class StudentApi(APIView):
         api_object = APIObject()
         api_object.data = arr
         api_object.recordsFiltered = data.count()
-        api_object.recordsTotal = data.count()
-        api_object.activePage = 1
+        api_object.recordsTotal = Student.objects.count()
+        api_object.activePage = active_page
 
         serializer = StudentPageableSerializer(
             api_object, context={'request': request})
