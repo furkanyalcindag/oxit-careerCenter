@@ -23,8 +23,8 @@ class StudentApi(APIView):
         if request.GET.get('studentNumber') is not None:
             student_number = request.GET.get('studentNumber')
 
-        lim_start = request.GET.get('count') * (active_page - 1)
-        lim_end = lim_start + request.GET.get('count')
+        lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
+        lim_end = lim_start + int(request.GET.get('count'))
 
 
         data = Student.objects.filter(studentNumber__icontains=student_number).order_by('-id')[lim_start:lim_end]
