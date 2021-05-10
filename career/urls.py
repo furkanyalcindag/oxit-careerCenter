@@ -3,6 +3,7 @@ from django.conf.urls import url
 from career.Views.CompanyViews import CompanyApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.InitViews import InitDataApi
+from career.Views.InstructorViews import InstructorApi
 from career.Views.StudentViews import StudentApi
 
 app_name = 'career'
@@ -22,5 +23,8 @@ urlpatterns = [
 
     # consultant
     url(r'consultant-api/$', ConsultantApi.as_view()),
+
+    # consultant
+    url(r'instructor-api/$', InstructorApi.as_view()),
 
 ]
