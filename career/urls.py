@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from career.Views.CompanyViews import CompanyApi
 from career.Views.ConsultantViews import ConsultantApi
+from career.Views.GeneralViews import LanguageApi
 from career.Views.InitViews import InitDataApi
 from career.Views.InstructorViews import InstructorApi
 from career.Views.StudentViews import StudentApi
@@ -26,5 +27,8 @@ urlpatterns = [
 
     # consultant
     url(r'instructor-api/$', InstructorApi.as_view()),
+
+    # consultant
+    url(r'language-api/$', LanguageApi.as_view()),
 
 ]

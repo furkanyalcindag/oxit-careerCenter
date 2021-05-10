@@ -1,0 +1,19 @@
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from career.models import Language
+from career.serializers.GeneralSerializers import LanguageSerializer
+
+
+class LanguageApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        languages = Language.objects.all()
+
+        serializer = LanguageSerializer(
+            languages, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
