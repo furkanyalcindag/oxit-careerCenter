@@ -27,6 +27,8 @@ class CompanyApi(APIView):
         lim_end = lim_start + int(request.GET.get('count'))
 
         data = Company.objects.filter(name__icontains=company_name).order_by('-id')[lim_start:lim_end]
+
+        filtered_count = Company.objects.filter(name__icontains=company_name).order_by('-id').count()
         arr = []
         for x in data:
             api_data = dict()
@@ -41,7 +43,7 @@ class CompanyApi(APIView):
 
         api_object = APIObject()
         api_object.data = arr
-        api_object.recordsFiltered = data.count()
+        api_object.recordsFiltered = filtered_count
         api_object.recordsTotal = Company.objects.count()
         api_object.activePage = 1
 
@@ -63,7 +65,6 @@ class CompanyApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def delete(self, request, format=None):
         try:

@@ -25,7 +25,9 @@ class InstructorApi(APIView):
             x = str(request.GET.get('instructorName')).split(' ')
             if len(x) > 1:
                 instructor_name = x[0]
-                instructor_surname = [1]
+                instructor_surname = x[1]
+            elif len(x) == 1:
+                instructor_name = x[0]
 
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
@@ -34,6 +36,10 @@ class InstructorApi(APIView):
                                          person__lastName__icontains=instructor_surname, isDeleted=False).order_by(
             '-id')[
                lim_start:lim_end]
+
+        filtered_count = Instructor.objects.filter(person__firstName__icontains=instructor_name,
+                                                   person__lastName__icontains=instructor_surname,
+                                                   isDeleted=False).count()
         arr = []
         for x in data:
             api_data = dict()
@@ -46,7 +52,7 @@ class InstructorApi(APIView):
 
         api_object = APIObject()
         api_object.data = arr
-        api_object.recordsFiltered = data.count()
+        api_object.recordsFiltered = filtered_count
         api_object.recordsTotal = Instructor.objects.filter(isDeleted=False).count()
         api_object.activePage = 1
 

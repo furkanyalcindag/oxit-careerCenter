@@ -26,6 +26,8 @@ class ConsultantApi(APIView):
             if len(x) > 1:
                 consultant_name = x[0]
                 consultant_surname = [1]
+            elif len(x) == 1:
+                consultant_name = x[0]
 
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
@@ -33,6 +35,9 @@ class ConsultantApi(APIView):
         data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
                                          profile__user__last_name__icontains=consultant_surname).order_by('-id')[
                lim_start:lim_end]
+
+        filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
+                                                   profile__user__last_name__icontains=consultant_surname).count()
         arr = []
         for x in data:
             api_data = dict()
@@ -46,7 +51,7 @@ class ConsultantApi(APIView):
 
         api_object = APIObject()
         api_object.data = arr
-        api_object.recordsFiltered = data.count()
+        api_object.recordsFiltered = filtered_count
         api_object.recordsTotal = Consultant.objects.count()
         api_object.activePage = 1
 
