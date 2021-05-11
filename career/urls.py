@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from career.Views.BlogViews import BlogApi
 from career.Views.CompanyViews import CompanyApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi
@@ -30,5 +31,10 @@ urlpatterns = [
 
     # consultant
     url(r'language-api/$', LanguageApi.as_view()),
+
+
+
+    # consultant
+    url(r'blog-api/$', BlogApi.as_view()),
 
 ]

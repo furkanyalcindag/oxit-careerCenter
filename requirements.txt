@@ -8,3 +8,4 @@ djangorestframework_simplejwt
 WeasyPrint
 drf-api-logger
 gunicorn
+python-slugify
