@@ -6,9 +6,11 @@ from rest_framework import serializers
 from slugify import slugify
 
 from career.models import Blog, BlogDescription, Language
+from career.serializers.GeneralSerializers import PageSerializer
 
 
 class BlogSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
     title = serializers.CharField(required=True)
     article = serializers.CharField(required=True)
     languageCode = serializers.CharField(write_only=True, required=False)
@@ -50,3 +52,13 @@ class BlogSerializer(serializers.Serializer):
         except Exception as e:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class BlogPageableSerializer(PageSerializer):
+    data = BlogSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
