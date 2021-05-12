@@ -14,7 +14,7 @@ class BlogSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
     article = serializers.CharField(required=True)
     languageCode = serializers.CharField(required=False)
-    image = serializers.CharField(required=False)
+    image = serializers.CharField(required=False,allow_blank=True,allow_null=True)
 
     def update(self, instance, validated_data):
 
