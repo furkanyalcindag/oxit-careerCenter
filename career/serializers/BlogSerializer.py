@@ -17,7 +17,24 @@ class BlogSerializer(serializers.Serializer):
     image = serializers.CharField(required=False)
 
     def update(self, instance, validated_data):
-        pass
+
+        try:
+            print('something')
+            blog = instance
+
+            blog_description = BlogDescription.objects.get(blog=blog, language=Language.objects.get(
+                code=validated_data.get('languageCode')))
+
+            blog_description.title = validated_data.get('title')
+            blog_description.article = validated_data.get('article')
+            blog_description.image = validated_data.get('îmage')
+
+            blog_description.save()
+            return blog_description
+
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
     def create(self, validated_data):
         try:

@@ -1,9 +1,12 @@
+import traceback
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from slugify import slugify
 
+from career.exceptions import LanguageCodeException
 from career.models import Blog, BlogDescription, Language
 from career.models.APIObject import APIObject
 from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer
@@ -77,9 +80,6 @@ class BlogApi(APIView):
 
             return Response(serializer.data, status.HTTP_200_OK)
 
-
-
-
     def post(self, request, format=None):
         serializer = BlogSerializer(data=request.data, context={'request': request})
 
@@ -93,3 +93,26 @@ class BlogApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+
+        try:
+            instance = Blog.objects.get(uuid=request.GET.get('id'))
+            serializer = BlogSerializer(data=request.data, instance=instance, context={'request': request})
+
+            if request.data['languageCode'] is None:
+                raise LanguageCodeException()
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "blog is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+        except LanguageCodeException:
+            traceback.print_exc()
+            return Response("Geçerli bir dil kodu gönderin", status.HTTP_404_NOT_FOUND)
+
+        except Exception:
+            return Response("", status.HTTP_404_NOT_FOUND)
