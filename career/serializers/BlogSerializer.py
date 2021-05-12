@@ -13,7 +13,7 @@ class BlogSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     title = serializers.CharField(required=True)
     article = serializers.CharField(required=True)
-    languageCode = serializers.CharField(write_only=True, required=False)
+    languageCode = serializers.CharField(required=False)
     image = serializers.CharField(required=False)
 
     def update(self, instance, validated_data):
