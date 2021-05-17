@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework import serializers
 from slugify import slugify
 
-from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription
+from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription, Instructor
 from career.serializers.GeneralSerializers import PageSerializer
 
 
@@ -16,9 +16,13 @@ class LectureSerializer(serializers.Serializer):
     languageCode = serializers.CharField(required=False)
     image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     capacity = serializers.IntegerField()
-    place = serializers.CharField()
-    isPaid = serializers.BooleanField()
+    locationId = serializers.UUIDField()
+    instructorId = serializers.UUIDField()
+    location = serializers.CharField(read_only=True)
+    instructor = serializers.CharField(read_only=True)
+    isPaid = serializers.BooleanField(default=False)
     price = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    room = serializers.CharField()
 
     def update(self, instance, validated_data):
 
@@ -48,6 +52,8 @@ class LectureSerializer(serializers.Serializer):
                 lecture.isPaid = validated_data.get('isPaid')
                 lecture.price = validated_data.get('price')
                 lecture.capacity = validated_data.get('capacity')
+                lecture.instructor = Instructor.objects.get(uuid=validated_data.get('instructorId'))
+                lecture.location = Instructor.objects.get(uuid=validated_data.get('locationId'))
                 lecture.save()
 
                 lecture_tr = LectureDescription()

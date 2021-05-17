@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from career.models import Language, Gender, ForeignLanguage, JobType
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
+from career.models.Location import Location
 
 
 class InitDataApi(APIView):
@@ -160,5 +161,29 @@ class InitDataApi(APIView):
         job_type = JobType()
         job_type.name = 'Remote'
         job_type.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class LocationDataApi(APIView):
+
+    def get(self, request, format=None):
+        location = Location()
+        location.name = 'Şehit Ömer Halis Demir Yerleşkesi'
+        location.address = ' Etlik'
+        location.phoneNumber = ' 03123123232'
+        location.save()
+
+        location2 = Location()
+        location2.name = '15 Temmuz Yerleşkesi'
+        location2.address = ' Etlik'
+        location2.phoneNumber = ' 03123123232'
+        location2.save()
+
+        location3 = Location()
+        location3.name = 'Çubuk Yerleşkesi'
+        location3.address = ' Çubuk'
+        location3.phoneNumber = ' 03123123232'
+        location3.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
