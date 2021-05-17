@@ -7,8 +7,9 @@ from career.models.Student import Student
 
 class Appointment(BaseModel):
     consultant = models.ForeignKey(Consultant, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    time = models.TimeField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    startTime = models.TimeField(null=True)
+    finishTime = models.TimeField(null=True)
     date = models.DateField()
     isCome = models.BooleanField(default=True)
     isPaid = models.BooleanField(default=False)
