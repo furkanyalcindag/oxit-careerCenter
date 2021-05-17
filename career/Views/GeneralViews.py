@@ -25,7 +25,7 @@ class LocationSelectApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Location.objects.all.order_by('-id')
+        data = Location.objects.all()
 
         select_arr = []
         for location in data:
