@@ -6,6 +6,7 @@ from rest_framework import serializers
 from slugify import slugify
 
 from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription, Instructor
+from career.models.Location import Location
 from career.serializers.GeneralSerializers import PageSerializer
 
 
@@ -16,13 +17,15 @@ class LectureSerializer(serializers.Serializer):
     languageCode = serializers.CharField(required=False)
     image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     capacity = serializers.IntegerField()
-    locationId = serializers.UUIDField()
-    instructorId = serializers.UUIDField()
+    locationId = serializers.UUIDField(write_only=True)
+    instructorId = serializers.UUIDField(write_only=True)
     location = serializers.CharField(read_only=True)
     instructor = serializers.CharField(read_only=True)
     isPaid = serializers.BooleanField(default=False)
-    price = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    price = serializers.DecimalField(max_digits=10, decimal_places=2, required=False,default=0)
     room = serializers.CharField()
+    date = serializers.DateField(required=True,format="%DD-%MM-%YYYY")
+    time = serializers.TimeField(required=True)
 
     def update(self, instance, validated_data):
 
@@ -32,8 +35,8 @@ class LectureSerializer(serializers.Serializer):
             lecture_description = LectureDescription.objects.get(lecture=lecture, language=Language.objects.get(
                 code=validated_data.get('languageCode')))
 
-            lecture_description.title = validated_data.get('title')
-            lecture_description.article = validated_data.get('article')
+            lecture_description.name = validated_data.get('name')
+            lecture_description.description = validated_data.get('description')
             lecture_description.image = validated_data.get('image')
 
             lecture_description.save()
@@ -53,7 +56,10 @@ class LectureSerializer(serializers.Serializer):
                 lecture.price = validated_data.get('price')
                 lecture.capacity = validated_data.get('capacity')
                 lecture.instructor = Instructor.objects.get(uuid=validated_data.get('instructorId'))
-                lecture.location = Instructor.objects.get(uuid=validated_data.get('locationId'))
+                lecture.location = Location.objects.get(uuid=validated_data.get('locationId'))
+                lecture.room = validated_data.get('room')
+                lecture.date = validated_data.get('date')
+                lecture.time = validated_data.get('time')
                 lecture.save()
 
                 lecture_tr = LectureDescription()
@@ -61,7 +67,6 @@ class LectureSerializer(serializers.Serializer):
                 lecture_tr.description = validated_data.get('description')
                 lecture_tr.language = Language.objects.get(code='tr')
                 lecture_tr.image = validated_data.get('image')
-
 
                 lecture_tr.lecture = lecture
                 lecture_tr.save()
@@ -74,6 +79,7 @@ class LectureSerializer(serializers.Serializer):
                     lecture_desc.description = ''
                     lecture_desc.language = lang
                     lecture_desc.lecture = lecture
+                    lecture_desc.image = None
                     lecture_desc.save()
 
                 return lecture

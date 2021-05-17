@@ -31,6 +31,12 @@ class LectureApi(APIView):
             api_data['uuid'] = lecture.uuid
             api_data['languageCode'] = lang.code
             api_data['image'] = lecture_translation.image
+            api_data['room'] = lecture.room
+            api_data['capacity'] = lecture.capacity
+            api_data['instructor'] = lecture.instructor.person.firstName + ' ' + lecture.instructor.person.lastName
+            api_data['location'] = lecture.location.name
+            api_data['date'] = str(lecture.date)
+            api_data['time'] = str(lecture.time)
 
             serializer = LectureSerializer(
                 api_data, context={'request': request})
@@ -66,9 +72,15 @@ class LectureApi(APIView):
                                                                      language=Language.objects.get(code=lang_code))
                 api_data = dict()
                 api_data['name'] = lecture_translation.name
-                api_data['description'] = lecture_translation.article
+                api_data['description'] = lecture_translation.description
                 api_data['uuid'] = x.uuid
                 api_data['image'] = lecture_translation.image
+                api_data['room'] = x.room
+                api_data['capacity'] = x.capacity
+                api_data['instructor'] = x.instructor.person.firstName + ' ' + x.instructor.person.lastName
+                api_data['location'] = x.location.name
+                api_data['date'] = str(x.date)
+                api_data['time'] = str(x.time)
                 arr.append(api_data)
 
             api_object = APIObject()
@@ -117,6 +129,7 @@ class LectureApi(APIView):
             return Response("Geçerli bir dil kodu gönderin", status.HTTP_404_NOT_FOUND)
 
         except Exception:
+            traceback.print_exc()
             return Response("", status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, format=None):
