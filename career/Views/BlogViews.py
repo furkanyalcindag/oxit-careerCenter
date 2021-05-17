@@ -55,7 +55,7 @@ class BlogApi(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Blog.objects.filter(keyword__icontains=title).order_by('-id')[
+            data = Blog.objects.filter(keyword__icontains=title, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
             filtered_count = Blog.objects.filter(keyword__icontains=title).count()
@@ -116,3 +116,13 @@ class BlogApi(APIView):
 
         except Exception:
             return Response("", status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, format=None):
+        try:
+            blog = Blog.objects.get(uuid=request.GET.get('id'))
+            blog.isDeleted = True
+            blog.save()
+
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)

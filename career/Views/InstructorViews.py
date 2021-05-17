@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 
 from career.models import Instructor
 from career.models.APIObject import APIObject
+from career.models.SelectObject import SelectObject
+from career.serializers.GeneralSerializers import SelectSerializer
 from career.serializers.IntructorSerializer import InstructorPageableSerializer, InstructorSerializer
 
 
@@ -87,6 +89,37 @@ class InstructorApi(APIView):
             instructor.save()
 
             return Response(status=status.HTTP_200_OK)
-        except:
+        except Exception:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class InstructorSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        instructor_name = ''
+        instructor_surname = ''
+
+        if request.GET.get('instructorName') is not None:
+            x = str(request.GET.get('instructorName')).split(' ')
+            if len(x) > 1:
+                instructor_name = x[0]
+                instructor_surname = x[1]
+            elif len(x) == 1:
+                instructor_name = x[0]
+
+        data = Instructor.objects.filter(person__firstName__icontains=instructor_name,
+                                         person__lastName__icontains=instructor_surname, isDeleted=False).order_by(
+            '-id')[:20]
+
+        select_arr = []
+        for instructor in data:
+            select_object = SelectObject()
+            select_object.value = instructor.uuid
+            select_object.label = instructor.person.firstName + ' ' + instructor.person.lastName
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

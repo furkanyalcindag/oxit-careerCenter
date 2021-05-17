@@ -5,7 +5,7 @@ from career.Views.CompanyViews import CompanyApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi
 from career.Views.InitViews import InitDataApi
-from career.Views.InstructorViews import InstructorApi
+from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.StudentViews import StudentApi
 
 app_name = 'career'
@@ -26,15 +26,15 @@ urlpatterns = [
     # consultant
     url(r'consultant-api/$', ConsultantApi.as_view()),
 
-    # consultant
+    # instructor
     url(r'instructor-api/$', InstructorApi.as_view()),
+    url(r'instructor-select-api/$', InstructorSelectApi.as_view()),
 
-    # consultant
+    # language
     url(r'language-api/$', LanguageApi.as_view()),
 
 
-
-    # consultant
+    # blog
     url(r'blog-api/$', BlogApi.as_view()),
 
 ]
