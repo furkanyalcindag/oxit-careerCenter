@@ -2,6 +2,7 @@ from django.db import models
 
 from career.models.BaseModel import BaseModel
 from career.models.Consultant import Consultant
+from career.models.Location import Location
 from career.models.Student import Student
 
 
@@ -14,3 +15,5 @@ class Appointment(BaseModel):
     isCome = models.BooleanField(default=True)
     isPaid = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+    room = models.CharField(max_length=256, null=True)
