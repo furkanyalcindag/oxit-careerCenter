@@ -122,6 +122,7 @@ class BlogApi(APIView):
             blog = Blog.objects.get(uuid=request.GET.get('id'))
             blog.isDeleted = True
             blog.save()
+            return Response('deleted', status.HTTP_200_OK)
 
         except Exception:
             traceback.print_exc()
