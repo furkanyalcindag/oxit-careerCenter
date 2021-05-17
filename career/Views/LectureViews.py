@@ -10,7 +10,7 @@ from career.exceptions import LanguageCodeException
 from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription
 from career.models.APIObject import APIObject
 from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer
-from career.serializers.LectureSerializer import LectureSerializer, LecturePageableSerializer
+from career.serializers.LectureSerializer import LectureSerializer, LecturePageableSerializer, LectureDescSerializer
 
 
 class LectureApi(APIView):
@@ -112,7 +112,7 @@ class LectureApi(APIView):
 
         try:
             instance = Lecture.objects.get(uuid=request.GET.get('id'))
-            serializer = LectureSerializer(data=request.data, instance=instance, context={'request': request})
+            serializer = LectureDescSerializer(data=request.data, instance=instance, context={'request': request})
 
             if request.data['languageCode'] is None:
                 raise LanguageCodeException()

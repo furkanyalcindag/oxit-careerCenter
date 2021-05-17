@@ -98,3 +98,30 @@ class LecturePageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
+
+
+class LectureDescSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(required=True)
+    description = serializers.CharField(required=True)
+    languageCode = serializers.CharField(required=False)
+    image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+    def update(self, instance, validated_data):
+
+        try:
+            lecture = instance
+
+            lecture_description = LectureDescription.objects.get(lecture=lecture, language=Language.objects.get(
+                code=validated_data.get('languageCode')))
+
+            lecture_description.name = validated_data.get('name')
+            lecture_description.description = validated_data.get('description')
+            lecture_description.image = validated_data.get('image')
+
+            lecture_description.save()
+            return lecture_description
+
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
