@@ -76,7 +76,7 @@ class LectureApi(APIView):
             data = Lecture.objects.filter(name__icontains=name, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Lecture.objects.filter(name__icontains=name).count()
+            filtered_count = Lecture.objects.filter(name__icontains=name,isDeleted=False).count()
             arr = []
             for x in data:
                 lecture_translation = LectureDescription.objects.get(lecture=x,
