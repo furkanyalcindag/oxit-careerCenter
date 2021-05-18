@@ -61,3 +61,16 @@ class CompanyPageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
+
+
+class CompanyInformationSerializer(serializers.Serializer):
+
+    about = serializers.CharField()
+
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+

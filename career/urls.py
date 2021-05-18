@@ -3,8 +3,8 @@ from django.conf.urls import url
 from career.Views.BlogViews import BlogApi
 from career.Views.CompanyViews import CompanyApi
 from career.Views.ConsultantViews import ConsultantApi
-from career.Views.GeneralViews import LanguageApi, LocationSelectApi
-from career.Views.InitViews import InitDataApi, LocationDataApi
+from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi
+from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.StudentViews import StudentApi
@@ -15,8 +15,11 @@ urlpatterns = [
 
     url(r'initial-data-api/$', InitDataApi.as_view()),
     url(r'initial-location-data-api/$', LocationDataApi.as_view()),
+    url(r'initial-city-data-api/$', CityDistrictDataApi.as_view()),
 
+    # general
     url(r'location-select-api/$', LocationSelectApi.as_view()),
+    url(r'city-district-select-api/$', CityDistrictSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
