@@ -137,16 +137,16 @@ class LectureInformationSerializer(serializers.Serializer):
     instructorId = serializers.UUIDField(write_only=True)
 
     def update(self, instance, validated_data):
-        lecture = instance
-        lecture.time = validated_data.get('time')
-        lecture.date = validated_data.get('date')
-        lecture.room = validated_data.get('room')
-        lecture.isPaid = validated_data.get('isPaid')
-        lecture.price = validated_data.get('price')
-        lecture.location = Location.objects.get(uuid=validated_data.get('locationId'))
-        lecture.instructor = Instructor.objects.get(uuid=validated_data.get('instructorId'))
-        lecture.save()
-        return lecture
+
+        instance.time = validated_data.get('time')
+        instance.date = validated_data.get('date')
+        instance.room = validated_data.get('room')
+        instance.isPaid = validated_data.get('isPaid')
+        instance.price = validated_data.get('price')
+        instance.location = Location.objects.get(uuid=validated_data.get('locationId'))
+        instance.instructor = Instructor.objects.get(uuid=validated_data.get('instructorId'))
+        instance.save()
+        return instance
 
     def create(self, validated_data):
         pass
