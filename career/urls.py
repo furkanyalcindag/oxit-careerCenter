@@ -6,7 +6,7 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
-from career.Views.LectureViews import LectureApi
+from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.StudentViews import StudentApi
 
 app_name = 'career'
@@ -40,5 +40,6 @@ urlpatterns = [
 
     # lecture
     url(r'lecture-api/$', LectureApi.as_view()),
+    url(r'lecture-info-api/$', LectureInfoApi.as_view()),
 
 ]

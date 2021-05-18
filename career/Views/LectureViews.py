@@ -7,10 +7,10 @@ from rest_framework.views import APIView
 from slugify import slugify
 
 from career.exceptions import LanguageCodeException
-from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription
+from career.models import Language, Lecture, LectureDescription
 from career.models.APIObject import APIObject
-from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer
-from career.serializers.LectureSerializer import LectureSerializer, LecturePageableSerializer, LectureDescSerializer
+from career.serializers.LectureSerializer import LectureSerializer, LecturePageableSerializer, LectureDescSerializer, \
+    LectureInformationSerializer
 
 
 class LectureApi(APIView):
@@ -143,3 +143,24 @@ class LectureApi(APIView):
 
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class LectureInfoApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, format=None):
+
+        try:
+            instance = Lecture.objects.get(uuid=request.GET.get('id'))
+            serializer = LectureInformationSerializer(data=request.data, instance=instance,
+                                                      context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "lecture is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception:
+            traceback.print_exc()
+            return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)

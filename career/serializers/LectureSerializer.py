@@ -22,9 +22,9 @@ class LectureSerializer(serializers.Serializer):
     location = serializers.CharField(read_only=True)
     instructor = serializers.CharField(read_only=True)
     isPaid = serializers.BooleanField(default=False)
-    price = serializers.DecimalField(max_digits=10, decimal_places=2, required=False,default=0)
+    price = serializers.DecimalField(max_digits=10, decimal_places=2, required=False, default=0)
     room = serializers.CharField()
-    date = serializers.DateField(required=True,format="%DD-%MM-%YYYY")
+    date = serializers.DateField(required=True, format="%DD-%MM-%YYYY")
     time = serializers.TimeField(required=True)
 
     def update(self, instance, validated_data):
@@ -108,7 +108,6 @@ class LectureDescSerializer(serializers.Serializer):
     image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
 
     def update(self, instance, validated_data):
-
         try:
             lecture = instance
 
@@ -125,3 +124,29 @@ class LectureDescSerializer(serializers.Serializer):
         except Exception:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class LectureInformationSerializer(serializers.Serializer):
+    capacity = serializers.IntegerField()
+    isPaid = serializers.BooleanField(default=False)
+    price = serializers.DecimalField(max_digits=10, decimal_places=2, required=False, default=0)
+    room = serializers.CharField()
+    date = serializers.DateField(required=True, format="%DD-%MM-%YYYY")
+    time = serializers.TimeField(required=True)
+    locationId = serializers.UUIDField(write_only=True)
+    instructorId = serializers.UUIDField(write_only=True)
+
+    def update(self, instance, validated_data):
+        lecture = instance
+        lecture.time = validated_data.get('time')
+        lecture.date = validated_data.get('date')
+        lecture.room = validated_data.get('room')
+        lecture.isPaid = validated_data.get('isPaid')
+        lecture.price = validated_data.get('price')
+        lecture.location = Location.objects.get(uuid=validated_data.get('locationId'))
+        lecture.instructor = Instructor.objects.get(uuid=validated_data.get('instructorId'))
+        lecture.save()
+        return lecture
+
+    def create(self, validated_data):
+        pass
