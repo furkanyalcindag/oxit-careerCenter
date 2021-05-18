@@ -46,6 +46,8 @@ class LectureApi(APIView):
             api_data['location'] = select_location
             api_data['date'] = str(lecture.date)
             api_data['time'] = str(lecture.time)
+            api_data['isPaid'] = lecture.isPaid
+            api_data['price'] = lecture.price
 
             serializer = LectureSerializer(
                 api_data, context={'request': request})
@@ -100,6 +102,8 @@ class LectureApi(APIView):
                 api_data['location'] = select_location
                 api_data['date'] = str(x.date)
                 api_data['time'] = str(x.time)
+                api_data['isPaid'] = x.isPaid
+                api_data['price'] = x.price
                 arr.append(api_data)
 
             api_object = APIObject()
