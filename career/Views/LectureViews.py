@@ -30,11 +30,20 @@ class LectureApi(APIView):
             api_data['description'] = lecture_translation.description
             api_data['uuid'] = lecture.uuid
             api_data['languageCode'] = lang.code
+
+            select_instructor = dict()
+            select_instructor['label'] = lecture.instructor.person.firstName + ' ' + lecture.instructor.person.lastName
+            select_instructor['value'] = lecture.instructor.uuid
+
+            select_location = dict()
+            select_location['label'] = lecture.location.name
+            select_location['value'] = lecture.location.uuid
+
             api_data['image'] = lecture_translation.image
             api_data['room'] = lecture.room
             api_data['capacity'] = lecture.capacity
-            api_data['instructor'] = lecture.instructor.person.firstName + ' ' + lecture.instructor.person.lastName
-            api_data['location'] = lecture.location.name
+            api_data['instructor'] = select_instructor
+            api_data['location'] = select_location
             api_data['date'] = str(lecture.date)
             api_data['time'] = str(lecture.time)
 

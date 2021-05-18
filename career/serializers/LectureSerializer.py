@@ -7,7 +7,7 @@ from slugify import slugify
 
 from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription, Instructor
 from career.models.Location import Location
-from career.serializers.GeneralSerializers import PageSerializer
+from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 
 
 class LectureSerializer(serializers.Serializer):
@@ -19,8 +19,8 @@ class LectureSerializer(serializers.Serializer):
     capacity = serializers.IntegerField()
     locationId = serializers.UUIDField(write_only=True)
     instructorId = serializers.UUIDField(write_only=True)
-    location = serializers.CharField(read_only=True)
-    instructor = serializers.CharField(read_only=True)
+    location = SelectSerializer(read_only=True)
+    instructor = SelectSerializer(read_only=True)
     isPaid = serializers.BooleanField(default=False)
     price = serializers.DecimalField(max_digits=10, decimal_places=2, required=False, default=0)
     room = serializers.CharField()
