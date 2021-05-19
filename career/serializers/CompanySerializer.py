@@ -104,3 +104,27 @@ class CompanyAboutInformationSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class CompanyCommunicationInformationSerializer(serializers.Serializer):
+    city = SelectSerializer(read_only=True)
+    district = SelectSerializer(read_only=True)
+    cityId = serializers.CharField(write_only=True, required=False, allow_null=True)
+    districtId = serializers.CharField(write_only=True,required=False, allow_null=True)
+    address = serializers.CharField(required=False, allow_null=True)
+    email = serializers.CharField(required=False, allow_null=True)
+    phone = serializers.CharField(required=False, allow_null=True)
+
+    def update(self, instance, validated_data):
+        if validated_data.get('cityId') is not None:
+            instance.city = City.objects.get(id=int(validated_data.get('cityId')))
+        if validated_data.get('districtId') is not None:
+            instance.district = City.objects.get(id=int(validated_data.get('districtId')))
+        instance.address = validated_data.get('address')
+        instance.email = validated_data.get('email')
+        instance.phone = validated_data.get('phone')
+        instance.save()
+        return instance
+
+    def create(self, validated_data):
+        pass

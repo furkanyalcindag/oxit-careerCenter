@@ -21,3 +21,4 @@ class Company(BaseModel):
     phone = models.CharField(max_length=20, null=True, blank=True)
     fax = models.CharField(max_length=20, null=True, blank=True)
     locationMap = models.TextField()
+    email = models.CharField(max_length=128, null=True)

@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from career.Views.BlogViews import BlogApi
-from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi
+from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
+    CompanyCommunicationInformationApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi
@@ -45,8 +46,9 @@ urlpatterns = [
     url(r'lecture-api/$', LectureApi.as_view()),
     url(r'lecture-info-api/$', LectureInfoApi.as_view()),
 
-    # ----------------company api---------------------------
+    # --------------------------------company api-------------------------------------------------------
     url(r'company/company-general-information-api/$', CompanyGeneralInformationApi.as_view()),
     url(r'company/company-about-information-api/$', CompanyAboutInformationApi.as_view()),
+    url(r'company/company-communication-information-api/$', CompanyCommunicationInformationApi.as_view()),
 
 ]

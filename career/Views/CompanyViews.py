@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from career.models import Company
 from career.models.APIObject import APIObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
-    CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer
+    CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer, CompanyCommunicationInformationSerializer
 
 
 class CompanyApi(APIView):
@@ -179,6 +179,65 @@ class CompanyAboutInformationApi(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response({"message": "about is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CompanyCommunicationInformationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            user = request.user
+            company = Company.objects.get(profile__user=user)
+            api_object = dict()
+            api_object['address'] = company.address
+            api_object['phone'] = company.phone
+            api_object['fax'] = company.fax
+            api_object['email'] = company.email
+
+            select_city = dict()
+
+            if company.city is not None:
+                select_city['label'] = company.city.name
+                select_city['value'] = company.city.id
+            else:
+                select_city = None
+            api_object['city'] = select_city
+            select_district = dict()
+            if company.district is not None:
+                select_district['label'] = company.district.name
+                select_district['value'] = company.district.id
+            else:
+                select_district = None
+
+
+            api_object['city'] = select_city
+            api_object['district'] = select_district
+
+            serializer = CompanyCommunicationInformationSerializer(api_object, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+    def put(self, request, format=None):
+        try:
+
+            instance = Company.objects.get(profile__user=request.user)
+            serializer = CompanyCommunicationInformationSerializer(data=request.data, instance=instance,
+                                                           context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "comm is updated"}, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
