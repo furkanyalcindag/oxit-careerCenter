@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Company
-from career.serializers.GeneralSerializers import PageSerializer
+from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from oxiterp.serializers import UserSerializer
 
 
@@ -64,13 +64,22 @@ class CompanyPageableSerializer(PageSerializer):
 
 
 class CompanyInformationSerializer(serializers.Serializer):
-
     about = serializers.CharField()
-
+    city = SelectSerializer(read_only=True)
+    district = SelectSerializer(read_only=True)
+    cityId = serializers.CharField(write_only=True, required=True)
+    districtId = serializers.CharField(write_only=True)
+    address = serializers.CharField(required=True)
+    name = serializers.CharField()
+    logo = serializers.CharField()
+    staffCount = serializers.IntegerField()
+    website = serializers.CharField()
+    phone = serializers.CharField()
+    fax = serializers.CharField(required=False)
+    locationMap = serializers.CharField()
 
     def update(self, instance, validated_data):
         pass
 
     def create(self, validated_data):
         pass
-

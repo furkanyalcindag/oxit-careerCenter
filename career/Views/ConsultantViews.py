@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Company, Consultant
+from career.models import Consultant
 from career.models.APIObject import APIObject
 from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer
 

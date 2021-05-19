@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 
 from career.models import Company
 from career.models.APIObject import APIObject
-from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer
+from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
+    CompanyInformationSerializer
 
 
 class CompanyApi(APIView):
@@ -93,3 +94,48 @@ class CompanyApi(APIView):
         except:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class CompanyInformationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            user = request.user
+
+            company = Company.objects.get(profile__user=user)
+            api_object = dict()
+            api_object['about'] = company.about
+            api_object['logo'] = company.logo
+
+            select_city = dict()
+            if company.city is not None:
+                select_city['label'] = company.city.name
+                select_city['value'] = company.city.id
+            else:
+                select_city = None
+
+            api_object['city'] = select_city
+
+            select_district = dict()
+            if company.district is not None:
+                select_district['label'] = company.district.name
+                select_district['value'] = company.district.id
+            else:
+                select_district = None
+
+            api_object['district'] = select_district
+            api_object['address'] = company.address
+            api_object['staffCount'] = company.staffCount
+            api_object['website'] = company.website
+            api_object['name'] = company.name
+            api_object['locationMap'] = company.locationMap
+            api_object['phone'] = company.phone
+            api_object['fax'] = company.fax
+
+            serializer = CompanyInformationSerializer(api_object, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -137,7 +137,6 @@ class LectureInformationSerializer(serializers.Serializer):
     instructorId = serializers.UUIDField(write_only=True)
 
     def update(self, instance, validated_data):
-
         instance.time = validated_data.get('time')
         instance.date = validated_data.get('date')
         instance.room = validated_data.get('room')
