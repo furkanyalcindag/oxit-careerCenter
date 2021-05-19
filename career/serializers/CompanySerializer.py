@@ -123,6 +123,7 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
         instance.address = validated_data.get('address')
         instance.email = validated_data.get('email')
         instance.phone = validated_data.get('phone')
+
         instance.save()
         return instance
 
