@@ -5,7 +5,7 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from career.models import Profile, Company
+from career.models import Profile, Company, City, District
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from oxiterp.serializers import UserSerializer
 
@@ -63,23 +63,44 @@ class CompanyPageableSerializer(PageSerializer):
         pass
 
 
-class CompanyInformationSerializer(serializers.Serializer):
-    about = serializers.CharField()
-    city = SelectSerializer(read_only=True)
-    district = SelectSerializer(read_only=True)
-    cityId = serializers.CharField(write_only=True, required=True)
-    districtId = serializers.CharField(write_only=True)
-    address = serializers.CharField(required=True)
+class CompanyGeneralInformationSerializer(serializers.Serializer):
+    # about = serializers.CharField()
+    # city = SelectSerializer(read_only=True)
+    # district = SelectSerializer(read_only=True)
+    # cityId = serializers.CharField(write_only=True, required=True)
+    # districtId = serializers.CharField(write_only=True)
+    # address = serializers.CharField(required=True)
     name = serializers.CharField()
-    logo = serializers.CharField()
-    staffCount = serializers.IntegerField()
-    website = serializers.CharField()
-    phone = serializers.CharField()
-    fax = serializers.CharField(required=False)
-    locationMap = serializers.CharField()
+    logo = serializers.CharField(required=False, allow_null=True)
+    staffCount = serializers.IntegerField(required=False, allow_null=True)
+    website = serializers.CharField(required=False, allow_null=True)
+    year = serializers.IntegerField(required=False, allow_null=True)
+
+    # phone = serializers.CharField()
+    # fax = serializers.CharField(required=False)
+    # locationMap = serializers.CharField()
 
     def update(self, instance, validated_data):
-        pass
+        instance.name = validated_data.get('name')
+        instance.logo = validated_data.get('logo')
+        instance.staffCount = validated_data.get('staffCount')
+        instance.website = validated_data.get('website')
+        instance.year = int(validated_data.get('year'))
+
+        instance.save()
+        return instance
 
     def create(self, validated_data):
         pass
+
+
+class CompanyAboutInformationSerializer(serializers.Serializer):
+    def create(self, validated_data):
+        pass
+
+    about = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        instance.about = validated_data.get('about')
+
+        return instance.save()

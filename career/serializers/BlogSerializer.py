@@ -27,7 +27,7 @@ class BlogSerializer(serializers.Serializer):
 
             blog_description.title = validated_data.get('title')
             blog_description.article = validated_data.get('article')
-            blog_description.image = validated_data.get('îmage')
+            blog_description.image = validated_data.get('image')
 
             blog_description.save()
             return blog_description

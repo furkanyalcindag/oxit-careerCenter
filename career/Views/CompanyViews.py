@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from career.models import Company
 from career.models.APIObject import APIObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
-    CompanyInformationSerializer
+    CompanyGeneralInformationSerializer
 
 
 class CompanyApi(APIView):
@@ -96,46 +96,57 @@ class CompanyApi(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class CompanyInformationApi(APIView):
+class CompanyGeneralInformationApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
         try:
             user = request.user
-
             company = Company.objects.get(profile__user=user)
             api_object = dict()
-            api_object['about'] = company.about
             api_object['logo'] = company.logo
-
-            select_city = dict()
+            '''select_city = dict()
             if company.city is not None:
                 select_city['label'] = company.city.name
                 select_city['value'] = company.city.id
             else:
                 select_city = None
-
             api_object['city'] = select_city
-
             select_district = dict()
             if company.district is not None:
                 select_district['label'] = company.district.name
                 select_district['value'] = company.district.id
             else:
                 select_district = None
-
             api_object['district'] = select_district
-            api_object['address'] = company.address
+            api_object['address'] = company.address'''
             api_object['staffCount'] = company.staffCount
             api_object['website'] = company.website
             api_object['name'] = company.name
-            api_object['locationMap'] = company.locationMap
-            api_object['phone'] = company.phone
-            api_object['fax'] = company.fax
-
-            serializer = CompanyInformationSerializer(api_object, context={'request': request})
-
+            api_object['year'] = company.year
+            # api_object['locationMap'] = company.locationMap
+            # api_object['phone'] = company.phone
+            # api_object['fax'] = company.fax
+            serializer = CompanyGeneralInformationSerializer(api_object, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, format=None):
+
+        try:
+
+            instance = Company.objects.get(profile__user=request.user)
+            serializer = CompanyGeneralInformationSerializer(data=request.data, instance=instance,
+                                                             context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "blog is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
