@@ -1,13 +1,15 @@
 from django.db import models
 
+from career.models.District import District
+from career.models.City import City
 from career.models.BaseModel import BaseModel
 from career.models.Profile import Profile
 
 
 class Company(BaseModel):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    city = models.CharField(max_length=255, blank=True, null=True)
-    district = models.CharField(max_length=100, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True)
+    district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     taxNumber = models.CharField(max_length=128, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)

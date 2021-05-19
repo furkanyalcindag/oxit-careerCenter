@@ -119,7 +119,7 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
         if validated_data.get('cityId') is not None:
             instance.city = City.objects.get(id=int(validated_data.get('cityId')))
         if validated_data.get('districtId') is not None:
-            instance.district = City.objects.get(id=int(validated_data.get('districtId')))
+            instance.district = District.objects.get(id=int(validated_data.get('districtId')))
         instance.address = validated_data.get('address')
         instance.email = validated_data.get('email')
         instance.phone = validated_data.get('phone')
