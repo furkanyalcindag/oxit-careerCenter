@@ -95,12 +95,12 @@ class CompanyGeneralInformationSerializer(serializers.Serializer):
 
 
 class CompanyAboutInformationSerializer(serializers.Serializer):
-    def create(self, validated_data):
-        pass
-
-    about = serializers.CharField()
+    about = serializers.CharField(required=True)
 
     def update(self, instance, validated_data):
         instance.about = validated_data.get('about')
+        instance.save()
+        return instance
 
-        return instance.save()
+    def create(self, validated_data):
+        pass

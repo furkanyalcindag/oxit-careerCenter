@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from career.models import Company
 from career.models.APIObject import APIObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
-    CompanyGeneralInformationSerializer
+    CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer
 
 
 class CompanyApi(APIView):
@@ -144,6 +144,41 @@ class CompanyGeneralInformationApi(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response({"message": "blog is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CompanyAboutInformationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            user = request.user
+            company = Company.objects.get(profile__user=user)
+            api_object = dict()
+            api_object['about'] = company.about
+
+            serializer = CompanyAboutInformationSerializer(api_object, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, format=None):
+        try:
+
+            instance = Company.objects.get(profile__user=request.user)
+            serializer = CompanyAboutInformationSerializer(data=request.data, instance=instance,
+                                                           context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "about is updated"}, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
