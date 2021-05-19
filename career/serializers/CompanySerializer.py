@@ -114,6 +114,7 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
     address = serializers.CharField(required=False, allow_null=True)
     email = serializers.CharField(required=False, allow_null=True)
     phone = serializers.CharField(required=False, allow_null=True)
+    fax = serializers.CharField(required=False, allow_null=True)
 
     def update(self, instance, validated_data):
         if validated_data.get('cityId') is not None:
@@ -123,6 +124,7 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
         instance.address = validated_data.get('address')
         instance.email = validated_data.get('email')
         instance.phone = validated_data.get('phone')
+        instance.fax = validated_data.get('fax')
 
         instance.save()
         return instance
