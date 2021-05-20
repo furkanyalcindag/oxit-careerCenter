@@ -64,21 +64,11 @@ class CompanyPageableSerializer(PageSerializer):
 
 
 class CompanyGeneralInformationSerializer(serializers.Serializer):
-    # about = serializers.CharField()
-    # city = SelectSerializer(read_only=True)
-    # district = SelectSerializer(read_only=True)
-    # cityId = serializers.CharField(write_only=True, required=True)
-    # districtId = serializers.CharField(write_only=True)
-    # address = serializers.CharField(required=True)
     name = serializers.CharField()
     logo = serializers.CharField(required=False, allow_null=True)
     staffCount = serializers.IntegerField(required=False, allow_null=True)
     website = serializers.CharField(required=False, allow_null=True)
     year = serializers.IntegerField(required=False, allow_null=True)
-
-    # phone = serializers.CharField()
-    # fax = serializers.CharField(required=False)
-    # locationMap = serializers.CharField()
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name')
@@ -110,7 +100,7 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
     city = SelectSerializer(read_only=True)
     district = SelectSerializer(read_only=True)
     cityId = serializers.CharField(write_only=True, required=False, allow_null=True)
-    districtId = serializers.CharField(write_only=True,required=False, allow_null=True)
+    districtId = serializers.CharField(write_only=True, required=False, allow_null=True)
     address = serializers.CharField(required=False, allow_null=True)
     email = serializers.CharField(required=False, allow_null=True)
     phone = serializers.CharField(required=False, allow_null=True)
