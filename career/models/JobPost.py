@@ -22,6 +22,5 @@ class JobPost(BaseModel):
     startDate = models.DateField()
     finishDate = models.DateField()
     viewCount = models.IntegerField()
-    city = models.ForeignKey(City ,on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
-
