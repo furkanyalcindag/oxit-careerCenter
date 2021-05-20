@@ -34,6 +34,10 @@ class AppointmentApi(APIView):
                 api_object['finishTime'] = appointment.finishTime
                 api_object['isSuitable'] = appointment.isSuitable
                 api_object['room'] = appointment.room
+                select_location = dict()
+                select_location['label'] = appointment.location.name
+                select_location['value'] = appointment.location.uuid
+                api_object['location'] = select_location
                 appointment_arr.append(api_object)
 
             serializer = AppointmentSerializer(appointment_arr, many=True, context={'request': request})
@@ -51,6 +55,10 @@ class AppointmentApi(APIView):
             api_object['finishTime'] = appointment.finishTime
             api_object['isSuitable'] = appointment.isSuitable
             api_object['room'] = appointment.room
+            select_location = dict()
+            select_location['label'] = appointment.location.name
+            select_location['value'] = appointment.location.uuid
+            api_object['location'] = select_location
             serializer = AppointmentSerializer(api_object, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)

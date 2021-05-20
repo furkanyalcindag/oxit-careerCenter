@@ -5,6 +5,7 @@ from rest_framework import serializers
 from career.exceptions import AppointmentValidationException
 from career.models import Consultant, Appointment
 from career.models.Location import Location
+from career.serializers.GeneralSerializers import SelectSerializer
 
 
 class AppointmentSerializer(serializers.Serializer):
@@ -17,6 +18,7 @@ class AppointmentSerializer(serializers.Serializer):
     finishTime = serializers.TimeField(required=True)
     locationId = serializers.UUIDField(write_only=True)
     isSuitable = serializers.BooleanField(read_only=True)
+    location = SelectSerializer(read_only=True)
 
     def update(self, instance, validated_data):
         pass
