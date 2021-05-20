@@ -5,7 +5,7 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from career.models import Profile, Consultant
+from career.models import Profile, Consultant, Appointment
 from career.serializers.GeneralSerializers import PageSerializer
 from oxiterp.serializers import UserSerializer
 
@@ -61,3 +61,5 @@ class ConsultantPageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
+
+
