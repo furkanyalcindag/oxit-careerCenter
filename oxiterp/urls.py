@@ -21,6 +21,8 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
+
+from accounts.views import ChangePasswordApi
 from oxiterp.views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -31,7 +33,7 @@ import accounts
 from accounts import views
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 
     path('accounts/', include('accounts.urls')),
     path('', views.login, name='index'),
@@ -39,9 +41,10 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/token/', CustomTokenObtainPairView.as_view()),
     path('api/token/refresh', TokenRefreshView.as_view()),
+    path('api/auth/change-password/', ChangePasswordApi.as_view()),
 
     path('career-service/', include('career.urls')),
-    #path('car-service/', include('carService.urls')),
+    # path('car-service/', include('carService.urls')),
 
 ]
 

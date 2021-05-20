@@ -1,19 +1,16 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from accounts.forms import LoginForm
 from django.contrib import auth, messages
-from django.urls import reverse
-
+from django.shortcuts import render, redirect
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # Create your Views here.
+from accounts.serializers import PasswordChangeSerializer
 
 
 def index(request):
     return render(request, 'accounts/index.html')
-
-
-# def login(request):
-# return render(request, 'registration/login.html')
 
 
 def login(request):
@@ -36,3 +33,18 @@ def login(request):
             return render(request, 'registration/login.html')
 
     return render(request, 'registration/login.html')
+
+
+class ChangePasswordApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, format=None):
+        instance = request.user
+
+        serializer = PasswordChangeSerializer(data=request.data, instance=instance, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "password is updated"}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
