@@ -84,7 +84,7 @@ class JobPostApi(APIView):
                 return Response(serializer.data, status.HTTP_200_OK)
             else:
                 uuid = request.GET.get('id')
-                x = JobPost.objects.get()
+                x = JobPost.objects.get(uuid=uuid)
 
                 api_data = dict()
                 api_data['uuid'] = x.uuid
@@ -126,6 +126,7 @@ class JobPostApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
     def post(self, request, format=None):
