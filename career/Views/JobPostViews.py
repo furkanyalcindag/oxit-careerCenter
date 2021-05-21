@@ -147,7 +147,7 @@ class JobPostApi(APIView):
 
         try:
 
-            instance = JobPost.objects.get(company__profile__user=request.user)
+            instance = JobPost.objects.get(company__profile__user=request.user, uuid=request.GET.get('id'))
             serializer = JobPostSerializer(data=request.data, instance=instance,
                                                              context={'request': request})
 
