@@ -1,3 +1,5 @@
+import traceback
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -134,3 +136,21 @@ class JobPostApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+
+        try:
+
+            instance = JobPost.objects.get(company__profile__user=request.user)
+            serializer = JobPostSerializer(data=request.data, instance=instance,
+                                                             context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "job post is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

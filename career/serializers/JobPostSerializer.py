@@ -8,23 +8,6 @@ from career.serializers.GeneralSerializers import SelectSerializer, PageSerializ
 
 
 class JobPostSerializer(serializers.Serializer):
-    '''
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    title = models.CharField(max_length=256)
-    quality = models.TextField()
-    jobDescription = models.TextField()
-    type = models.ForeignKey(JobType, on_delete=models.CASCADE)
-    salaryMin = models.IntegerField(null=True)
-    salaryMax = models.IntegerField(null=True)
-    experienceYear = models.IntegerField()
-    startDate = models.DateField()
-    finishDate = models.DateField()
-    viewCount = models.IntegerField()
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
-
-
-    '''
     uuid = serializers.UUIDField(read_only=True)
     title = serializers.CharField(required=True)
     quality = serializers.CharField(required=True)
@@ -37,11 +20,28 @@ class JobPostSerializer(serializers.Serializer):
     district = SelectSerializer(read_only=True)
     cityId = serializers.CharField(write_only=True, required=False, allow_null=True)
     districtId = serializers.CharField(write_only=True, required=False, allow_null=True)
-    startDate = serializers.DateField(required=True)
+    startDate = serializers.DateField(required=False)
     finishDate = serializers.DateField(read_only=True)
 
+    class Meta:
+        partial: True
+
     def update(self, instance, validated_data):
-        pass
+        try:
+            instance.title = validated_data.get('title')
+            instance.quality = validated_data.get('quality')
+            instance.jobDescription = validated_data.get('jobDescription')
+            instance.type = JobType.objects.get(id=validated_data.get('typeId'))
+            instance.experienceYear = validated_data.get('experienceYear')
+            instance.company = Company.objects.get(profile__user=self.context['request'].user)
+            instance.city = City.objects.get(id=int(validated_data.get('cityId')))
+            instance.district = District.objects.get(id=int(validated_data.get('districtId')))
+            instance.save()
+            return instance
+
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
     def create(self, validated_data):
 
