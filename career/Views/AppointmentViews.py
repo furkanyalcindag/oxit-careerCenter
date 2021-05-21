@@ -89,3 +89,21 @@ class AppointmentApi(APIView):
         except Exception:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+
+        try:
+
+            instance = Appointment.objects.get(consultant__profile__user=request.user, uuid=request.GET.get('id'))
+            serializer = AppointmentSerializer(data=request.data, instance=instance,
+                                               context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "Appointment is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

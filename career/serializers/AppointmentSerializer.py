@@ -1,5 +1,6 @@
 import traceback
 
+from django.db.models import Q
 from rest_framework import serializers
 
 from career.exceptions import AppointmentValidationException
@@ -21,7 +22,37 @@ class AppointmentSerializer(serializers.Serializer):
     location = SelectSerializer(read_only=True)
 
     def update(self, instance, validated_data):
-        pass
+        try:
+            user = self.context['request'].user
+            consultant = Consultant.objects.get(profile__user=user)
+            date = validated_data.get('date')
+            start_time = validated_data.get('startTime')
+            finish_time = validated_data.get('finishTime')
+
+
+            appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False,
+                                                      startTime__lte=start_time,
+                                                      finishTime__gt=start_time).filter(~Q(uuid=instance.uuid))
+            if len(appointments) > 0:
+                raise AppointmentValidationException()
+            else:
+                instance.consultant = consultant
+                instance.isPaid = validated_data.get('isPaid')
+                instance.price = validated_data.get('price')
+                instance.date = date
+                instance.startTime = start_time
+                instance.finishTime = finish_time
+                instance.room = validated_data.get('room')
+                instance.location = Location.objects.get(uuid=validated_data.get('locationId'))
+                instance.save()
+                return instance
+        except AppointmentValidationException:
+            traceback.print_exc()
+            raise serializers.ValidationError("Lütfen geçerli bir tarih ve zaman giriniz")
+
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
     def create(self, validated_data):
         try:
@@ -32,7 +63,8 @@ class AppointmentSerializer(serializers.Serializer):
             finish_time = validated_data.get('finishTime')
             appointment = Appointment()
 
-            appointments = Appointment.objects.filter(date=date, isDeleted=False, startTime__lte=start_time,
+            appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False,
+                                                      startTime__lte=start_time,
                                                       finishTime__gt=start_time)
             if len(appointments) > 0:
                 raise AppointmentValidationException()
