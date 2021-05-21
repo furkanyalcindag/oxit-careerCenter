@@ -32,7 +32,8 @@ class AppointmentSerializer(serializers.Serializer):
             finish_time = validated_data.get('finishTime')
             appointment = Appointment()
 
-            appointments =Appointment.objects.filter(date=date, startTime__lte=start_time,finishTime__gt=start_time)
+            appointments = Appointment.objects.filter(date=date, isDeleted=False, startTime__lte=start_time,
+                                                      finishTime__gt=start_time)
             if len(appointments) > 0:
                 raise AppointmentValidationException()
             else:

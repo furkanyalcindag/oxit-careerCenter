@@ -4,7 +4,7 @@ import traceback
 from rest_framework import serializers
 
 from career.models import JobPost, JobType, City, District, Company
-from career.serializers.GeneralSerializers import SelectSerializer
+from career.serializers.GeneralSerializers import SelectSerializer, PageSerializer
 
 
 class JobPostSerializer(serializers.Serializer):
@@ -38,6 +38,7 @@ class JobPostSerializer(serializers.Serializer):
     cityId = serializers.CharField(write_only=True, required=False, allow_null=True)
     districtId = serializers.CharField(write_only=True, required=False, allow_null=True)
     startDate = serializers.DateField(required=True)
+    finishDate = serializers.DateField(read_only=True)
 
     def update(self, instance, validated_data):
         pass
@@ -62,3 +63,13 @@ class JobPostSerializer(serializers.Serializer):
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class JobPostPageableSerializer(PageSerializer):
+    data = JobPostSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
