@@ -22,9 +22,7 @@ class JobPostSerializer(serializers.Serializer):
     districtId = serializers.CharField(write_only=True, required=False, allow_null=True)
     startDate = serializers.DateField(required=False)
     finishDate = serializers.DateField(read_only=True)
-
-    class Meta:
-        partial: True
+    
 
     def update(self, instance, validated_data):
         try:
