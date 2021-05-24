@@ -7,8 +7,10 @@ from rest_framework.views import APIView
 
 from career.models import Company
 from career.models.APIObject import APIObject
+from career.models.SelectObject import SelectObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
     CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer, CompanyCommunicationInformationSerializer
+from career.serializers.GeneralSerializers import SelectSerializer
 
 
 class CompanyApi(APIView):
@@ -215,7 +217,6 @@ class CompanyCommunicationInformationApi(APIView):
             else:
                 select_district = None
 
-
             api_object['city'] = select_city
             api_object['district'] = select_district
 
@@ -226,14 +227,12 @@ class CompanyCommunicationInformationApi(APIView):
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-
     def put(self, request, format=None):
         try:
 
             instance = Company.objects.get(profile__user=request.user)
             serializer = CompanyCommunicationInformationSerializer(data=request.data, instance=instance,
-                                                           context={'request': request})
+                                                                   context={'request': request})
 
             if serializer.is_valid():
                 serializer.save()
@@ -244,3 +243,25 @@ class CompanyCommunicationInformationApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CompanySelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        company_name = ''
+
+        if request.GET.get('companyName') is not None:
+            company_name = str(request.GET.get('companyName'))
+
+        data = Company.objects.filter(name__icontains=company_name, isDeleted=False).order_by('-id')[:20]
+        select_arr = []
+        for company in data:
+            select_object = SelectObject()
+            select_object.value = company.uuid
+            select_object.label = company.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

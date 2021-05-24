@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import JobPost, Company
+from career.models import Company
 from career.models.APIObject import APIObject
 from career.models.JobApplication import JobApplication
 from career.serializers.StudentSerializer import StudentPageableSerializer

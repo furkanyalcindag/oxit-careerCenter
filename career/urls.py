@@ -3,7 +3,7 @@ from django.conf.urls import url
 from career.Views.AppointmentViews import AppointmentApi
 from career.Views.BlogViews import BlogApi
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
-    CompanyCommunicationInformationApi
+    CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi
@@ -11,6 +11,7 @@ from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
+from career.Views.ScholarshipViews import ScholarshipApi
 from career.Views.StudentViews import StudentApi
 
 app_name = 'career'
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'location-select-api/$', LocationSelectApi.as_view()),
     url(r'city-district-select-api/$', CityDistrictSelectApi.as_view()),
     url(r'job-type-select-api/$', JobTypeSelectApi.as_view()),
+    url(r'company-select-api/$', CompanySelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
@@ -49,6 +51,9 @@ urlpatterns = [
     # lecture
     url(r'lecture-api/$', LectureApi.as_view()),
     url(r'lecture-info-api/$', LectureInfoApi.as_view()),
+
+    # scholarship
+    url(r'scholarship-api/$', ScholarshipApi.as_view()),
 
     # --------------------------------company api-------------------------------------------------------
     url(r'company/company-general-information-api/$', CompanyGeneralInformationApi.as_view()),
