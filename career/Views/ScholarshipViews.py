@@ -55,6 +55,7 @@ class ScholarshipApi(APIView):
                 api_data['uuid'] = x.uuid
                 api_data['amount'] = x.amount
                 api_data['isApprove'] = x.isApprove
+                api_data['company'] = x.company.name
                 arr.append(api_data)
 
             api_object = APIObject()
