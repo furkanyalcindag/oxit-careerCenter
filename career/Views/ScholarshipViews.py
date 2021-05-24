@@ -25,6 +25,13 @@ class ScholarshipApi(APIView):
             api_data['amount'] = scholarship.amount
             api_data['isApprove'] = scholarship.isApprove
 
+            select_company = dict()
+            select_company[
+                'label'] = scholarship.company.name
+            select_company['value'] = scholarship.company.uuid
+
+            api_data['company'] = select_company
+
             serializer = ScholarshipSerializer(
                 api_data, context={'request': request})
 
@@ -55,7 +62,12 @@ class ScholarshipApi(APIView):
                 api_data['uuid'] = x.uuid
                 api_data['amount'] = x.amount
                 api_data['isApprove'] = x.isApprove
-                api_data['company'] = x.company.name
+                select_company = dict()
+                select_company[
+                    'label'] = x.company.name
+                select_company['value'] = x.company.uuid
+
+                api_data['company'] = select_company
                 arr.append(api_data)
 
             api_object = APIObject()

@@ -4,7 +4,7 @@ import traceback
 from rest_framework import serializers
 
 from career.models import Scholarship, Company
-from career.serializers.GeneralSerializers import PageSerializer
+from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 
 
 class ScholarshipSerializer(serializers.Serializer):
@@ -12,7 +12,7 @@ class ScholarshipSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     description = serializers.CharField(required=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
-    company = serializers.CharField(read_only=True)
+    company = SelectSerializer(read_only=True)
     companyId = serializers.UUIDField(write_only=True, required=True)
     isApprove = serializers.BooleanField()
 
