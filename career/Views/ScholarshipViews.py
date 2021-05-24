@@ -16,7 +16,7 @@ class ScholarshipApi(APIView):
     def get(self, request, format=None):
 
         if request.GET.get('id') is not None:
-            scholarship = Scholarship.objects.get(uuid=request.GET.get('id'))
+            scholarship = Scholarship.objects.get(uuid=request.GET.get('id'),isDeleted=False)
 
             api_data = dict()
             api_data['name'] = scholarship.name
@@ -112,3 +112,14 @@ class ScholarshipApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        try:
+            scholarship = Scholarship.objects.get(uuid=request.GET.get('id'))
+            scholarship.isDeleted = True
+            scholarship.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
