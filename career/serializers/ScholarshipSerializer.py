@@ -4,17 +4,10 @@ import traceback
 from rest_framework import serializers
 
 from career.models import Scholarship, Company
+from career.serializers.GeneralSerializers import PageSerializer
 
 
 class ScholarshipSerializer(serializers.Serializer):
-    '''
-    name = models.CharField(max_length=256, null=True)
-    description = models.TextField(null=True, blank=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
-    isApprove = models.BooleanField(default=False)
-    '''
-
     name = serializers.CharField(required=True)
     description = serializers.CharField(required=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
@@ -23,7 +16,17 @@ class ScholarshipSerializer(serializers.Serializer):
     isApprove = serializers.BooleanField()
 
     def update(self, instance, validated_data):
-        pass
+        try:
+            instance.name = validated_data.get('name')
+            instance.description = validated_data.get('description')
+            instance.company = Company.objects.get(uuid=validated_data.get('companyId'))
+            instance.amount = validated_data.get('amount')
+            instance.isApprove = validated_data.get('isApprove')
+            instance.save()
+            return instance
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
     def create(self, validated_data):
         try:
@@ -38,3 +41,14 @@ class ScholarshipSerializer(serializers.Serializer):
         except Exception:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class ScholarshipPageableSerializer(PageSerializer):
+    data = ScholarshipSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
