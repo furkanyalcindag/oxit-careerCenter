@@ -9,6 +9,7 @@ from career.serializers.GeneralSerializers import PageSerializer
 
 class ScholarshipSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
+    uuid = serializers.UUIDField(read_only=True)
     description = serializers.CharField(required=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
     company = serializers.CharField(read_only=True)
@@ -51,4 +52,3 @@ class ScholarshipPageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
-
