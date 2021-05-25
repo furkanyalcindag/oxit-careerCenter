@@ -8,7 +8,7 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi
-from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi
+from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'initial-data-api/$', InitDataApi.as_view()),
     url(r'initial-location-data-api/$', LocationDataApi.as_view()),
     url(r'initial-city-data-api/$', CityDistrictDataApi.as_view()),
+    url(r'initial-uni-data-api/$', UniversityDataApi.as_view()),
 
     # general
     url(r'location-select-api/$', LocationSelectApi.as_view()),
