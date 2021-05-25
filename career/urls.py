@@ -61,7 +61,7 @@ urlpatterns = [
     url(r'company/company-communication-information-api/$', CompanyCommunicationInformationApi.as_view()),
     url(r'company/company-job-post-api/$', JobPostApi.as_view()),
     url(r'company/job-applicant-api/$', JopApplicantsApi.as_view()),
-    url(r'company/scholarship-api/$', CompanyScholarshipApi.as_view()),
+    url(r'company/company-scholarship-api/$', CompanyScholarshipApi.as_view()),
 
     # -----------------------------consultant api----------------------------------------
     url(r'consultant/appointment-api/$', AppointmentApi.as_view()),
