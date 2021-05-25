@@ -5,7 +5,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department
+from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
+    EducationType
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
@@ -251,5 +252,30 @@ class UniversityDataApi(APIView):
         department3 = Department()
         department3.name = 'Uluslararası İlişkiler'
         department3.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class EducationTypeDataApi(APIView):
+    def get(self, request, format=None):
+        type = EducationType()
+        type.name = "Lisans"
+        type.save()
+
+        type2 = EducationType()
+        type2.name = "Yüksek Lisans"
+        type2.save()
+
+        type3 = EducationType()
+        type3.name = "Doktora"
+        type3.save()
+
+        type4 = EducationType()
+        type4.name = "Ön Lisans"
+        type4.save()
+
+        type5 = EducationType()
+        type5.name = "Lise"
+        type5.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)

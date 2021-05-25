@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 
 from career.models import Student
 from career.models.APIObject import APIObject
-from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer
+from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
+    StudentUniversityEducationInformationSerializer
 
 
 class StudentApi(APIView):
@@ -25,7 +26,6 @@ class StudentApi(APIView):
 
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
-
 
         data = Student.objects.filter(studentNumber__icontains=student_number).order_by('-id')[lim_start:lim_end]
         arr = []
@@ -91,3 +91,21 @@ class StudentApi(APIView):
         except:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentEducationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, format=None):
+        serializer = StudentUniversityEducationInformationSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "student education info is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

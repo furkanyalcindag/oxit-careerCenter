@@ -7,14 +7,16 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
     CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
-    UniversitySelectApi, FacultySelectApi
-from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi
+    UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi
+from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
+    EducationTypeDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
-from career.Views.StudentViews import StudentApi
+from career.Views.StudentViews import StudentApi, StudentEducationApi
+from career.models import EducationType
 
 app_name = 'career'
 
@@ -24,6 +26,7 @@ urlpatterns = [
     url(r'initial-location-data-api/$', LocationDataApi.as_view()),
     url(r'initial-city-data-api/$', CityDistrictDataApi.as_view()),
     url(r'initial-uni-data-api/$', UniversityDataApi.as_view()),
+    url(r'initial-education-type-api/$', EducationTypeDataApi.as_view()),
 
     # general
     url(r'location-select-api/$', LocationSelectApi.as_view()),
@@ -33,6 +36,7 @@ urlpatterns = [
     url(r'university-select-api/$', UniversitySelectApi.as_view()),
     url(r'faculty-select-api/$', FacultySelectApi.as_view()),
     url(r'department-select-api/$', FacultySelectApi.as_view()),
+    url(r'education-type-select-api/$', EducationTypeSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
@@ -71,5 +75,8 @@ urlpatterns = [
 
     # -----------------------------consultant api----------------------------------------
     url(r'consultant/appointment-api/$', AppointmentApi.as_view()),
+
+    # ------------------------------student api-----------------------------
+    path('student/student-education-api/', StudentEducationApi.as_view()),
 
 ]

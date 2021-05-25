@@ -1,9 +1,10 @@
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, District, City, JobType, University, Faculty
+from career.models import Language, District, City, JobType, University, Faculty, EducationType
 from career.models.Location import Location
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
@@ -137,6 +138,24 @@ class DepartmentSelectApi(APIView):
             select_object = SelectObject()
             select_object.value = department.id
             select_object.label = department.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class EducationTypeSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = EducationType.objects.filter(~Q(name='Lise'))
+
+        select_arr = []
+        for education_type in data:
+            select_object = SelectObject()
+            select_object.value = education_type.id
+            select_object.label = education_type.name
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
