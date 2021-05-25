@@ -16,7 +16,6 @@ from career.Views.JobPostViews import JobPostApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi
-from career.models import EducationType
 
 app_name = 'career'
 

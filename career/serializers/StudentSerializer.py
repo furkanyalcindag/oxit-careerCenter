@@ -67,16 +67,16 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
     university = SelectSerializer(read_only=True)
     faculty = SelectSerializer(read_only=True)
     department = SelectSerializer(read_only=True)
-    universityId = serializers.CharField(write_only=True)
+    universityId = serializers.CharField(write_only=True, required=True)
     educationType = SelectSerializer(read_only=True)
-    departmentId = serializers.CharField(write_only=True)
-    facultyId = serializers.CharField(write_only=True)
-    educationTypeId = serializers.CharField(write_only=True)
-    isGraduated = serializers.BooleanField()
-    gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=False)
-    isQuaternarySystem = serializers.BooleanField()
+    departmentId = serializers.CharField(write_only=True, required=True)
+    facultyId = serializers.CharField(write_only=True, required=True)
+    educationTypeId = serializers.CharField(write_only=True, required=True)
+    isGraduated = serializers.BooleanField(required=True)
+    gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
+    isQuaternarySystem = serializers.BooleanField(required=True)
     startDate = serializers.DateField(required=True)
-    graduationDate = serializers.DateField()
+    graduationDate = serializers.DateField(required=True)
 
     def update(self, instance, validated_data):
         pass
@@ -109,8 +109,10 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
             student_education_info.graduationDate = validated_data.get('graduationDate')
             student_education_info.gpa = validated_data.get('gpa')
             student_education_info.isQuaternarySystem = validated_data.get('isQuaternarySystem')
-            student_education_info.save()
+            student.isGraduated = validated_data.get('isGraduated')
             student_education_info.student = student
+            student_education_info.save()
+
             return student_education_info
 
         except:
