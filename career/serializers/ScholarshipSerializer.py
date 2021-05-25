@@ -1,4 +1,3 @@
-import trace
 import traceback
 
 from rest_framework import serializers
@@ -52,3 +51,38 @@ class ScholarshipPageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
+
+
+class CompanyScholarshipSerializer(serializers.Serializer):
+    name = serializers.CharField(required=True)
+    uuid = serializers.UUIDField(read_only=True)
+    description = serializers.CharField(required=True)
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
+    company = SelectSerializer(read_only=True)
+
+    def update(self, instance, validated_data):
+        try:
+            instance.name = validated_data.get('name')
+            instance.description = validated_data.get('description')
+            instance.amount = validated_data.get('amount')
+            instance.isApprove = False
+            instance.save()
+            return instance
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def create(self, validated_data):
+        try:
+
+            user = self.context['request'].user
+            scholarship = Scholarship()
+            scholarship.name = validated_data.get('name')
+            scholarship.description = validated_data.get('description')
+            scholarship.company = Company.objects.get(profile__user=user)
+            scholarship.amount = validated_data.get('amount')
+            scholarship.save()
+            return scholarship
+        except Exception:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")

@@ -36,7 +36,6 @@ class StudentSerializer(serializers.Serializer):
                 # user.set_password(validated_data.get('password'))
                 user.set_password('oxit2016')
                 user.save()
-
                 group = Group.objects.get(name='Student')
                 user.groups.add(group)
                 user.save()
@@ -47,7 +46,6 @@ class StudentSerializer(serializers.Serializer):
                 student.isGraduated = False
                 student.save()
                 return student
-
         except Exception as e:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
