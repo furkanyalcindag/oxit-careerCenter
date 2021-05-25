@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 
 from career.Views.AppointmentViews import AppointmentApi
 from career.Views.BlogViews import BlogApi
@@ -33,7 +34,7 @@ urlpatterns = [
     url(r'student-api/$', StudentApi.as_view()),
 
     # company
-    url(r'company-api/$', CompanyApi.as_view()),
+    path(r'company-api/$', CompanyApi.as_view()),
 
     # consultant
     url(r'consultant-api/$', ConsultantApi.as_view()),
@@ -61,7 +62,7 @@ urlpatterns = [
     url(r'company/company-communication-information-api/$', CompanyCommunicationInformationApi.as_view()),
     url(r'company/company-job-post-api/$', JobPostApi.as_view()),
     url(r'company/job-applicant-api/$', JopApplicantsApi.as_view()),
-    url(r'company/scholarship-company-api/$', CompanyScholarshipApi.as_view()),
+    path('company/scholarship-company-api/', CompanyScholarshipApi.as_view()),
 
     # -----------------------------consultant api----------------------------------------
     url(r'consultant/appointment-api/$', AppointmentApi.as_view()),
