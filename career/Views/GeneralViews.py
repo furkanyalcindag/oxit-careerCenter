@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, District, City, JobType
+from career.models import Language, District, City, JobType, University, Faculty
 from career.models.Location import Location
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
@@ -88,3 +88,57 @@ class CityDistrictSelectApi(APIView):
         except Exception as e:
 
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class UniversitySelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = University.objects.all()
+
+        select_arr = []
+        for university in data:
+            select_object = SelectObject()
+            select_object.value = university.id
+            select_object.label = university.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class FacultySelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = Faculty.objects.all()
+
+        select_arr = []
+        for faculty in data:
+            select_object = SelectObject()
+            select_object.value = faculty.id
+            select_object.label = faculty.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class DepartmentSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = Faculty.objects.all()
+
+        select_arr = []
+        for department in data:
+            select_object = SelectObject()
+            select_object.value = department.id
+            select_object.label = department.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

@@ -6,7 +6,8 @@ from career.Views.BlogViews import BlogApi
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
-from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi
+from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
+    UniversitySelectApi, FacultySelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
@@ -28,13 +29,16 @@ urlpatterns = [
     url(r'city-district-select-api/$', CityDistrictSelectApi.as_view()),
     url(r'job-type-select-api/$', JobTypeSelectApi.as_view()),
     url(r'company-select-api/$', CompanySelectApi.as_view()),
+    url(r'university-select-api/$', UniversitySelectApi.as_view()),
+    url(r'faculty-select-api/$', FacultySelectApi.as_view()),
+    url(r'department-select-api/$', FacultySelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
     url(r'student-api/$', StudentApi.as_view()),
 
     # company
-    path(r'company-api/$', CompanyApi.as_view()),
+    path('company-api/', CompanyApi.as_view()),
 
     # consultant
     url(r'consultant-api/$', ConsultantApi.as_view()),
