@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, District, City, JobType, University, Faculty, EducationType
+from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department
 from career.models.Location import Location
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
@@ -131,7 +131,7 @@ class DepartmentSelectApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Faculty.objects.all()
+        data = Department.objects.all()
 
         select_arr = []
         for department in data:

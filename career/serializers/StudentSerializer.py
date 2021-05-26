@@ -145,3 +145,54 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentHighSchoolEducationInformationSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    educationType = SelectSerializer(read_only=True)
+    isGraduated = serializers.BooleanField(required=True)
+    gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
+    isQuaternarySystem = serializers.BooleanField(required=True)
+    startDate = serializers.DateField(required=True)
+    graduationDate = serializers.DateField(required=True)
+    highSchool = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        try:
+            student_education_info = StudentEducationInfo()
+
+            user = self.context['request'].user
+
+            student = Student.objects.get(profile__user=user)
+
+            student_education_info.highSchool = validated_data.get('highSchool')
+            student_education_info.educationType = EducationType.objects.get(name='Lise')
+            student_education_info.startDate = validated_data.get('startDate')
+            student_education_info.graduationDate = validated_data.get('graduationDate')
+            student_education_info.gpa = validated_data.get('gpa')
+            student_education_info.isQuaternarySystem = validated_data.get('isQuaternarySystem')
+            student_education_info.isGraduated = validated_data.get('isGraduated')
+            student_education_info.student = student
+            student_education_info.save()
+
+            return student_education_info
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def update(self, instance, validated_data):
+        try:
+
+            instance.highSchool = validated_data.get('highSchool')
+            instance.startDate = validated_data.get('startDate')
+            instance.graduationDate = validated_data.get('graduationDate')
+            instance.gpa = validated_data.get('gpa')
+            instance.isQuaternarySystem = validated_data.get('isQuaternarySystem')
+            instance.isGraduated = validated_data.get('isGraduated')
+            instance.save()
+            return instance
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")

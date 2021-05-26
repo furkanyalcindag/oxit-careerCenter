@@ -77,5 +77,6 @@ urlpatterns = [
 
     # ------------------------------student api-----------------------------
     path('student/student-education-api/', StudentEducationApi.as_view()),
+    path('student/student-high-school-education-api/', StudentEducationApi.as_view()),
 
 ]
