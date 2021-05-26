@@ -9,13 +9,13 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
-    EducationTypeDataApi
+    EducationTypeDataApi, MaritalStatusDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
-from career.Views.StudentViews import StudentApi, StudentEducationApi
+from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi
 
 app_name = 'career'
 
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'initial-city-data-api/$', CityDistrictDataApi.as_view()),
     url(r'initial-uni-data-api/$', UniversityDataApi.as_view()),
     url(r'initial-education-type-api/$', EducationTypeDataApi.as_view()),
+    url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
 
     # general
     url(r'location-select-api/$', LocationSelectApi.as_view()),
@@ -77,6 +78,6 @@ urlpatterns = [
 
     # ------------------------------student api-----------------------------
     path('student/student-education-api/', StudentEducationApi.as_view()),
-    path('student/student-high-school-education-api/', StudentEducationApi.as_view()),
+    path('student/student-high-school-education-api/', StudentHighSchoolEducationApi.as_view()),
 
 ]

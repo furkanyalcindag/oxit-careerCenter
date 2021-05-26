@@ -196,3 +196,7 @@ class StudentHighSchoolEducationInformationSerializer(serializers.Serializer):
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+
+
