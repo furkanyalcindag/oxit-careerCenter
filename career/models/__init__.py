@@ -25,6 +25,7 @@ from .Language import Language
 from .Lecture import Lecture
 from .LectureDescription import LectureDescription
 from .MaritalStatus import MaritalStatus
+from .MaritalStatusDescription import MaritalStatusDescription
 from .Nationality import Nationality
 from .Profile import Profile
 from .ProfileSocialMedia import ProfileSocialMedia

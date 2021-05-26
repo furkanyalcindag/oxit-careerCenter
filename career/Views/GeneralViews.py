@@ -191,6 +191,6 @@ class DeleteLog(APIView):
 
     def delete(self, request, format=None):
         APILogsModel.objects.all().delete()
-        StudentEducationInfo.objects.all().delete()
+        MaritalStatus.objects.all().clear()
 
         return Response("", status.HTTP_200_OK)
