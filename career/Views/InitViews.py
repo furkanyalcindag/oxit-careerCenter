@@ -318,3 +318,43 @@ class MaritalStatusDataApi(APIView):
         marital_status_description4.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+
+
+class MilitaryStatusDataApi(APIView):
+
+    def get(self, request, format=None):
+        marital_status = MaritalStatus()
+        marital_status.keyword = 'single'
+        marital_status.save()
+
+        marital_status_description = MaritalStatusDescription()
+        marital_status_description.language = Language.objects.get(code='en')
+        marital_status_description.maritalStatus = marital_status
+        marital_status_description.name = 'Single'
+        marital_status_description.save()
+
+        marital_status_description2 = MaritalStatusDescription()
+        marital_status_description2.language = Language.objects.get(code='tr')
+        marital_status_description2.maritalStatus = marital_status
+        marital_status_description2.name = 'Bekar'
+        marital_status_description2.save()
+
+        marital_status2 = MaritalStatus()
+        marital_status2.keyword = 'married'
+        marital_status2.save()
+
+        marital_status_description3 = MaritalStatusDescription()
+        marital_status_description3.language = Language.objects.get(code='en')
+        marital_status_description3.maritalStatus = marital_status2
+        marital_status_description3.name = 'Married'
+        marital_status_description3.save()
+
+        marital_status_description4 = MaritalStatusDescription()
+        marital_status_description4.language = Language.objects.get(code='tr')
+        marital_status_description4.maritalStatus = marital_status2
+        marital_status_description4.name = 'Evli'
+        marital_status_description4.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)

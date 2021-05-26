@@ -178,7 +178,7 @@ class MaritalStatusSelectApi(APIView):
             select_object = SelectObject()
             marital_status_description = MaritalStatusDescription.objects.get(maritalStatus=marital_status,
                                                                               language=lang)
-            select_object.value = marital_status
+            select_object.value = marital_status.uuid
             select_object.label = marital_status_description.name
             select_arr.append(select_object)
 
