@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, StudentEducationInfo
 from career.models.Location import Location
+from career.models.MaritalStatusDescription import MaritalStatusDescription
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
 
@@ -172,12 +173,13 @@ class MaritalStatusSelectApi(APIView):
         lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
         lang = Language.objects.get(code=lang_code)
         data = MaritalStatus.objects.filter()
-
         select_arr = []
-        for education_type in data:
+        for marital_status in data:
             select_object = SelectObject()
-            select_object.value = education_type.id
-            select_object.label = education_type.name
+            marital_status_description = MaritalStatusDescription.objects.get(maritalStatus=marital_status,
+                                                                              language=lang)
+            select_object.value = marital_status
+            select_object.label = marital_status_description.name
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
@@ -188,12 +190,7 @@ class MaritalStatusSelectApi(APIView):
 class DeleteLog(APIView):
 
     def delete(self, request, format=None):
-
         APILogsModel.objects.all().delete()
         StudentEducationInfo.objects.all().delete()
 
         return Response("", status.HTTP_200_OK)
-
-
-
-
