@@ -1,4 +1,5 @@
 from django.db.models import Q
+from drf_api_logger.models import APILogsModel
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -182,3 +183,16 @@ class MaritalStatusSelectApi(APIView):
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
 
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+class DeleteLog(APIView):
+
+    def delete(self, request, format=None):
+
+        APILogsModel.objects.all().delete()
+
+        return Response("", status.HTTP_200_OK)
+
+
+
+

@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'initial-uni-data-api/$', UniversityDataApi.as_view()),
     url(r'initial-education-type-api/$', EducationTypeDataApi.as_view()),
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
+    url(r'delete-logs-api/$', MaritalStatusDataApi.as_view()),
 
     # general
     url(r'location-select-api/$', LocationSelectApi.as_view()),
