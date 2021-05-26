@@ -78,9 +78,6 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
     startDate = serializers.DateField(required=True)
     graduationDate = serializers.DateField(required=True)
 
-    def update(self, instance, validated_data):
-        pass
-
     def create(self, validated_data):
         try:
             student_education_info = StudentEducationInfo()
@@ -109,11 +106,41 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
             student_education_info.graduationDate = validated_data.get('graduationDate')
             student_education_info.gpa = validated_data.get('gpa')
             student_education_info.isQuaternarySystem = validated_data.get('isQuaternarySystem')
-            student.isGraduated = validated_data.get('isGraduated')
+            student_education_info.isGraduated = validated_data.get('isGraduated')
             student_education_info.student = student
             student_education_info.save()
 
             return student_education_info
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def update(self, instance, validated_data):
+        try:
+            if is_integer(validated_data.get('universityId')):
+                instance.university = University.objects.get(id=int(validated_data.get('universityId')))
+            else:
+                instance.otherUniversityName = validated_data.get('universityId')
+
+            if is_integer(validated_data.get('facultyId')):
+                instance.faculty = Faculty.objects.get(id=int(validated_data.get('facultyId')))
+            else:
+                instance.otherFacultyName = validated_data.get('facultyId')
+
+            if is_integer(validated_data.get('departmentId')):
+                instance.department = Department.objects.get(id=int(validated_data.get('departmentId')))
+            else:
+                instance.otherDepartmentName = validated_data.get('departmentId')
+
+            instance.educationType = EducationType.objects.get(id=validated_data.get('educationTypeId'))
+            instance.startDate = validated_data.get('startDate')
+            instance.graduationDate = validated_data.get('graduationDate')
+            instance.gpa = validated_data.get('gpa')
+            instance.isQuaternarySystem = validated_data.get('isQuaternarySystem')
+            instance.isGraduated = validated_data.get('isGraduated')
+            instance.save()
+            return instance
 
         except:
             traceback.print_exc()

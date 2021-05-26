@@ -100,7 +100,7 @@ class StudentEducationApi(APIView):
 
         if request.GET.get('id') is not None:
             education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
-                                                              student__profile__user=request.user)
+                                                              student__profile__user=request.user, isDeleted=False)
             api_data = dict()
             api_data['isGraduated'] = education_info.isGraduated
             api_data['gpa'] = education_info.gpa
@@ -133,7 +133,7 @@ class StudentEducationApi(APIView):
             serializer = StudentUniversityEducationInformationSerializer(api_data, context={"request": request})
             return Response(serializer.data, status.HTTP_200_OK)
         else:
-            education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user)
+            education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user, isDeleted=False)
             arr = []
             for education_info in education_infos:
                 api_data = dict()
@@ -182,3 +182,30 @@ class StudentEducationApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = StudentEducationInfo.objects.get(uuid=request.GET.get('id'), student__profile__user=request.user)
+            serializer = StudentUniversityEducationInformationSerializer(data=request.data, instance=instance,
+                                                                         context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "education info is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        try:
+            student_education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
+                                                                      student__profile__user=request.user)
+            student_education_info.isDeleted = True
+            student_education_info.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)

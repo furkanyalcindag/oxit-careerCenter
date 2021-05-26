@@ -100,7 +100,6 @@ class ScholarshipApi(APIView):
     def put(self, request, format=None):
 
         try:
-
             instance = Scholarship.objects.get(uuid=request.GET.get('id'))
             serializer = ScholarshipSerializer(data=request.data, instance=instance,
                                                context={'request': request})
