@@ -4,7 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department
+from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
+    MaritalStatus
 from career.models.Location import Location
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
@@ -150,6 +151,26 @@ class EducationTypeSelectApi(APIView):
 
     def get(self, request, format=None):
         data = EducationType.objects.filter(~Q(name='Lise'))
+
+        select_arr = []
+        for education_type in data:
+            select_object = SelectObject()
+            select_object.value = education_type.id
+            select_object.label = education_type.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class MaritalStatusSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        lang = Language.objects.get(code=lang_code)
+        data = MaritalStatus.objects.filter()
 
         select_arr = []
         for education_type in data:

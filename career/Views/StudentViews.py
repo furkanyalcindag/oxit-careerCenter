@@ -97,45 +97,10 @@ class StudentEducationApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-
-        if request.GET.get('id') is not None:
-            education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
-                                                              student__profile__user=request.user, isDeleted=False)
-            api_data = dict()
-            api_data['isGraduated'] = education_info.isGraduated
-            api_data['gpa'] = education_info.gpa
-            api_data['startDate'] = education_info.startDate
-            api_data['graduationDate'] = education_info.graduationDate
-            api_data['uuid'] = education_info.uuid
-
-            select_university = dict()
-            select_university['label'] = education_info.university.name
-            select_university['value'] = education_info.university.id
-
-            select_faculty = dict()
-            select_faculty['label'] = education_info.faculty.name
-            select_faculty['value'] = education_info.faculty.id
-
-            select_department = dict()
-            select_department['label'] = education_info.department.name
-            select_department['value'] = education_info.department.id
-
-            select_education_type = dict()
-            select_education_type['label'] = education_info.educationType.name
-            select_education_type['value'] = education_info.educationType.id
-
-            api_data['university'] = select_university
-            api_data['faculty'] = select_faculty
-            api_data['department'] = select_department
-            api_data['educationType'] = select_education_type
-            api_data['isQuaternarySystem'] = education_info.isQuaternarySystem
-
-            serializer = StudentUniversityEducationInformationSerializer(api_data, context={"request": request})
-            return Response(serializer.data, status.HTTP_200_OK)
-        else:
-            education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user, isDeleted=False)
-            arr = []
-            for education_info in education_infos:
+        try:
+            if request.GET.get('id') is not None:
+                education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
+                                                                  student__profile__user=request.user, isDeleted=False)
                 api_data = dict()
                 api_data['isGraduated'] = education_info.isGraduated
                 api_data['gpa'] = education_info.gpa
@@ -164,10 +129,50 @@ class StudentEducationApi(APIView):
                 api_data['department'] = select_department
                 api_data['educationType'] = select_education_type
                 api_data['isQuaternarySystem'] = education_info.isQuaternarySystem
-                arr.append(api_data)
 
-            serializer = StudentUniversityEducationInformationSerializer(arr, many=True, context={"request": request})
-            return Response(serializer.data, status.HTTP_200_OK)
+                serializer = StudentUniversityEducationInformationSerializer(api_data, context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+            else:
+                education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user,
+                                                                      isDeleted=False)
+                arr = []
+                for education_info in education_infos:
+                    api_data = dict()
+                    api_data['isGraduated'] = education_info.isGraduated
+                    api_data['gpa'] = education_info.gpa
+                    api_data['startDate'] = education_info.startDate
+                    api_data['graduationDate'] = education_info.graduationDate
+                    api_data['uuid'] = education_info.uuid
+
+                    select_university = dict()
+                    select_university['label'] = education_info.university.name
+                    select_university['value'] = education_info.university.id
+
+                    select_faculty = dict()
+                    select_faculty['label'] = education_info.faculty.name
+                    select_faculty['value'] = education_info.faculty.id
+
+                    select_department = dict()
+                    select_department['label'] = education_info.department.name
+                    select_department['value'] = education_info.department.id
+
+                    select_education_type = dict()
+                    select_education_type['label'] = education_info.educationType.name
+                    select_education_type['value'] = education_info.educationType.id
+
+                    api_data['university'] = select_university
+                    api_data['faculty'] = select_faculty
+                    api_data['department'] = select_department
+                    api_data['educationType'] = select_education_type
+                    api_data['isQuaternarySystem'] = education_info.isQuaternarySystem
+                    arr.append(api_data)
+
+                serializer = StudentUniversityEducationInformationSerializer(arr, many=True,
+                                                                             context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request, format=None):
         serializer = StudentUniversityEducationInformationSerializer(data=request.data, context={'request': request})
