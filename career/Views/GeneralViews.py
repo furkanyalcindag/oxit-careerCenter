@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
-    MaritalStatus
+    MaritalStatus, StudentEducationInfo
 from career.models.Location import Location
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
@@ -190,6 +190,7 @@ class DeleteLog(APIView):
     def delete(self, request, format=None):
 
         APILogsModel.objects.all().delete()
+        StudentEducationInfo.objects.all().delete()
 
         return Response("", status.HTTP_200_OK)
 
