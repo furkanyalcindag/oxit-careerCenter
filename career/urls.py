@@ -7,9 +7,10 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
     CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
-    UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi
+    UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
+    MilitaryStatusSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
-    EducationTypeDataApi, MaritalStatusDataApi
+    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
@@ -20,13 +21,13 @@ from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHi
 app_name = 'career'
 
 urlpatterns = [
-
     url(r'initial-data-api/$', InitDataApi.as_view()),
     url(r'initial-location-data-api/$', LocationDataApi.as_view()),
     url(r'initial-city-data-api/$', CityDistrictDataApi.as_view()),
     url(r'initial-uni-data-api/$', UniversityDataApi.as_view()),
     url(r'initial-education-type-api/$', EducationTypeDataApi.as_view()),
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
+    url(r'initial-military-status-api/$', MilitaryStatusDataApi.as_view()),
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
     # general
@@ -39,6 +40,7 @@ urlpatterns = [
     url(r'department-select-api/$', FacultySelectApi.as_view()),
     url(r'education-type-select-api/$', EducationTypeSelectApi.as_view()),
     url(r'marital-status-select-api/$', MaritalStatusSelectApi.as_view()),
+    url(r'military-status-select-api/$', MilitaryStatusSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student

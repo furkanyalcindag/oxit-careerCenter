@@ -6,11 +6,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
-    EducationType, MaritalStatus
+    EducationType, MaritalStatus, MilitaryStatusDescription
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
 from career.models.MaritalStatusDescription import MaritalStatusDescription
+from career.models.MilitaryStatus import MilitaryStatus
 
 
 class InitDataApi(APIView):
@@ -320,41 +321,55 @@ class MaritalStatusDataApi(APIView):
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
 
 
-
-
 class MilitaryStatusDataApi(APIView):
 
     def get(self, request, format=None):
-        marital_status = MaritalStatus()
-        marital_status.keyword = 'single'
-        marital_status.save()
+        military_status = MilitaryStatus()
+        military_status.keyword = 'delayed'
+        military_status.save()
 
-        marital_status_description = MaritalStatusDescription()
-        marital_status_description.language = Language.objects.get(code='en')
-        marital_status_description.maritalStatus = marital_status
-        marital_status_description.name = 'Single'
-        marital_status_description.save()
+        military_status_description = MilitaryStatusDescription()
+        military_status_description.language = Language.objects.get(code='en')
+        military_status_description.militaryStatus = military_status
+        military_status_description.name = 'Delayed'
+        military_status_description.save()
 
-        marital_status_description2 = MaritalStatusDescription()
-        marital_status_description2.language = Language.objects.get(code='tr')
-        marital_status_description2.maritalStatus = marital_status
-        marital_status_description2.name = 'Bekar'
-        marital_status_description2.save()
+        military_status_description = MilitaryStatusDescription()
+        military_status_description.language = Language.objects.get(code='tr')
+        military_status_description.militaryStatus = military_status
+        military_status_description.name = 'Tecilli'
+        military_status_description.save()
 
-        marital_status2 = MaritalStatus()
-        marital_status2.keyword = 'married'
-        marital_status2.save()
+        military_status2 = MaritalStatus()
+        military_status2.keyword = 'done'
+        military_status2.save()
 
-        marital_status_description3 = MaritalStatusDescription()
-        marital_status_description3.language = Language.objects.get(code='en')
-        marital_status_description3.maritalStatus = marital_status2
-        marital_status_description3.name = 'Married'
-        marital_status_description3.save()
+        military_status_description3 = MilitaryStatusDescription()
+        military_status_description3.language = Language.objects.get(code='en')
+        military_status_description3.maritalStatus = military_status2
+        military_status_description3.name = 'Done'
+        military_status_description3.save()
 
-        marital_status_description4 = MaritalStatusDescription()
-        marital_status_description4.language = Language.objects.get(code='tr')
-        marital_status_description4.maritalStatus = marital_status2
-        marital_status_description4.name = 'Evli'
-        marital_status_description4.save()
+        military_status_description4 = MilitaryStatusDescription()
+        military_status_description4.language = Language.objects.get(code='tr')
+        military_status_description4.maritalStatus = military_status2
+        military_status_description4.name = 'Yapıldı'
+        military_status_description4.save()
+
+        military_status3 = MaritalStatus()
+        military_status3.keyword = 'exempt'
+        military_status3.save()
+
+        military_status_description5 = MilitaryStatusDescription()
+        military_status_description5.language = Language.objects.get(code='en')
+        military_status_description5.maritalStatus = military_status3
+        military_status_description5.name = 'Exempt'
+        military_status_description5.save()
+
+        military_status_description6 = MilitaryStatusDescription()
+        military_status_description6.language = Language.objects.get(code='tr')
+        military_status_description6.maritalStatus = military_status3
+        military_status_description6.name = 'Muaf'
+        military_status_description6.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)

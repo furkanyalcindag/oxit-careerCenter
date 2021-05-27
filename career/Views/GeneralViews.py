@@ -6,9 +6,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
-    MaritalStatus, StudentEducationInfo
+    MaritalStatus, StudentEducationInfo, MilitaryStatusDescription
 from career.models.Location import Location
 from career.models.MaritalStatusDescription import MaritalStatusDescription
+from career.models.MilitaryStatus import MilitaryStatus
 from career.models.SelectObject import SelectObject
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
 
@@ -180,6 +181,27 @@ class MaritalStatusSelectApi(APIView):
                                                                               language=lang)
             select_object.value = marital_status.uuid
             select_object.label = marital_status_description.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class MilitaryStatusSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        lang = Language.objects.get(code=lang_code)
+        data = MilitaryStatus.objects.filter()
+        select_arr = []
+        for military_status in data:
+            select_object = SelectObject()
+            military_status_description = MilitaryStatusDescription.objects.get(maritalStatus=marital_status,
+                                                                                language=lang)
+            select_object.value = military_status.uuid
+            select_object.label = military_status_description.name
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
