@@ -352,6 +352,16 @@ class StudentGeneralInformationApi(APIView):
             api_data['lastName'] = student.profile.user.last_name
             api_data['birthDate'] = student.profile.birthDate
             api_data['email'] = student.profile.user.email
+            api_data['studentNumber'] = student.studentNumber
+
+            nationality_data = dict()
+            if student.profile.nationality is not None:
+                nationality_data['label'] = student.profile.nationality.name
+                nationality_data['value'] = student.profile.nationality.id
+            else:
+                nationality_data = None
+
+            api_data['nationality'] = nationality_data
 
             gender_data = dict()
             if student.profile.gender is not None:

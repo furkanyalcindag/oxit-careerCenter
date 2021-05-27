@@ -5,7 +5,8 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType
+from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
+    MaritalStatus, Gender, Nationality
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
 
@@ -206,13 +207,28 @@ class StudentGeneralInformationSerializer(serializers.Serializer):
     gender = SelectSerializer(read_only=True)
     maritalStatusId = serializers.UUIDField(write_only=True)
     maritalStatus = SelectSerializer(read_only=True)
+    nationality = SelectSerializer(read_only=True)
+    nationalityId = serializers.CharField(write_only=True)
     studentNumber = serializers.CharField(read_only=True)
     email = serializers.CharField(read_only=True)
 
     def update(self, instance, validated_data):
+        try:
+            profile = instance.profile
+            user = profile.user
+            user.first_name = validated_data.get('firstName')
+            user.last_name = validated_data.get('lastName')
 
-        profile = instance.profile
-
+            profile.birthDate = validated_data.get('birthDate')
+            profile.maritalStatus = MaritalStatus.objects.get(uuid=validated_data.get('maritalStatusId'))
+            profile.gender = Gender.objects.get(uuid=validated_data.get('genderId'))
+            profile.nationality = Nationality.objects.get(id=int(validated_data.get('nationalityId')))
+            user.save()
+            profile.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
     def create(self, validated_data):
         pass
