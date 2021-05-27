@@ -334,41 +334,41 @@ class MilitaryStatusDataApi(APIView):
         military_status_description.name = 'Delayed'
         military_status_description.save()
 
-        military_status_description = MilitaryStatusDescription()
-        military_status_description.language = Language.objects.get(code='tr')
-        military_status_description.militaryStatus = military_status
-        military_status_description.name = 'Tecilli'
-        military_status_description.save()
+        military_status_description2 = MilitaryStatusDescription()
+        military_status_description2.language = Language.objects.get(code='tr')
+        military_status_description2.militaryStatus = military_status
+        military_status_description2.name = 'Tecilli'
+        military_status_description2.save()
 
-        military_status2 = MaritalStatus()
+        military_status2 = MilitaryStatus()
         military_status2.keyword = 'done'
         military_status2.save()
 
         military_status_description3 = MilitaryStatusDescription()
         military_status_description3.language = Language.objects.get(code='en')
-        military_status_description3.maritalStatus = military_status2
+        military_status_description3.militaryStatus = military_status2
         military_status_description3.name = 'Done'
         military_status_description3.save()
 
         military_status_description4 = MilitaryStatusDescription()
         military_status_description4.language = Language.objects.get(code='tr')
-        military_status_description4.maritalStatus = military_status2
+        military_status_description4.militaryStatus = military_status2
         military_status_description4.name = 'Yapıldı'
         military_status_description4.save()
 
-        military_status3 = MaritalStatus()
+        military_status3 = MilitaryStatus()
         military_status3.keyword = 'exempt'
         military_status3.save()
 
         military_status_description5 = MilitaryStatusDescription()
         military_status_description5.language = Language.objects.get(code='en')
-        military_status_description5.maritalStatus = military_status3
+        military_status_description5.militaryStatus = military_status3
         military_status_description5.name = 'Exempt'
         military_status_description5.save()
 
         military_status_description6 = MilitaryStatusDescription()
         military_status_description6.language = Language.objects.get(code='tr')
-        military_status_description6.maritalStatus = military_status3
+        military_status_description6.militaryStatus = military_status3
         military_status_description6.name = 'Muaf'
         military_status_description6.save()
 
