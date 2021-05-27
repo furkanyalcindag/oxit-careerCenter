@@ -8,7 +8,7 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
-    MilitaryStatusSelectApi, NationalitySelectApi
+    MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'marital-status-select-api/$', MaritalStatusSelectApi.as_view()),
     url(r'military-status-select-api/$', MilitaryStatusSelectApi.as_view()),
     url(r'nationality-status-select-api/$', NationalitySelectApi.as_view()),
+    url(r'gender-select-api/$', GenderSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student

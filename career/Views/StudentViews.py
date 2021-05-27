@@ -326,7 +326,7 @@ class StudentProfileImageApi(APIView):
 
     def put(self, request, format=None):
         try:
-            instance = Student.objects.get(student__profile__user=request.user)
+            instance = Student.objects.get(profile__user=request.user)
             serializer = StudentProfileImageSerializer(data=request.data, instance=instance,
                                                        context={'request': request})
             if serializer.is_valid():
