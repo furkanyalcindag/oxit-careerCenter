@@ -198,10 +198,24 @@ class StudentHighSchoolEducationInformationSerializer(serializers.Serializer):
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
 
-class StudentGeneralInformation(serializers.Serializer):
+class StudentGeneralInformationSerializer(serializers.Serializer):
     firstName = serializers.CharField()
     lastName = serializers.CharField()
     birthDate = serializers.DateField()
+    genderId = serializers.UUIDField(write_only=True)
+    gender = SelectSerializer(read_only=True)
+    maritalStatusId = serializers.UUIDField(write_only=True)
+    maritalStatus = SelectSerializer(read_only=True)
+    studentNumber = serializers.CharField(read_only=True)
+    email = serializers.CharField(read_only=True)
+
+    def update(self, instance, validated_data):
+
+        profile = instance.profile
+
+
+    def create(self, validated_data):
+        pass
 
 
 class StudentProfileImageSerializer(serializers.Serializer):

@@ -5,11 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, StudentEducationInfo
+from career.models import Student, StudentEducationInfo, MaritalStatusDescription
 from career.models.APIObject import APIObject
+from career.models.GenderDescription import GenderDescription
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
-    StudentProfileImageSerializer
+    StudentProfileImageSerializer, StudentGeneralInformationSerializer
 
 
 class StudentApi(APIView):
@@ -337,3 +338,60 @@ class StudentProfileImageApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class StudentGeneralInformationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            student = Student.objects.get(profile__user=request.user)
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+            api_data = dict()
+            api_data['firstName'] = student.profile.user.first_name
+            api_data['lastName'] = student.profile.user.last_name
+            api_data['birthDate'] = student.profile.birthDate
+            api_data['email'] = student.profile.user.email
+
+            gender_data = dict()
+            if student.profile.gender is not None:
+                gender_data['label'] = GenderDescription.objects.get(gender=student.profile.gender,
+                                                                     language__code=lang_code)
+                gender_data['value'] = student.profile.gender.uuid
+            else:
+                gender_data = None
+
+            api_data['gender'] = gender_data
+
+            marital_data = dict()
+            if student.profile.maritalStatus is not None:
+                marital_data['label'] = MaritalStatusDescription.objects.get(
+                    maritalStatus=student.profile.maritalStatus,
+                    language__code=lang_code)
+                marital_data['value'] = student.profile.maritalStatus.uuid
+            else:
+                marital_data = None
+
+            api_data['maritalStatus'] = marital_data
+
+            serializer = StudentGeneralInformationSerializer(api_data, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            traceback.print_exc()
+            return Response(str(e), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, format=None):
+        try:
+            instance = Student.objects.get(profile__user=request.user)
+            serializer = StudentGeneralInformationSerializer(data=request.data, instance=instance,
+                                                             context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "student information is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response('error', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
