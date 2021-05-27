@@ -209,8 +209,9 @@ class StudentProfileImageSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         try:
-            instance.profile.profileImage = validated_data.get('profileImage')
-            instance.save()
+            profile = instance.profile
+            profile.profileImage = validated_data.get('profileImage')
+            profile.save()
             return instance
         except:
             traceback.print_exc()
