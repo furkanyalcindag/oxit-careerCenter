@@ -202,3 +202,19 @@ class StudentGeneralInformation(serializers.Serializer):
     firstName = serializers.CharField()
     lastName = serializers.CharField()
     birthDate = serializers.DateField()
+
+
+class StudentProfileImageSerializer(serializers.Serializer):
+    profileImage = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        try:
+            instance.profile.profileImage = validated_data.get('profileImage')
+            instance.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
+
+    def create(self, validated_data):
+        pass
