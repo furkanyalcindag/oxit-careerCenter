@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
-    MaritalStatus, StudentEducationInfo, MilitaryStatusDescription
+    MaritalStatus, StudentEducationInfo, MilitaryStatusDescription, Nationality
 from career.models.Location import Location
 from career.models.MaritalStatusDescription import MaritalStatusDescription
 from career.models.MilitaryStatus import MilitaryStatus
@@ -220,3 +220,21 @@ class DeleteLog(APIView):
         MilitaryStatus.objects.all().delete()
 
         return Response("", status.HTTP_200_OK)
+
+
+class NationalitySelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = Nationality.objects.filter()
+
+        select_arr = []
+        for nationality in data:
+            select_object = SelectObject()
+            select_object.value = nationality.id
+            select_object.label = nationality.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

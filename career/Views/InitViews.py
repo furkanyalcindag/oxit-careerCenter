@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
-    EducationType, MaritalStatus, MilitaryStatusDescription
+    EducationType, MaritalStatus, MilitaryStatusDescription, Nationality
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
@@ -371,5 +371,27 @@ class MilitaryStatusDataApi(APIView):
         military_status_description6.militaryStatus = military_status3
         military_status_description6.name = 'Muaf'
         military_status_description6.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class NationalityDataApi(APIView):
+
+    def get(self, request, format=None):
+        nationality = Nationality()
+        nationality.name = 'Türkiye'
+        nationality.save()
+
+        nationality2 = Nationality()
+        nationality2.name = 'Almanya'
+        nationality2.save()
+
+        nationality3 = Nationality()
+        nationality3.name = 'İsviçre'
+        nationality3.save()
+
+        nationality4 = Nationality()
+        nationality4.name = 'A.B.D'
+        nationality4.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)

@@ -198,5 +198,7 @@ class StudentHighSchoolEducationInformationSerializer(serializers.Serializer):
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
 
-
-
+class StudentGeneralInformation(serializers.Serializer):
+    firstName = serializers.CharField()
+    lastName = serializers.CharField()
+    birthDate = serializers.DateField()

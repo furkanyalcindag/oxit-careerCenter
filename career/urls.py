@@ -8,9 +8,9 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
-    MilitaryStatusSelectApi
+    MilitaryStatusSelectApi, NationalitySelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
-    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi
+    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'initial-education-type-api/$', EducationTypeDataApi.as_view()),
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
     url(r'initial-military-status-api/$', MilitaryStatusDataApi.as_view()),
+    url(r'initial-nationality-data-api/$', NationalityDataApi.as_view()),
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
     # general
@@ -41,6 +42,7 @@ urlpatterns = [
     url(r'education-type-select-api/$', EducationTypeSelectApi.as_view()),
     url(r'marital-status-select-api/$', MaritalStatusSelectApi.as_view()),
     url(r'military-status-select-api/$', MilitaryStatusSelectApi.as_view()),
+    url(r'nationality-status-select-api/$', NationalitySelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
