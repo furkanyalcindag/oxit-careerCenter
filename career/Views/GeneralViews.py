@@ -198,7 +198,7 @@ class MilitaryStatusSelectApi(APIView):
         select_arr = []
         for military_status in data:
             select_object = SelectObject()
-            military_status_description = MilitaryStatusDescription.objects.get(maritalStatus=marital_status,
+            military_status_description = MilitaryStatusDescription.objects.get(militaryStatus=military_status,
                                                                                 language=lang)
             select_object.value = military_status.uuid
             select_object.label = military_status_description.name
