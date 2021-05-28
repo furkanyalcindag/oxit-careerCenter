@@ -9,3 +9,6 @@ class GenderDescription(BaseModel):
     name = models.CharField(max_length=64)
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+
+

@@ -111,20 +111,35 @@ class StudentEducationApi(APIView):
                 api_data['uuid'] = education_info.uuid
 
                 select_university = dict()
-                select_university['label'] = education_info.university.name
-                select_university['value'] = education_info.university.id
+                if education_info.university is not None:
+
+                    select_university['label'] = education_info.university.name
+                    select_university['value'] = education_info.university.id
+                else:
+                    select_university = None
 
                 select_faculty = dict()
-                select_faculty['label'] = education_info.faculty.name
-                select_faculty['value'] = education_info.faculty.id
+
+                if education_info.faculty is not None:
+
+                    select_faculty['label'] = education_info.faculty.name
+                    select_faculty['value'] = education_info.faculty.id
+                else:
+                    select_faculty = None
 
                 select_department = dict()
-                select_department['label'] = education_info.department.name
-                select_department['value'] = education_info.department.id
+                if education_info.department is not None:
+                    select_department['label'] = education_info.department.name
+                    select_department['value'] = education_info.department.id
+                else:
+                    select_department = None
 
                 select_education_type = dict()
-                select_education_type['label'] = education_info.educationType.name
-                select_education_type['value'] = education_info.educationType.id
+                if education_info.educationType is not None:
+                    select_education_type['label'] = education_info.educationType.name
+                    select_education_type['value'] = education_info.educationType.id
+                else:
+                    select_education_type = None
 
                 api_data['university'] = select_university
                 api_data['faculty'] = select_faculty
@@ -147,20 +162,35 @@ class StudentEducationApi(APIView):
                     api_data['uuid'] = education_info.uuid
 
                     select_university = dict()
-                    select_university['label'] = education_info.university.name
-                    select_university['value'] = education_info.university.id
+                    if education_info.university is not None:
+
+                        select_university['label'] = education_info.university.name
+                        select_university['value'] = education_info.university.id
+                    else:
+                        select_university = None
 
                     select_faculty = dict()
-                    select_faculty['label'] = education_info.faculty.name
-                    select_faculty['value'] = education_info.faculty.id
+
+                    if education_info.faculty is not None:
+
+                        select_faculty['label'] = education_info.faculty.name
+                        select_faculty['value'] = education_info.faculty.id
+                    else:
+                        select_faculty = None
 
                     select_department = dict()
-                    select_department['label'] = education_info.department.name
-                    select_department['value'] = education_info.department.id
+                    if education_info.department is not None:
+                        select_department['label'] = education_info.department.name
+                        select_department['value'] = education_info.department.id
+                    else:
+                        select_department = None
 
                     select_education_type = dict()
-                    select_education_type['label'] = education_info.educationType.name
-                    select_education_type['value'] = education_info.educationType.id
+                    if education_info.educationType is not None:
+                        select_education_type['label'] = education_info.educationType.name
+                        select_education_type['value'] = education_info.educationType.id
+                    else:
+                        select_education_type = None
 
                     api_data['university'] = select_university
                     api_data['faculty'] = select_faculty
