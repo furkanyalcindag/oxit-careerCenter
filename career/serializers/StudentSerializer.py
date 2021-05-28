@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
-    MaritalStatus, Gender, Nationality, Certificate
+    MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType
 from career.models.MilitaryStatus import MilitaryStatus
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
@@ -328,6 +328,55 @@ class StudentCertificateSerializer(serializers.Serializer):
             instance.institutionName = validated_data.get('institutionName')
             instance.description = validated_data.get('description')
             instance.year = validated_data.get('year')
+            instance.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentJobInformationSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    company = serializers.CharField(required=True)
+    title = serializers.CharField(required=True)
+    startDate = serializers.DateField(required=True)
+    isContinue = serializers.BooleanField(required=False, allow_null=True)
+    finishDate = serializers.DateField(required=False)
+    description = serializers.CharField(required=False)
+    jobType = SelectSerializer(read_only=True)
+    jobTypeId = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        try:
+            job_information = JobInfo()
+
+            user = self.context['request'].user
+            student = Student.objects.get(profile__user=user)
+            job_information.student = student
+            job_information.company = validated_data.get('company')
+            job_information.title = validated_data.get('title')
+            job_information.startDate = validated_data.get('startDate')
+            job_information.isContinue = validated_data.get('isContinue')
+            job_information.finishDate = validated_data.get('finishDate')
+            job_information.description = validated_data.get('description')
+            job_information.jobType = JobType.objects.get(id=int(validated_data.get('jobTypeId')))
+            job_information.save()
+
+            return job_information
+
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def update(self, instance, validated_data):
+        try:
+            instance.company = validated_data.get('company')
+            instance.title = validated_data.get('title')
+            instance.startDate = validated_data.get('startDate')
+            instance.isContinue = validated_data.get('isContinue')
+            instance.finishDate = validated_data.get('finishDate')
+            instance.description = validated_data.get('description')
+            instance.jobType = JobType.objects.get(id=int(validated_data.get('jobTypeId')))
             instance.save()
             return instance
         except:

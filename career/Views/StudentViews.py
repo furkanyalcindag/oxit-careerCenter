@@ -6,13 +6,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription, \
-    Certificate
+    Certificate, JobInfo, JobType
 from career.models.APIObject import APIObject
 from career.models.GenderDescription import GenderDescription
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
-    StudentCommunicationSerializer, StudentCertificateSerializer
+    StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer
 
 
 class StudentApi(APIView):
@@ -604,6 +604,110 @@ class StudentCertificateApi(APIView):
                                            student__profile__user=request.user)
             cert.isDeleted = True
             cert.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentJobInfoApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                job_info = JobInfo.objects.get(uuid=request.GET.get('id'),
+                                               student__profile__user=request.user, isDeleted=False)
+                api_data = dict()
+                api_data['uuid'] = job_info.uuid
+                api_data['title'] = job_info.title
+                api_data['company'] = job_info.company
+                api_data['startDate'] = job_info.startDate
+                api_data['isContinue'] = job_info.isContinue
+                api_data['finishDate'] = job_info.finishDate
+                api_data['description'] = job_info.description
+
+                job_type_select = dict()
+                if job_info.jobType is not None:
+                    job_type_select['label'] = job_info.jobType.name
+                    job_type_select['value'] = job_info.jobType.id
+                else:
+                    job_type_select['label'] = ''
+                    job_type_select['value'] = ''
+
+                api_data['jobType'] = job_type_select
+
+                serializer = StudentJobInformationSerializer(api_data, context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+            else:
+                job_infos = JobInfo.objects.filter(student__profile__user=request.user,
+                                                   isDeleted=False)
+                arr = []
+                for job_info in job_infos:
+                    api_data = dict()
+                    api_data['uuid'] = job_info.uuid
+                    api_data['title'] = job_info.title
+                    api_data['company'] = job_info.company
+                    api_data['startDate'] = job_info.startDate
+                    api_data['isContinue'] = job_info.isContinue
+                    api_data['finishDate'] = job_info.finishDate
+                    api_data['description'] = job_info.description
+
+                    job_type_select = dict()
+                    if job_info.jobType is not None:
+                        job_type_select['label'] = job_info.jobType.name
+                        job_type_select['value'] = job_info.jobType.id
+                    else:
+                        job_type_select['label'] = ''
+                        job_type_select['value'] = ''
+
+                    api_data['jobType'] = job_type_select
+
+                    arr.append(api_data)
+
+                serializer = StudentJobInformationSerializer(arr, many=True,
+                                                             context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = JobInfo.objects.get(student__profile__user=request.user, uuid=request.GET.get('id'))
+            serializer = StudentJobInformationSerializer(data=request.data, instance=instance,
+                                                         context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "job info is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentJobInformationSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "job info is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            job_info = JobInfo.objects.get(uuid=request.GET.get('id'),
+                                           student__profile__user=request.user)
+            job_info.isDeleted = True
+            job_info.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:
