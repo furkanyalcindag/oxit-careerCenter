@@ -17,7 +17,7 @@ from career.Views.JobPostViews import JobPostApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
-    StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi
+    StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi
 
 app_name = 'career'
 
@@ -90,5 +90,6 @@ urlpatterns = [
     path('student/student-profile-image-api/', StudentProfileImageApi.as_view()),
     path('student/student-general-information-api/', StudentGeneralInformationApi.as_view()),
     path('student/student-military-status-api/', StudentMilitaryStatusApi.as_view()),
+    path('student/student-communication-api/', StudentCommunicationApi.as_view()),
 
 ]

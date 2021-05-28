@@ -272,3 +272,22 @@ class StudentMilitaryStatusSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class StudentCommunicationSerializer(serializers.Serializer):
+    mobilePhone = serializers.CharField(required=False, allow_null=True)
+    address = serializers.CharField(required=False, allow_null=True)
+
+    def update(self, instance, validated_data):
+        try:
+            profile = instance.profile
+            profile.mobilePhone = validated_data.get('mobilePhone')
+            profile.address = validated_data.get('address')
+            profile.save()
+            return instance
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
+
+    def create(self, validated_data):
+        pass

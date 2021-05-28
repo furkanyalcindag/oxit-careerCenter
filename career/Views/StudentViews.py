@@ -10,7 +10,8 @@ from career.models.APIObject import APIObject
 from career.models.GenderDescription import GenderDescription
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
-    StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer
+    StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
+    StudentCommunicationSerializer
 
 
 class StudentApi(APIView):
@@ -473,7 +474,42 @@ class StudentMilitaryStatusApi(APIView):
                                                          context={'request': request})
             if serializer.is_valid():
                 serializer.save()
-                return Response({"message": "profile image is updated"}, status=status.HTTP_200_OK)
+                return Response({"message": "military status image is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class StudentCommunicationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            student = Student.objects.get(profile__user=request.user)
+
+            api_data = dict()
+
+            api_data['mobilePhone'] = student.profile.mobilePhone
+            api_data['address'] = student.profile.address
+
+            serializer = StudentCommunicationSerializer(api_data, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Student.objects.get(profile__user=request.user)
+            serializer = StudentCommunicationSerializer(data=request.data, instance=instance,
+                                                        context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "communication is updated"}, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
