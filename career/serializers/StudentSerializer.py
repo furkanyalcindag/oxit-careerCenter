@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
-    MaritalStatus, Gender, Nationality
+    MaritalStatus, Gender, Nationality, Certificate
 from career.models.MilitaryStatus import MilitaryStatus
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
@@ -291,3 +291,45 @@ class StudentCommunicationSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class StudentCertificateSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(required=True)
+    institutionName = serializers.CharField(required=True)
+    certificateNo = serializers.CharField(required=False, allow_null=True)
+    description = serializers.CharField(required=False, allow_null=True)
+    year = serializers.IntegerField()
+
+    def create(self, validated_data):
+        try:
+            certificate = Certificate()
+
+            user = self.context['request'].user
+            student = Student.objects.get(profile__user=user)
+            certificate.student = student
+            certificate.certificateNo = validated_data.get('certificateNo')
+            certificate.name = validated_data.get('name')
+            certificate.institutionName = validated_data.get('institutionName')
+            certificate.description = validated_data.get('description')
+            certificate.year = validated_data.get('year')
+            certificate.save()
+
+            return certificate
+
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def update(self, instance, validated_data):
+        try:
+            instance.certificateNo = validated_data.get('certificateNo')
+            instance.name = validated_data.get('name')
+            instance.institutionName = validated_data.get('institutionName')
+            instance.description = validated_data.get('description')
+            instance.year = validated_data.get('year')
+            instance.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")

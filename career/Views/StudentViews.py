@@ -5,13 +5,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription
+from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription, \
+    Certificate
 from career.models.APIObject import APIObject
 from career.models.GenderDescription import GenderDescription
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
-    StudentCommunicationSerializer
+    StudentCommunicationSerializer, StudentCertificateSerializer
 
 
 class StudentApi(APIView):
@@ -397,7 +398,7 @@ class StudentGeneralInformationApi(APIView):
             gender_data = dict()
             if student.profile.gender is not None:
                 gender_data['label'] = GenderDescription.objects.get(gender=student.profile.gender,
-                                                                     language__code=lang_code)
+                                                                     language__code=lang_code).name
                 gender_data['value'] = student.profile.gender.uuid
             else:
                 gender_data = None
@@ -408,7 +409,7 @@ class StudentGeneralInformationApi(APIView):
             if student.profile.maritalStatus is not None:
                 marital_data['label'] = MaritalStatusDescription.objects.get(
                     maritalStatus=student.profile.maritalStatus,
-                    language__code=lang_code)
+                    language__code=lang_code).name
                 marital_data['value'] = student.profile.maritalStatus.uuid
             else:
                 marital_data = None
@@ -455,7 +456,8 @@ class StudentMilitaryStatusApi(APIView):
                     militaryStatus=student.profile.militaryStatus, language__code=lang_code).name
                 military_status_select['value'] = student.profile.militaryStatus.uuid
             else:
-                military_status_select = None
+                military_status_select['label'] = ''
+                military_status_select['value'] = ''
 
             api_data['militaryStatus'] = military_status_select
             api_data['delayedDate'] = student.profile.militaryDelayedDate
@@ -515,3 +517,84 @@ class StudentCommunicationApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class StudentCertificateApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                certificate = Certificate.objects.get(uuid=request.GET.get('id'),
+                                                      student__profile__user=request.user, isDeleted=False)
+                api_data = dict()
+                api_data['name'] = certificate.name
+                api_data['institutionName'] = certificate.institutionName
+                api_data['year'] = certificate.year
+                api_data['certificateNo'] = certificate.certificateNo
+                api_data['uuid'] = certificate.uuid
+                api_data['description'] = certificate.description
+
+                serializer = StudentCertificateSerializer(api_data, context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+            else:
+                certificates = Certificate.objects.filter(student__profile__user=request.user,
+                                                          isDeleted=False)
+                arr = []
+                for certificate in certificates:
+                    api_data = dict()
+                    api_data['name'] = certificate.name
+                    api_data['institutionName'] = certificate.institutionName
+                    api_data['year'] = certificate.year
+                    api_data['certificateNo'] = certificate.certificateNo
+                    api_data['uuid'] = certificate.uuid
+                    api_data['description'] = certificate.description
+                    arr.append(api_data)
+
+                serializer = StudentCertificateSerializer(arr, many=True,
+                                                          context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Certificate.objects.get(student__profile__user=request.user, uuid=request.GET.get('id'))
+            serializer = StudentCertificateSerializer(data=request.data, instance=instance,
+                                                      context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "communication is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentCertificateSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "student certificate is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            cert = Certificate.objects.get(uuid=request.GET.get('id'),
+                                           student__profile__user=request.user)
+            cert.isDeleted = True
+            cert.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
