@@ -451,7 +451,7 @@ class StudentMilitaryStatusApi(APIView):
             military_status_select = dict()
             if student.profile.militaryStatus is not None:
                 military_status_select['label'] = MilitaryStatusDescription.objects.get(
-                    militaryStatus=student.profile.militaryStatus, language__code=lang_code)
+                    militaryStatus=student.profile.militaryStatus, language__code=lang_code).name
                 military_status_select['value'] = student.profile.militaryStatus.uuid
             else:
                 military_status_select = None
