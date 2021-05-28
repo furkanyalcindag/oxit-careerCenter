@@ -118,7 +118,8 @@ class StudentEducationApi(APIView):
                     select_university['label'] = education_info.university.name
                     select_university['value'] = education_info.university.id
                 else:
-                    select_university = None
+                    select_university['label'] = ''
+                    select_university['value'] = ''
 
                 select_faculty = dict()
 
@@ -127,21 +128,24 @@ class StudentEducationApi(APIView):
                     select_faculty['label'] = education_info.faculty.name
                     select_faculty['value'] = education_info.faculty.id
                 else:
-                    select_faculty = None
+                    select_faculty['label'] = ''
+                    select_faculty['value'] = ''
 
                 select_department = dict()
                 if education_info.department is not None:
                     select_department['label'] = education_info.department.name
                     select_department['value'] = education_info.department.id
                 else:
-                    select_department = None
+                    select_department['label'] = ''
+                    select_department['value'] = ''
 
                 select_education_type = dict()
                 if education_info.educationType is not None:
                     select_education_type['label'] = education_info.educationType.name
                     select_education_type['value'] = education_info.educationType.id
                 else:
-                    select_education_type = None
+                    select_education_type['label'] = ''
+                    select_education_type['value'] = ''
 
                 api_data['university'] = select_university
                 api_data['faculty'] = select_faculty
@@ -169,7 +173,8 @@ class StudentEducationApi(APIView):
                         select_university['label'] = education_info.university.name
                         select_university['value'] = education_info.university.id
                     else:
-                        select_university = None
+                        select_university['label'] = ''
+                        select_university['value'] = ''
 
                     select_faculty = dict()
 
@@ -178,21 +183,24 @@ class StudentEducationApi(APIView):
                         select_faculty['label'] = education_info.faculty.name
                         select_faculty['value'] = education_info.faculty.id
                     else:
-                        select_faculty = None
+                        select_faculty['label'] = ''
+                        select_faculty['value'] = ''
 
                     select_department = dict()
                     if education_info.department is not None:
                         select_department['label'] = education_info.department.name
                         select_department['value'] = education_info.department.id
                     else:
-                        select_department = None
+                        select_department['label'] = ''
+                        select_department['value'] = ''
 
                     select_education_type = dict()
                     if education_info.educationType is not None:
                         select_education_type['label'] = education_info.educationType.name
                         select_education_type['value'] = education_info.educationType.id
                     else:
-                        select_education_type = None
+                        select_education_type['label'] = ''
+                        select_education_type['value'] = ''
 
                     api_data['university'] = select_university
                     api_data['faculty'] = select_faculty
@@ -391,7 +399,8 @@ class StudentGeneralInformationApi(APIView):
                 nationality_data['label'] = student.profile.nationality.name
                 nationality_data['value'] = student.profile.nationality.id
             else:
-                nationality_data = None
+                nationality_data['label'] = ''
+                nationality_data['value'] = ''
 
             api_data['nationality'] = nationality_data
 
@@ -401,7 +410,8 @@ class StudentGeneralInformationApi(APIView):
                                                                      language__code=lang_code).name
                 gender_data['value'] = student.profile.gender.uuid
             else:
-                gender_data = None
+                gender_data['label'] = ''
+                gender_data['value'] = ''
 
             api_data['gender'] = gender_data
 
@@ -412,7 +422,8 @@ class StudentGeneralInformationApi(APIView):
                     language__code=lang_code).name
                 marital_data['value'] = student.profile.maritalStatus.uuid
             else:
-                marital_data = None
+                marital_data['label'] = ''
+                marital_data['value'] = ''
 
             api_data['maritalStatus'] = marital_data
 
