@@ -9,10 +9,12 @@ from career.models import Student, StudentEducationInfo, MaritalStatusDescriptio
     Certificate, JobInfo, JobType
 from career.models.APIObject import APIObject
 from career.models.GenderDescription import GenderDescription
+from career.models.Reference import Reference
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
-    StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer
+    StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
+    StudentReferenceSerializer
 
 
 class StudentApi(APIView):
@@ -708,6 +710,85 @@ class StudentJobInfoApi(APIView):
                                            student__profile__user=request.user)
             job_info.isDeleted = True
             job_info.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentReferenceApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                reference = Reference.objects.get(uuid=request.GET.get('id'),
+                                                  student__profile__user=request.user, isDeleted=False)
+                api_data = dict()
+                api_data['uuid'] = reference.uuid
+                api_data['firstName'] = reference.firstName
+                api_data['lastName'] = reference.lastName
+                api_data['title'] = reference.title
+                api_data['telephoneNumber'] = reference.telephoneNumber
+
+                serializer = StudentReferenceSerializer(api_data, context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+            else:
+                references = Reference.objects.filter(student__profile__user=request.user,
+                                                      isDeleted=False)
+                arr = []
+                for reference in references:
+                    api_data = dict()
+                    api_data['uuid'] = reference.uuid
+                    api_data['firstName'] = reference.firstName
+                    api_data['lastName'] = reference.lastName
+                    api_data['title'] = reference.title
+                    api_data['telephoneNumber'] = reference.telephoneNumber
+                    arr.append(api_data)
+
+                serializer = StudentReferenceSerializer(arr, many=True,
+                                                        context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Reference.objects.get(student__profile__user=request.user, uuid=request.GET.get('id'))
+            serializer = StudentReferenceSerializer(data=request.data, instance=instance,
+                                                      context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "reference is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentReferenceSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "student reference is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            reference = Reference.objects.get(uuid=request.GET.get('id'),
+                                           student__profile__user=request.user)
+            reference.isDeleted = True
+            reference.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:

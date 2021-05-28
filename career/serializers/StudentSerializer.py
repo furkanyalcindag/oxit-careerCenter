@@ -8,6 +8,7 @@ from rest_framework.validators import UniqueValidator
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
     MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType
 from career.models.MilitaryStatus import MilitaryStatus
+from career.models.Reference import Reference
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
 
@@ -382,3 +383,46 @@ class StudentJobInformationSerializer(serializers.Serializer):
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+
+
+class StudentReferenceSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    firstName = serializers.CharField(required=True)
+    lastName = serializers.CharField(required=True)
+    title = serializers.CharField(required=True)
+    telephoneNumber = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        try:
+            reference = Reference()
+
+            user = self.context['request'].user
+            student = Student.objects.get(profile__user=user)
+            reference.student = student
+            reference.firstName = validated_data.get('firstName')
+            reference.lastName = validated_data.get('lastName')
+            reference.title = validated_data.get('title')
+            reference.telephoneNumber = validated_data.get('telephoneNumber')
+
+            reference.save()
+
+            return reference
+
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def update(self, instance, validated_data):
+        try:
+            instance.firstName = validated_data.get('firstName')
+            instance.lastName = validated_data.get('lastName')
+            instance.title = validated_data.get('title')
+            instance.telephoneNumber = validated_data.get('telephoneNumber')
+            instance.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
