@@ -5,12 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, StudentEducationInfo, MaritalStatusDescription
+from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription
 from career.models.APIObject import APIObject
 from career.models.GenderDescription import GenderDescription
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
-    StudentProfileImageSerializer, StudentGeneralInformationSerializer
+    StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer
 
 
 class StudentApi(APIView):
@@ -435,3 +435,47 @@ class StudentGeneralInformationApi(APIView):
         except:
             traceback.print_exc()
             return Response('error', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class StudentMilitaryStatusApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            student = Student.objects.get(profile__user=request.user)
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+
+            api_data = dict()
+
+            military_status_select = dict()
+            if student.profile.militaryStatus is not None:
+                military_status_select['label'] = MilitaryStatusDescription.objects.get(
+                    militaryStatus=student.profile.militaryStatus, language__code=lang_code)
+                military_status_select['value'] = student.profile.militaryStatus.uuid
+            else:
+                military_status_select = None
+
+            api_data['militaryStatus'] = military_status_select
+            api_data['delayedDate'] = student.profile.militaryDelayedDate
+
+            serializer = StudentMilitaryStatusSerializer(api_data, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Student.objects.get(profile__user=request.user)
+            serializer = StudentMilitaryStatusSerializer(data=request.data, instance=instance,
+                                                         context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "profile image is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

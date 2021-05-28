@@ -7,6 +7,7 @@ from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
     MaritalStatus, Gender, Nationality
+from career.models.MilitaryStatus import MilitaryStatus
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
 
@@ -240,6 +241,28 @@ class StudentProfileImageSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         try:
             profile = instance.profile
+            profile.profileImage = validated_data.get('profileImage')
+            profile.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
+
+    def create(self, validated_data):
+        pass
+
+
+class StudentMilitaryStatusSerializer(serializers.Serializer):
+    militaryStatus = SelectSerializer(read_only=True)
+    militaryStatusId = serializers.UUIDField(write_only=True)
+    delayedDate = serializers.DateField(required=False, allow_null=True)
+
+    def update(self, instance, validated_data):
+        try:
+            profile = instance.profile
+            military_status = MilitaryStatus.objects.get(uuid=validated_data.get('militaryStatusId'))
+            profile.militaryStatus = military_status
+            profile.militaryDelayedDate = validated_data.get('delayedDate')
             profile.profileImage = validated_data.get('profileImage')
             profile.save()
             return instance
