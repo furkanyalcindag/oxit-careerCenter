@@ -15,6 +15,7 @@ from .EducationType import EducationType
 from .Faculty import Faculty
 from .ForeignLanguage import ForeignLanguage
 from .ForeignLanguageLevel import ForeignLanguageLevel
+from .ForeignLanguageLevelDescription import ForeignLanguageLevelDescription
 from .Gender import Gender
 from .Instructor import Instructor
 from .JobInfo import JobInfo

@@ -8,9 +8,10 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
 from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
-    MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi
+    MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
+    ForeignLanguageSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
-    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi
+    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
 from career.Views.JobPostViews import JobPostApi
@@ -18,7 +19,8 @@ from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
-    StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi
+    StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
+    StudentForeignLanguageApi
 
 app_name = 'career'
 
@@ -31,6 +33,7 @@ urlpatterns = [
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
     url(r'initial-military-status-api/$', MilitaryStatusDataApi.as_view()),
     url(r'initial-nationality-data-api/$', NationalityDataApi.as_view()),
+    url(r'initial-language-level-data-api/$', LanguageLevelDesc.as_view()),
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
     # general
@@ -46,6 +49,8 @@ urlpatterns = [
     url(r'military-status-select-api/$', MilitaryStatusSelectApi.as_view()),
     url(r'nationality-status-select-api/$', NationalitySelectApi.as_view()),
     url(r'gender-select-api/$', GenderSelectApi.as_view()),
+    url(r'foreign-language-level-select-api/$', ForeignLanguageLevelSelectApi.as_view()),
+    url(r'foreign-language-select-api/$', ForeignLanguageSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
@@ -62,7 +67,7 @@ urlpatterns = [
     url(r'instructor-select-api/$', InstructorSelectApi.as_view()),
 
     # language
-    url(r'language-api/$', LanguageApi.as_view()),
+    path('language-api/', LanguageApi.as_view()),
 
     # blog
     url(r'blog-api/$', BlogApi.as_view()),
@@ -95,5 +100,6 @@ urlpatterns = [
     path('student/student-certificate-api/', StudentCertificateApi.as_view()),
     path('student/student-job-info-api/', StudentJobInfoApi.as_view()),
     path('student/student-reference-api/', StudentReferenceApi.as_view()),
+    path('student/student-foreign-language-api/', StudentForeignLanguageApi.as_view())
 
 ]

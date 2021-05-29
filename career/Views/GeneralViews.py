@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
-    MaritalStatus, StudentEducationInfo, MilitaryStatusDescription, Nationality, Gender
+    MaritalStatus, StudentEducationInfo, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
+    ForeignLanguageLevel, ForeignLanguageLevelDescription
+from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
 from career.models.MaritalStatusDescription import MaritalStatusDescription
@@ -255,6 +257,49 @@ class GenderSelectApi(APIView):
                                                                language=lang)
             select_object.value = gender.uuid
             select_object.label = gender_description.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ForeignLanguageSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        lang = Language.objects.get(code=lang_code)
+        data = ForeignLanguage.objects.filter()
+        select_arr = []
+        for foreign_language in data:
+            select_object = SelectObject()
+            foreign_language_description = ForeignLanguageDescription.objects.get(foreignLanguage=foreign_language,
+                                                                                  language=lang)
+            select_object.value = foreign_language.id
+            select_object.label = foreign_language_description.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ForeignLanguageLevelSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        lang = Language.objects.get(code=lang_code)
+        data = ForeignLanguageLevel.objects.filter()
+        select_arr = []
+        for foreign_language_level in data:
+            select_object = SelectObject()
+            foreign_language_level_description = ForeignLanguageLevelDescription.objects.get(
+                foreignLanguageLevel=foreign_language_level,
+                language=lang)
+            select_object.value = foreign_language_level.id
+            select_object.label = foreign_language_level_description.name
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})

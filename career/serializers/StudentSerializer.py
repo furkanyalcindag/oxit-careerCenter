@@ -6,7 +6,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
-    MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType
+    MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguage, \
+    ForeignLanguageLevel
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.Reference import Reference
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
@@ -385,8 +386,6 @@ class StudentJobInformationSerializer(serializers.Serializer):
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
 
-
-
 class StudentReferenceSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     firstName = serializers.CharField(required=True)
@@ -426,3 +425,64 @@ class StudentReferenceSerializer(serializers.Serializer):
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
+
+class StudentForeignLanguageSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    foreignLanguage = SelectSerializer(read_only=True)
+    foreignLanguageId = serializers.CharField(write_only=True)
+
+    readingLevel = SelectSerializer(read_only=True)
+    readingLevelId = serializers.CharField(write_only=True)
+
+    writingLevel = SelectSerializer(read_only=True)
+    writingLevelId = serializers.CharField(write_only=True)
+
+    speakingLevel = SelectSerializer(read_only=True)
+    speakingLevelId = serializers.CharField(write_only=True)
+
+    listeningLevel = SelectSerializer(read_only=True)
+    listeningLevelId = serializers.CharField(write_only=True)
+
+    def update(self, instance, validated_data):
+        try:
+            instance.student = Student.objects.get(profile__user=self.context['request'].user)
+            instance.foreignLanguage = ForeignLanguage.objects.get(
+                id=int(validated_data.get('foreignLanguageId')))
+            instance.readingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('readingLevelId')))
+            instance.writingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('writingLevelId')))
+            instance.speakingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('speakingLevelId')))
+            instance.listeningLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('listeningLevelId')))
+
+            instance.save()
+
+            return instance
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def create(self, validated_data):
+        try:
+            student_foreign_language = StudentForeignLanguage()
+            student_foreign_language.student = Student.objects.get(profile__user=self.context['request'].user)
+            student_foreign_language.foreignLanguage = ForeignLanguage.objects.get(
+                id=int(validated_data.get('foreignLanguageId')))
+            student_foreign_language.readingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('readingLevelId')))
+            student_foreign_language.writingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('writingLevelId')))
+            student_foreign_language.speakingLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('speakingLevelId')))
+            student_foreign_language.listeningLevel = ForeignLanguageLevel.objects.get(
+                id=int(validated_data.get('listeningLevelId')))
+
+            student_foreign_language.save()
+
+            return student_foreign_language
+
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")

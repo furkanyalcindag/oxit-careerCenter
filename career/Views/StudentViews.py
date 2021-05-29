@@ -6,15 +6,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription, \
-    Certificate, JobInfo, JobType
+    Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguageLevelDescription
 from career.models.APIObject import APIObject
+from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Reference import Reference
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
     StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
-    StudentReferenceSerializer
+    StudentReferenceSerializer, StudentForeignLanguageSerializer
 
 
 class StudentApi(APIView):
@@ -759,7 +760,7 @@ class StudentReferenceApi(APIView):
         try:
             instance = Reference.objects.get(student__profile__user=request.user, uuid=request.GET.get('id'))
             serializer = StudentReferenceSerializer(data=request.data, instance=instance,
-                                                      context={'request': request})
+                                                    context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response({"message": "reference is updated"}, status=status.HTTP_200_OK)
@@ -786,9 +787,193 @@ class StudentReferenceApi(APIView):
     def delete(self, request, format=None):
         try:
             reference = Reference.objects.get(uuid=request.GET.get('id'),
-                                           student__profile__user=request.user)
+                                              student__profile__user=request.user)
             reference.isDeleted = True
             reference.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentForeignLanguageApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+            if request.GET.get('id') is not None:
+                student_foreign_language = StudentForeignLanguage.objects.get(uuid=request.GET.get('id'),
+                                                                              student__profile__user=request.user,
+                                                                              isDeleted=False)
+                api_data = dict()
+                api_data['uuid'] = student_foreign_language.uuid
+
+                foreign_language_select = dict()
+                if student_foreign_language.foreignLanguage is not None:
+                    foreign_language_select['label'] = ForeignLanguageDescription.objects.get(
+                        foreignLanguage=student_foreign_language.foreignLanguage, language__code=lang_code).name
+                    foreign_language_select['value'] = student_foreign_language.foreignLanguage.id
+                else:
+                    foreign_language_select['label'] = ''
+                    foreign_language_select['value'] = ''
+
+                api_data['foreignLanguage'] = foreign_language_select
+
+                foreign_language_reading_level_select = dict()
+                if student_foreign_language.readingLevel is not None:
+                    foreign_language_reading_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                        foreignLanguageLevel=student_foreign_language.readingLevel, language__code=lang_code).name
+                    foreign_language_reading_level_select['value'] = student_foreign_language.readingLevel.id
+                else:
+                    foreign_language_reading_level_select['label'] = ''
+                    foreign_language_reading_level_select['value'] = ''
+
+                api_data['readingLevel'] = foreign_language_reading_level_select
+
+                foreign_language_writing_level_select = dict()
+                if student_foreign_language.writingLevel is not None:
+                    foreign_language_writing_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                        foreignLanguageLevel=student_foreign_language.writingLevel, language__code=lang_code).name
+                    foreign_language_writing_level_select['value'] = student_foreign_language.writingLevel.id
+                else:
+                    foreign_language_writing_level_select['label'] = ''
+                    foreign_language_writing_level_select['value'] = ''
+
+                api_data['writingLevel'] = foreign_language_writing_level_select
+
+                foreign_language_speaking_level_select = dict()
+                if student_foreign_language.speakingLevel is not None:
+                    foreign_language_speaking_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                        foreignLanguageLevel=student_foreign_language.speakingLevel, language__code=lang_code).name
+                    foreign_language_speaking_level_select['value'] = student_foreign_language.speakingLevel.id
+                else:
+                    foreign_language_speaking_level_select['label'] = ''
+                    foreign_language_speaking_level_select['value'] = ''
+
+                api_data['speakingLevel'] = foreign_language_speaking_level_select
+
+                foreign_language_listening_level_select = dict()
+                if student_foreign_language.listeningLevel is not None:
+                    foreign_language_listening_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                        foreignLanguageLevel=student_foreign_language.listeningLevel, language__code=lang_code).name
+                    foreign_language_listening_level_select['value'] = student_foreign_language.listeningLevel.id
+                else:
+                    foreign_language_listening_level_select['label'] = ''
+                    foreign_language_listening_level_select['value'] = ''
+
+                api_data['listeningLevel'] = foreign_language_listening_level_select
+
+                serializer = StudentForeignLanguageSerializer(api_data, context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+            else:
+                languages = StudentForeignLanguage.objects.filter(student__profile__user=request.user,
+                                                                  isDeleted=False)
+                arr = []
+                for student_foreign_language in languages:
+                    api_data = dict()
+                    api_data['uuid'] = student_foreign_language.uuid
+
+                    foreign_language_select = dict()
+                    if student_foreign_language.foreignLanguage is not None:
+                        foreign_language_select['label'] = ForeignLanguageDescription.objects.get(
+                            foreignLanguage=student_foreign_language.foreignLanguage, language__code=lang_code).name
+                        foreign_language_select['value'] = student_foreign_language.foreignLanguage.id
+                    else:
+                        foreign_language_select['label'] = ''
+                        foreign_language_select['value'] = ''
+
+                    api_data['foreignLanguage'] = foreign_language_select
+
+                    foreign_language_reading_level_select = dict()
+                    if student_foreign_language.readingLevel is not None:
+                        foreign_language_reading_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                            foreignLanguageLevel=student_foreign_language.readingLevel, language__code=lang_code).name
+                        foreign_language_reading_level_select['value'] = student_foreign_language.readingLevel.id
+                    else:
+                        foreign_language_reading_level_select['label'] = ''
+                        foreign_language_reading_level_select['value'] = ''
+
+                    api_data['readingLevel'] = foreign_language_reading_level_select
+
+                    foreign_language_writing_level_select = dict()
+                    if student_foreign_language.writingLevel is not None:
+                        foreign_language_writing_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                            foreignLanguageLevel=student_foreign_language.writingLevel, language__code=lang_code).name
+                        foreign_language_writing_level_select['value'] = student_foreign_language.writingLevel.id
+                    else:
+                        foreign_language_writing_level_select['label'] = ''
+                        foreign_language_writing_level_select['value'] = ''
+
+                    api_data['writingLevel'] = foreign_language_writing_level_select
+
+                    foreign_language_speaking_level_select = dict()
+                    if student_foreign_language.speakingLevel is not None:
+                        foreign_language_speaking_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                            foreignLanguageLevel=student_foreign_language.speakingLevel, language__code=lang_code).name
+                        foreign_language_speaking_level_select['value'] = student_foreign_language.speakingLevel.id
+                    else:
+                        foreign_language_speaking_level_select['label'] = ''
+                        foreign_language_speaking_level_select['value'] = ''
+
+                    api_data['speakingLevel'] = foreign_language_speaking_level_select
+
+                    foreign_language_listening_level_select = dict()
+                    if student_foreign_language.listeningLevel is not None:
+                        foreign_language_listening_level_select['label'] = ForeignLanguageLevelDescription.objects.get(
+                            foreignLanguageLevel=student_foreign_language.listeningLevel, language__code=lang_code).name
+                        foreign_language_listening_level_select['value'] = student_foreign_language.listeningLevel.id
+                    else:
+                        foreign_language_listening_level_select['label'] = ''
+                        foreign_language_listening_level_select['value'] = ''
+
+                    api_data['listeningLevel'] = foreign_language_listening_level_select
+                    arr.append(api_data)
+
+                serializer = StudentForeignLanguageSerializer(arr, many=True,
+                                                              context={"request": request})
+                return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = StudentForeignLanguage.objects.get(student__profile__user=request.user,
+                                                          uuid=request.GET.get('id'))
+            serializer = StudentForeignLanguageSerializer(data=request.data, instance=instance,
+                                                          context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "foreign language is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentForeignLanguageSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "foreign language is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            foreign_language = StudentForeignLanguage.objects.get(uuid=request.GET.get('id'),
+                                                                  student__profile__user=request.user)
+            foreign_language.isDeleted = True
+            foreign_language.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:

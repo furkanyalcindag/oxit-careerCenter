@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
-    EducationType, MaritalStatus, MilitaryStatusDescription, Nationality
+    EducationType, MaritalStatus, MilitaryStatusDescription, Nationality, ForeignLanguageLevel, \
+    ForeignLanguageLevelDescription
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
@@ -166,6 +167,84 @@ class InitDataApi(APIView):
         job_type.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class LanguageLevelDesc(APIView):
+
+    def get(self, request, format=None):
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'beginner'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Beginner'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Başlangıç'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'elementary'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Elementary'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Orta'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'intermediate'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Intermediate'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'İyi'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'advanced'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Advanced'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Çok İyi'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
 
 
 class LocationDataApi(APIView):
