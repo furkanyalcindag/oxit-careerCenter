@@ -80,7 +80,7 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
     gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
     isQuaternarySystem = serializers.BooleanField(required=True)
     startDate = serializers.DateField(required=True)
-    graduationDate = serializers.DateField(required=True)
+    graduationDate = serializers.DateField(required=True,allow_null=True)
 
     def create(self, validated_data):
         try:
