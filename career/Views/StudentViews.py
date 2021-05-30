@@ -268,7 +268,7 @@ class StudentHighSchoolEducationApi(APIView):
 
         if request.GET.get('id') is not None:
             education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
-                                                              student__profile__user=request.user, isDeleted=False)
+                                                              student__profile__user=request.user,educationType__name='Lise', isDeleted=False)
             api_data = dict()
             api_data['isGraduated'] = education_info.isGraduated
             api_data['gpa'] = education_info.gpa
