@@ -343,7 +343,7 @@ class StudentJobInformationSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
     startDate = serializers.DateField(required=True)
     isContinue = serializers.BooleanField(required=False, allow_null=True)
-    finishDate = serializers.DateField(required=False)
+    finishDate = serializers.DateField(required=False, allow_null=True)
     description = serializers.CharField(required=False)
     jobType = SelectSerializer(read_only=True)
     jobTypeId = serializers.CharField(write_only=True)
