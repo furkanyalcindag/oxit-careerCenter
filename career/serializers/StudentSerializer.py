@@ -8,8 +8,10 @@ from rest_framework.validators import UniqueValidator
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
     MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguage, \
     ForeignLanguageLevel, StudentQualification
+from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.Reference import Reference
+from career.models.StudentDriverLicense import StudentDriverLicense
 from career.models.StudentExam import StudentExam
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
@@ -547,6 +549,53 @@ class StudentExamSerializer(serializers.Serializer):
             exam.year = int(validated_data.get('year'))
             exam.save()
             return exam
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentDriverLicenseSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    driverLicense = SelectSerializer(read_only=True)
+    driverLicenseValue = serializers.CharField(required=True, write_only=True)
+
+    def update(self, instance, validated_data):
+        try:
+            valid_license = False
+            for e in DriverLicenseEnum:
+                if e.value == validated_data.get('driverLicenseValue'):
+                    valid_license = True
+                    break
+
+            if valid_license:
+
+                instance.driverLicense = validated_data.get('driverLicenseValue')
+                instance.save()
+                return instance
+            else:
+                raise Exception
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def create(self, validated_data):
+        try:
+            student = Student.objects.get(profile__user=self.context['request'].user)
+            driver_license = StudentDriverLicense()
+            valid_license = False
+            for e in DriverLicenseEnum:
+                if e.value == validated_data.get('driverLicenseValue'):
+                    valid_license = True
+                    break
+
+            if valid_license:
+                driver_license.driverLicense = validated_data.get('driverLicenseValue')
+                driver_license.student = student
+                driver_license.save()
+
+                return driver_license
+            else:
+                raise Exception
         except Exception as e:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")

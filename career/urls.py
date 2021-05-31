@@ -9,7 +9,7 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
@@ -20,7 +20,7 @@ from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
-    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi
+    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi
 
 app_name = 'career'
 
@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'gender-select-api/$', GenderSelectApi.as_view()),
     url(r'foreign-language-level-select-api/$', ForeignLanguageLevelSelectApi.as_view()),
     url(r'foreign-language-select-api/$', ForeignLanguageSelectApi.as_view()),
+    url(r'driver-license-select-api/$', DriverLicenseSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
@@ -102,6 +103,7 @@ urlpatterns = [
     path('student/student-reference-api/', StudentReferenceApi.as_view()),
     path('student/student-foreign-language-api/', StudentForeignLanguageApi.as_view()),
     path('student/student-qualification-api/', StudentQualificationApi.as_view()),
-    path('student/student-exam-api/', StudentExamApi.as_view())
+    path('student/student-exam-api/', StudentExamApi.as_view()),
+    path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view())
 
 ]

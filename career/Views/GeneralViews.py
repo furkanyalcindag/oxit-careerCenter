@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, StudentEducationInfo, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
     ForeignLanguageLevel, ForeignLanguageLevelDescription
+from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
@@ -294,6 +295,22 @@ class ForeignLanguageLevelSelectApi(APIView):
                 language=lang)
             select_object.value = foreign_language_level.id
             select_object.label = foreign_language_level_description.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class DriverLicenseSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        select_arr = []
+        for e in DriverLicenseEnum:
+            select_object = SelectObject()
+            select_object.value = e.value
+            select_object.label = e.value
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})

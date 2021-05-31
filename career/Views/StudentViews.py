@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
     Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
 from career.models.APIObject import APIObject
+from career.models.StudentDriverLicense import StudentDriverLicense
 from career.models.StudentEducationInfo import StudentEducationInfo
 
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
@@ -19,7 +20,8 @@ from career.serializers.StudentSerializer import StudentSerializer, StudentPagea
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
     StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
-    StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer, StudentExamSerializer
+    StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer, StudentExamSerializer, \
+    StudentDriverLicenseSerializer
 
 
 class StudentApi(APIView):
@@ -1140,6 +1142,92 @@ class StudentExamApi(APIView):
                                            student__profile__user=request.user)
             exam.isDeleted = True
             exam.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentDriverLicenseApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                driver_license = StudentDriverLicense.objects.get(student__profile__user=request.user,
+                                                                  uuid=request.GET.get('id'))
+
+                api_data = dict()
+
+                api_data['uuid'] = driver_license.uuid
+
+                api_licence_select = dict()
+                api_licence_select['label'] = driver_license.driverLicense
+                api_licence_select['value'] = driver_license.driverLicense
+
+                api_data['driverLicense'] = api_licence_select
+
+                serializer = StudentDriverLicenseSerializer(api_data, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+
+                licenses = StudentDriverLicense.objects.filter(student__profile__user=request.user,
+                                                               isDeleted=False)
+                arr = []
+                for q in licenses:
+                    api_data = dict()
+
+                    api_data['uuid'] = q.uuid
+                    api_licence_select = dict()
+                    api_licence_select['label'] = q.driverLicense
+                    api_licence_select['value'] = q.driverLicense
+
+                    api_data['driverLicense'] = api_licence_select
+                    arr.append(api_data)
+
+                serializer = StudentDriverLicenseSerializer(arr, many=True, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = StudentDriverLicense.objects.get(student__profile__user=request.user,
+                                                        uuid=request.GET.get('id'))
+            serializer = StudentDriverLicenseSerializer(data=request.data, instance=instance,
+                                                        context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "driver license is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentDriverLicenseSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "driver license is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            license = StudentDriverLicense.objects.get(uuid=request.GET.get('id'),
+                                                       student__profile__user=request.user)
+            license.isDeleted = True
+            license.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:

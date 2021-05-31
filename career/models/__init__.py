@@ -40,3 +40,4 @@ from .StudentForeignLanguage import StudentForeignLanguage
 from .University import University
 from .StudentQualification import StudentQualification
 from .StudentExam import StudentExam
+from .StudentDriverLicense import StudentDriverLicense
