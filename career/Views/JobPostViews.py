@@ -171,8 +171,7 @@ class JobPostStudentApi(APIView):
 
                 active_page = 1
                 title = ''
-                city_id = int(request.GET.get('city'))
-                job_type_id = int(request.GET.get('jobType'))
+
                 if request.GET.get('page') is not None:
                     active_page = int(request.GET.get('page'))
 
@@ -208,6 +207,7 @@ class JobPostStudentApi(APIView):
                     api_data['jobDescription'] = x.jobDescription
                     api_data['logo'] = x.company.logo
                     api_data['companyName'] = x.company.name
+                    api_data['staffCount'] = x.company.staffCount
 
                     select_type = dict()
                     select_type['label'] = x.type.name
@@ -258,6 +258,7 @@ class JobPostStudentApi(APIView):
                 api_data['quality'] = x.quality
                 api_data['jobDescription'] = x.jobDescription
                 api_data['companyName'] = x.company.name
+                api_data['staffCount'] = x.company.staffCount
 
                 select_type = dict()
                 select_type['label'] = x.type.name
