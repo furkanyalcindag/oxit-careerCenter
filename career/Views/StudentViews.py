@@ -14,11 +14,12 @@ from career.models.StudentEducationInfo import StudentEducationInfo
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Reference import Reference
+from career.models.StudentExam import StudentExam
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
     StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
-    StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer
+    StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer, StudentExamSerializer
 
 
 class StudentApi(APIView):
@@ -1058,6 +1059,87 @@ class StudentQualificationApi(APIView):
                                                              student__profile__user=request.user)
             qualification.isDeleted = True
             qualification.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentExamApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                qualification = StudentExam.objects.get(student__profile__user=request.user,
+                                                        uuid=request.GET.get('id'))
+
+                api_data = dict()
+
+                api_data['uuid'] = qualification.uuid
+                api_data['name'] = qualification.name
+                api_data['point'] = qualification.rating
+                api_data['year'] = qualification.rating
+
+                serializer = StudentExamSerializer(api_data, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+
+                qualifications = StudentExam.objects.filter(student__profile__user=request.user,
+                                                            isDeleted=False)
+                arr = []
+                for q in qualifications:
+                    api_data = dict()
+
+                    api_data['uuid'] = q.uuid
+                    api_data['name'] = q.name
+                    api_data['point'] = q.point
+                    api_data['year'] = q.year
+                    arr.append(api_data)
+
+                serializer = StudentExamSerializer(arr, many=True, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = StudentExam.objects.get(student__profile__user=request.user,
+                                               uuid=request.GET.get('id'))
+            serializer = StudentExamSerializer(data=request.data, instance=instance,
+                                               context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "exam is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentExamSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "exam is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            exam = StudentExam.objects.get(uuid=request.GET.get('id'),
+                                           student__profile__user=request.user)
+            exam.isDeleted = True
+            exam.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:

@@ -10,6 +10,7 @@ from career.models import Profile, Student, StudentEducationInfo, University, Fa
     ForeignLanguageLevel, StudentQualification
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.Reference import Reference
+from career.models.StudentExam import StudentExam
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from career.services.GeneralService import is_integer
 
@@ -514,6 +515,38 @@ class StudentQualificationSerializer(serializers.Serializer):
             qualification.student = student
             qualification.save()
             return qualification
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentExamSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(required=True)
+    point = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
+    year = serializers.IntegerField(required=True)
+
+    def update(self, instance, validated_data):
+        try:
+            instance.name = validated_data.get('name')
+            instance.point = validated_data.get('point')
+            instance.year = validated_data.get('year')
+            instance.save()
+            return instance
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def create(self, validated_data):
+        try:
+            student = Student.objects.get(profile__user=self.context['request'].user)
+            exam = StudentExam()
+            exam.name = validated_data.get('name')
+            exam.point = validated_data.get('point')
+            exam.student = student
+            exam.year = int(validated_data.get('year'))
+            exam.save()
+            return exam
         except Exception as e:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
