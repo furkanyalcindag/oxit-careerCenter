@@ -7,7 +7,7 @@ from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Student, StudentEducationInfo, University, Faculty, Department, EducationType, \
     MaritalStatus, Gender, Nationality, Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguage, \
-    ForeignLanguageLevel
+    ForeignLanguageLevel, StudentQualification
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.Reference import Reference
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
@@ -80,7 +80,7 @@ class StudentUniversityEducationInformationSerializer(serializers.Serializer):
     gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
     isQuaternarySystem = serializers.BooleanField(required=True)
     startDate = serializers.DateField(required=True)
-    graduationDate = serializers.DateField(required=True,allow_null=True)
+    graduationDate = serializers.DateField(required=True, allow_null=True)
 
     def create(self, validated_data):
         try:
@@ -483,6 +483,37 @@ class StudentForeignLanguageSerializer(serializers.Serializer):
 
             return student_foreign_language
 
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentQualificationSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    name = serializers.CharField(required=True)
+    rating = serializers.CharField(required=True)
+
+    def update(self, instance, validated_data):
+        try:
+            instance.name = validated_data.get('name')
+            instance.rating = int(validated_data.get('rating'))
+
+            instance.save()
+            return instance
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+    def create(self, validated_data):
+        try:
+            student = Student.objects.get(profile__user=self.context['request'].user)
+
+            qualification = StudentQualification()
+            qualification.name = validated_data.get('name')
+            qualification.rating = int(validated_data.get('rating'))
+            qualification.student = student
+            qualification.save()
+            return qualification
         except Exception as e:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")

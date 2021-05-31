@@ -1,13 +1,16 @@
 import traceback
 
-from rest_framework import status
+from django.db.models import Q
+from rest_framework import status, response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, StudentEducationInfo, MaritalStatusDescription, MilitaryStatusDescription, \
-    Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguageLevelDescription
+from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
+    Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
 from career.models.APIObject import APIObject
+from career.models.StudentEducationInfo import StudentEducationInfo
+
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Reference import Reference
@@ -15,7 +18,7 @@ from career.serializers.StudentSerializer import StudentSerializer, StudentPagea
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
     StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
-    StudentReferenceSerializer, StudentForeignLanguageSerializer
+    StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer
 
 
 class StudentApi(APIView):
@@ -159,8 +162,9 @@ class StudentEducationApi(APIView):
                 serializer = StudentUniversityEducationInformationSerializer(api_data, context={"request": request})
                 return Response(serializer.data, status.HTTP_200_OK)
             else:
-                education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user,
-                                                                      isDeleted=False)
+                education_infos = StudentEducationInfo.objects.exclude(educationType__name='Lise').filter(
+                    student__profile__user=request.user,
+                    isDeleted=False)
                 arr = []
                 for education_info in education_infos:
                     api_data = dict()
@@ -268,7 +272,8 @@ class StudentHighSchoolEducationApi(APIView):
 
         if request.GET.get('id') is not None:
             education_info = StudentEducationInfo.objects.get(uuid=request.GET.get('id'),
-                                                              student__profile__user=request.user,educationType__name='Lise', isDeleted=False)
+                                                              student__profile__user=request.user,
+                                                              educationType__name='Lise', isDeleted=False)
             api_data = dict()
             api_data['isGraduated'] = education_info.isGraduated
             api_data['gpa'] = education_info.gpa
@@ -974,6 +979,85 @@ class StudentForeignLanguageApi(APIView):
                                                                   student__profile__user=request.user)
             foreign_language.isDeleted = True
             foreign_language.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentQualificationApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            if request.GET.get('id') is not None:
+                qualification = StudentQualification.objects.get(student__profile__user=request.user,
+                                                                 uuid=request.GET.get('id'))
+
+                api_data = dict()
+
+                api_data['uuid'] = qualification.uuid
+                api_data['name'] = qualification.name
+                api_data['rating'] = qualification.rating
+
+                serializer = StudentQualificationSerializer(api_data, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+
+                qualifications = StudentQualification.objects.filter(student__profile__user=request.user,
+                                                                     isDeleted=False)
+                arr = []
+                for q in qualifications:
+                    api_data = dict()
+
+                    api_data['uuid'] = q.uuid
+                    api_data['name'] = q.name
+                    api_data['rating'] = q.rating
+                    arr.append(api_data)
+
+                serializer = StudentQualificationSerializer(arr, many=True, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = StudentQualification.objects.get(student__profile__user=request.user,
+                                                        uuid=request.GET.get('id'))
+            serializer = StudentQualificationSerializer(data=request.data, instance=instance,
+                                                        context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "qualification is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        serializer = StudentQualificationSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "qualification is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            qualification = StudentQualification.objects.get(uuid=request.GET.get('id'),
+                                                             student__profile__user=request.user)
+            qualification.isDeleted = True
+            qualification.save()
 
             return Response(status=status.HTTP_200_OK)
         except Exception:

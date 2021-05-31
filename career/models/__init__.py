@@ -38,3 +38,4 @@ from .Student import Student
 from .StudentEducationInfo import StudentEducationInfo
 from .StudentForeignLanguage import StudentForeignLanguage
 from .University import University
+from .StudentQualification import StudentQualification
