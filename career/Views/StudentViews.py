@@ -1080,8 +1080,8 @@ class StudentExamApi(APIView):
 
                 api_data['uuid'] = qualification.uuid
                 api_data['name'] = qualification.name
-                api_data['point'] = qualification.rating
-                api_data['year'] = qualification.rating
+                api_data['point'] = qualification.point
+                api_data['year'] = qualification.year
 
                 serializer = StudentExamSerializer(api_data, context={'request': request})
                 return Response(serializer.data, status=status.HTTP_200_OK)
