@@ -197,6 +197,7 @@ class JobPostStudentApi(APIView):
                     api_data['quality'] = x.quality
                     api_data['jobDescription'] = x.jobDescription
                     api_data['logo'] = x.company.logo
+                    api_data['companyName'] = x.company.name
 
                     select_type = dict()
                     select_type['label'] = x.type.name
@@ -243,9 +244,10 @@ class JobPostStudentApi(APIView):
                 api_data = dict()
                 api_data['uuid'] = x.uuid
                 api_data['title'] = x.title
-                api_data['title'] = x.company.logo
+                api_data['logo'] = x.company.logo
                 api_data['quality'] = x.quality
                 api_data['jobDescription'] = x.jobDescription
+                api_data['companyName'] = x.company.name
 
                 select_type = dict()
                 select_type['label'] = x.type.name
@@ -269,7 +271,6 @@ class JobPostStudentApi(APIView):
                     select_district['value'] = x.district.id
                 else:
                     select_district = None
-
                 api_data['city'] = select_city
                 api_data['district'] = select_district
                 api_data['finishDate'] = x.finishDate
