@@ -14,7 +14,7 @@ from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDat
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi
-from career.Views.JobPostViews import JobPostApi
+from career.Views.JobPostViews import JobPostApi, JobPostStudentApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
@@ -104,6 +104,7 @@ urlpatterns = [
     path('student/student-foreign-language-api/', StudentForeignLanguageApi.as_view()),
     path('student/student-qualification-api/', StudentQualificationApi.as_view()),
     path('student/student-exam-api/', StudentExamApi.as_view()),
-    path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view())
+    path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view()),
+    path('student/student-job-post-api/', JobPostStudentApi.as_view())
 
 ]
