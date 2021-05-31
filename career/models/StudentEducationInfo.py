@@ -18,7 +18,7 @@ class StudentEducationInfo(BaseModel):
     otherDepartmentName = models.CharField(max_length=256)
     isGraduated = models.BooleanField(default=False)
     startDate = models.DateField()
-    graduationDate = models.DateField()
+    graduationDate = models.DateField(null=True)
     highSchool = models.CharField(max_length=256)
     educationType = models.ForeignKey(EducationType, on_delete=models.CASCADE)
     gpa = models.DecimalField(max_digits=10, decimal_places=2, default=0)
