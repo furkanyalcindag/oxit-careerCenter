@@ -295,7 +295,8 @@ class StudentHighSchoolEducationApi(APIView):
             serializer = StudentHighSchoolEducationInformationSerializer(api_data, context={"request": request})
             return Response(serializer.data, status.HTTP_200_OK)
         else:
-            education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user, isDeleted=False)
+            education_infos = StudentEducationInfo.objects.filter(student__profile__user=request.user, isDeleted=False,
+                                                                  educationType__name='Lise')
             arr = []
             for education_info in education_infos:
                 api_data = dict()
