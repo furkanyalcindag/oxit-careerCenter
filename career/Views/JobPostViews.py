@@ -182,12 +182,22 @@ class JobPostStudentApi(APIView):
                 lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
                 lim_end = lim_start + int(request.GET.get('count'))
 
-                data = JobPost.objects.filter(title__icontains=title,
-                                              isDeleted=False, city__id=city_id, type__id=job_type_id).order_by('-id')[
+                kwargs = dict()
+
+                if request.GET.get('cityId') is not None:
+                    kwargs['city__id'] = request.GET.get('cityId')
+
+                if request.GET.get('jobType') is not None:
+                    kwargs['type__id'] = request.GET.get('jobType')
+
+                kwargs['title__icontains'] = title
+
+                kwargs['isDeleted'] = False
+
+                data = JobPost.objects.filter(**kwargs).order_by('-id')[
                        lim_start:lim_end]
 
-                filtered_count = JobPost.objects.filter(title__icontains=title,
-                                                        isDeleted=False, city__id=city_id, type__id=job_type_id).count()
+                filtered_count = JobPost.objects.filter(**kwargs).count()
 
                 arr = []
                 for x in data:
