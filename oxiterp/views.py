@@ -13,7 +13,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['username'] = self.user.username
         data['fullName'] = self.user.first_name + ' ' + self.user.last_name
         data['group'] = self.user.groups.values_list('name', flat=True)[0]
-        if Profile.objects.get(user=self.user) is not None:
+        if len(Profile.objects.filter(user=self.user)) > 0:
             data['avatar'] = Profile.objects.get(user=self.user).profileImage
         else:
             data['avatar'] = None

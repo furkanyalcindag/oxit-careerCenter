@@ -30,16 +30,11 @@
       <change afterPath="$PROJECT_DIR$/career/templates/img/hacettepe.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/career/templates/img/office.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/career/templates/img/ybu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/cv-print.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/aybu-karmer.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/foto.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/gazi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/hacettepe.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/office.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tmp/img/ybu.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/career/Views/StudentViews.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/Views/StudentViews.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/career/services/GeneralService.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/services/GeneralService.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/career/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oxiterp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/oxiterp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,28 +172,8 @@
       <workItem from="1621515415542" duration="90081000" />
       <workItem from="1622182985295" duration="177000" />
       <workItem from="1622183235703" duration="843000" />
-      <workItem from="1622187432677" duration="72794000" />
-    </task>
-    <task id="LOCAL-00084" summary="info about api">
-      <created>1622017744655</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1622017744656</updated>
-    </task>
-    <task id="LOCAL-00085" summary="info about api">
-      <created>1622024395623</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1622024395623</updated>
-    </task>
-    <task id="LOCAL-00086" summary="info about api">
-      <created>1622032436876</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1622032436876</updated>
+      <workItem from="1622187432677" duration="77064000" />
+      <workItem from="1622569319383" duration="662000" />
     </task>
     <task id="LOCAL-00087" summary="info about api">
       <created>1622033192865</created>
@@ -522,7 +497,28 @@
       <option name="project" value="LOCAL" />
       <updated>1622563839414</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="api token api">
+      <created>1622564655511</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1622564655512</updated>
+    </task>
+    <task id="LOCAL-00134" summary="hjtytuytytuy">
+      <created>1622564772016</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1622564772017</updated>
+    </task>
+    <task id="LOCAL-00135" summary="user api">
+      <created>1622569559252</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1622569559253</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,9 +537,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="JOB POST GET LİST" />
-    <MESSAGE value="jobpost single get api" />
-    <MESSAGE value="jobpost put api" />
     <MESSAGE value="military status select api" />
     <MESSAGE value="nationality select api" />
     <MESSAGE value="info about api" />
@@ -566,7 +559,10 @@
     <MESSAGE value="cover letter api" />
     <MESSAGE value="student blog api" />
     <MESSAGE value="profile image to token" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile image to token" />
+    <MESSAGE value="api token api" />
+    <MESSAGE value="hjtytuytytuy" />
+    <MESSAGE value="user api" />
+    <option name="LAST_COMMIT_MESSAGE" value="user api" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -578,12 +574,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>84</line>
+          <line>89</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>42</line>
+          <line>47</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -703,12 +699,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>381</line>
+          <line>386</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>368</line>
+          <line>373</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -718,7 +714,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>966</line>
+          <line>971</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -733,8 +729,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/oxiterp/views.py</url>
-          <line>15</line>
+          <line>16</line>
           <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/services/GeneralService.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/oxiterp/views.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
