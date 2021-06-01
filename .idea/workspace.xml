@@ -23,12 +23,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c972ec9-8c54-4dfe-a63e-e6d519b90ddf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/career/templates/cv-print.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/aybu-karmer.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/foto.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/gazi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/hacettepe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/office.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/career/templates/img/ybu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/cv-print.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/aybu-karmer.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/foto.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/gazi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/hacettepe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/office.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/img/ybu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/Views/CompanyViews.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/Views/CompanyViews.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/Views/ConsultantViews.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/Views/ConsultantViews.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/serializers/CompanySerializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/serializers/CompanySerializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/serializers/LectureSerializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/serializers/LectureSerializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/career/Views/StudentViews.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/Views/StudentViews.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/career/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oxiterp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/oxiterp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,14 +86,17 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/career/serializers" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/career/templates" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/career/templates" />
+      <recent name="$PROJECT_DIR$/tmp" />
+      <recent name="$PROJECT_DIR$/career/models" />
+      <recent name="$PROJECT_DIR$/accounts" />
       <recent name="$PROJECT_DIR$/career/serializers" />
-      <recent name="$PROJECT_DIR$/career/Views" />
     </key>
   </component>
   <component name="RunManager">
@@ -159,338 +176,356 @@
       <workItem from="1618155050740" duration="1485000" />
       <workItem from="1619339570497" duration="4457000" />
       <workItem from="1620072431112" duration="18754000" />
-      <workItem from="1620239735667" duration="95624000" />
+      <workItem from="1620239735667" duration="126822000" />
+      <workItem from="1621515415542" duration="90081000" />
+      <workItem from="1622182985295" duration="177000" />
+      <workItem from="1622183235703" duration="843000" />
+      <workItem from="1622187432677" duration="72108000" />
     </task>
-    <task id="LOCAL-00001" summary="serializer modified">
-      <created>1619378114960</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00083" summary="info about api">
+      <created>1621962590631</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
       <option name="project" value="LOCAL" />
-      <updated>1619378114960</updated>
+      <updated>1621962590632</updated>
     </task>
-    <task id="LOCAL-00002" summary="serializer modified">
-      <created>1620080933575</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00084" summary="info about api">
+      <created>1622017744655</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
       <option name="project" value="LOCAL" />
-      <updated>1620080933575</updated>
+      <updated>1622017744656</updated>
     </task>
-    <task id="LOCAL-00003" summary="serializer modified">
-      <created>1620081194896</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+    <task id="LOCAL-00085" summary="info about api">
+      <created>1622024395623</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
       <option name="project" value="LOCAL" />
-      <updated>1620081194896</updated>
+      <updated>1622024395623</updated>
     </task>
-    <task id="LOCAL-00004" summary="serializer modified">
-      <created>1620081347322</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00086" summary="info about api">
+      <created>1622032436876</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
       <option name="project" value="LOCAL" />
-      <updated>1620081347322</updated>
+      <updated>1622032436876</updated>
     </task>
-    <task id="LOCAL-00005" summary="serializer modified">
-      <created>1620083536105</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+    <task id="LOCAL-00087" summary="info about api">
+      <created>1622033192865</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
       <option name="project" value="LOCAL" />
-      <updated>1620083536105</updated>
+      <updated>1622033192865</updated>
     </task>
-    <task id="LOCAL-00006" summary="serializer modified">
-      <created>1620118819061</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+    <task id="LOCAL-00088" summary="info about api">
+      <created>1622034857237</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
       <option name="project" value="LOCAL" />
-      <updated>1620118819061</updated>
+      <updated>1622034857237</updated>
     </task>
-    <task id="LOCAL-00007" summary="serializer modified">
-      <created>1620131723354</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+    <task id="LOCAL-00089" summary="info about api">
+      <created>1622035155167</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
       <option name="project" value="LOCAL" />
-      <updated>1620131723354</updated>
+      <updated>1622035155167</updated>
     </task>
-    <task id="LOCAL-00008" summary="serializer modified">
-      <created>1620200652057</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+    <task id="LOCAL-00090" summary="info about api">
+      <created>1622035624635</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
       <option name="project" value="LOCAL" />
-      <updated>1620200652057</updated>
+      <updated>1622035624635</updated>
     </task>
-    <task id="LOCAL-00009" summary="admin company api">
-      <created>1620217763462</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+    <task id="LOCAL-00091" summary="info about api">
+      <created>1622038303904</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
       <option name="project" value="LOCAL" />
-      <updated>1620217763462</updated>
+      <updated>1622038303904</updated>
     </task>
-    <task id="LOCAL-00010" summary="student api delete">
-      <created>1620219081690</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+    <task id="LOCAL-00092" summary="info about api">
+      <created>1622039664535</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
       <option name="project" value="LOCAL" />
-      <updated>1620219081690</updated>
+      <updated>1622039664535</updated>
     </task>
-    <task id="LOCAL-00011" summary="admin company api">
-      <created>1620221835042</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+    <task id="LOCAL-00093" summary="info about api">
+      <created>1622040020378</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
       <option name="project" value="LOCAL" />
-      <updated>1620221835042</updated>
+      <updated>1622040020378</updated>
     </task>
-    <task id="LOCAL-00012" summary="student aktif pasif etme bugfix">
-      <created>1620237823568</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+    <task id="LOCAL-00094" summary="info about api">
+      <created>1622040084965</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
       <option name="project" value="LOCAL" />
-      <updated>1620237823568</updated>
+      <updated>1622040084965</updated>
     </task>
-    <task id="LOCAL-00013" summary="company delete">
-      <created>1620283750853</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
+    <task id="LOCAL-00095" summary="info about api">
+      <created>1622040934048</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
       <option name="project" value="LOCAL" />
-      <updated>1620283750853</updated>
+      <updated>1622040934048</updated>
     </task>
-    <task id="LOCAL-00014" summary="admin company api">
-      <created>1620286895465</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
+    <task id="LOCAL-00096" summary="info about api">
+      <created>1622041196631</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
       <option name="project" value="LOCAL" />
-      <updated>1620286895465</updated>
+      <updated>1622041196631</updated>
     </task>
-    <task id="LOCAL-00015" summary="admin company api">
-      <created>1620296275936</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
+    <task id="LOCAL-00097" summary="military status select api">
+      <created>1622099799469</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
       <option name="project" value="LOCAL" />
-      <updated>1620296275936</updated>
+      <updated>1622099799469</updated>
     </task>
-    <task id="LOCAL-00016" summary="consultant api bug fix">
-      <created>1620304245641</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
+    <task id="LOCAL-00098" summary="info about api">
+      <created>1622101834837</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
       <option name="project" value="LOCAL" />
-      <updated>1620304245641</updated>
+      <updated>1622101834837</updated>
     </task>
-    <task id="LOCAL-00017" summary="consultant api bug fix">
-      <created>1620306433858</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
+    <task id="LOCAL-00099" summary="info about api">
+      <created>1622102001016</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
       <option name="project" value="LOCAL" />
-      <updated>1620306433858</updated>
+      <updated>1622102001016</updated>
     </task>
-    <task id="LOCAL-00018" summary="consultant api bug fix">
-      <created>1620550963614</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
+    <task id="LOCAL-00100" summary="nationality select api">
+      <created>1622104367211</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
       <option name="project" value="LOCAL" />
-      <updated>1620550963614</updated>
+      <updated>1622104367211</updated>
     </task>
-    <task id="LOCAL-00019" summary="consultant api bug fix">
-      <created>1620555452702</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
+    <task id="LOCAL-00101" summary="info about api">
+      <created>1622110862814</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
       <option name="project" value="LOCAL" />
-      <updated>1620555452702</updated>
+      <updated>1622110862814</updated>
     </task>
-    <task id="LOCAL-00020" summary="consultant api bug fix">
-      <created>1620594867645</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
+    <task id="LOCAL-00102" summary="info about api">
+      <created>1622112878080</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
       <option name="project" value="LOCAL" />
-      <updated>1620594867645</updated>
+      <updated>1622112878080</updated>
     </task>
-    <task id="LOCAL-00021" summary="instructor api">
-      <created>1620653589217</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
+    <task id="LOCAL-00103" summary="info about api">
+      <created>1622113723048</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
       <option name="project" value="LOCAL" />
-      <updated>1620653589217</updated>
+      <updated>1622113723048</updated>
     </task>
-    <task id="LOCAL-00022" summary="consultant api bug fix">
-      <created>1620655673669</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
+    <task id="LOCAL-00104" summary="info about api">
+      <created>1622115901288</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
       <option name="project" value="LOCAL" />
-      <updated>1620655673669</updated>
+      <updated>1622115901288</updated>
     </task>
-    <task id="LOCAL-00023" summary="consultant api bug fix">
-      <created>1620721213754</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
+    <task id="LOCAL-00105" summary="info about api">
+      <created>1622116801494</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
       <option name="project" value="LOCAL" />
-      <updated>1620721213754</updated>
+      <updated>1622116801494</updated>
     </task>
-    <task id="LOCAL-00024" summary="blog api bug fix">
-      <created>1620735287324</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
+    <task id="LOCAL-00106" summary="education info bug fix">
+      <created>1622188623160</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
       <option name="project" value="LOCAL" />
-      <updated>1620735287324</updated>
+      <updated>1622188623161</updated>
     </task>
-    <task id="LOCAL-00025" summary="consultant api bug fix">
-      <created>1620736372218</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
+    <task id="LOCAL-00107" summary="military status">
+      <created>1622192401201</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
       <option name="project" value="LOCAL" />
-      <updated>1620736372218</updated>
+      <updated>1622192401201</updated>
     </task>
-    <task id="LOCAL-00026" summary="consultant api bug fix">
-      <created>1620741223091</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
+    <task id="LOCAL-00108" summary="military status bug fix">
+      <created>1622192489265</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
       <option name="project" value="LOCAL" />
-      <updated>1620741223091</updated>
+      <updated>1622192489265</updated>
     </task>
-    <task id="LOCAL-00027" summary="consultant api bug fix">
-      <created>1620747522268</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
+    <task id="LOCAL-00109" summary="communication api">
+      <created>1622193776096</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
       <option name="project" value="LOCAL" />
-      <updated>1620747522268</updated>
+      <updated>1622193776096</updated>
     </task>
-    <task id="LOCAL-00028" summary="consultant api bug fix">
-      <created>1620804559000</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
+    <task id="LOCAL-00110" summary="certificate api">
+      <created>1622203993596</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
       <option name="project" value="LOCAL" />
-      <updated>1620804559000</updated>
+      <updated>1622203993597</updated>
     </task>
-    <task id="LOCAL-00029" summary="consultant api bug fix">
-      <created>1620817704477</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
+    <task id="LOCAL-00111" summary="bug fix">
+      <created>1622204754452</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
       <option name="project" value="LOCAL" />
-      <updated>1620817704478</updated>
+      <updated>1622204754452</updated>
     </task>
-    <task id="LOCAL-00030" summary="consultant api bug fix">
-      <created>1620818705942</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
+    <task id="LOCAL-00112" summary="Job info api">
+      <created>1622214631247</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
       <option name="project" value="LOCAL" />
-      <updated>1620818705942</updated>
+      <updated>1622214631247</updated>
     </task>
-    <task id="LOCAL-00031" summary="consultant api bug fix">
-      <created>1621233425309</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
+    <task id="LOCAL-00113" summary="reference api">
+      <created>1622238088683</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
       <option name="project" value="LOCAL" />
-      <updated>1621233425310</updated>
+      <updated>1622238088683</updated>
     </task>
-    <task id="LOCAL-00032" summary="consultant api bug fix">
-      <created>1621237639239</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
+    <task id="LOCAL-00114" summary="student foreign language">
+      <created>1622327891467</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
       <option name="project" value="LOCAL" />
-      <updated>1621237639239</updated>
+      <updated>1622327891467</updated>
     </task>
-    <task id="LOCAL-00033" summary="consultant api bug fix">
-      <created>1621239879768</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
+    <task id="LOCAL-00115" summary="job info bug fix">
+      <created>1622371170896</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
       <option name="project" value="LOCAL" />
-      <updated>1621239879768</updated>
+      <updated>1622371170896</updated>
     </task>
-    <task id="LOCAL-00034" summary="consultant api bug fix">
-      <created>1621248966852</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
+    <task id="LOCAL-00116" summary="education info bug fix">
+      <created>1622372644955</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
       <option name="project" value="LOCAL" />
-      <updated>1621248966852</updated>
+      <updated>1622372644956</updated>
     </task>
-    <task id="LOCAL-00035" summary="consultant api bug fix">
-      <created>1621250714958</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
+    <task id="LOCAL-00117" summary="bug fix">
+      <created>1622374336019</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
       <option name="project" value="LOCAL" />
-      <updated>1621250714958</updated>
+      <updated>1622374336019</updated>
     </task>
-    <task id="LOCAL-00036" summary="location api bug fix">
-      <created>1621252103287</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
+    <task id="LOCAL-00118" summary="delete logs">
+      <created>1622378867428</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
       <option name="project" value="LOCAL" />
-      <updated>1621252103287</updated>
+      <updated>1622378867428</updated>
     </task>
-    <task id="LOCAL-00037" summary="consultant api bug fix">
-      <created>1621253100150</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
+    <task id="LOCAL-00119" summary="qualificaation api">
+      <created>1622449216849</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
       <option name="project" value="LOCAL" />
-      <updated>1621253100150</updated>
+      <updated>1622449216849</updated>
     </task>
-    <task id="LOCAL-00038" summary="lecture api">
-      <created>1621261221446</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
+    <task id="LOCAL-00120" summary="exam api">
+      <created>1622453109841</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
       <option name="project" value="LOCAL" />
-      <updated>1621261221446</updated>
+      <updated>1622453109841</updated>
     </task>
-    <task id="LOCAL-00039" summary="consultant api bug fix">
-      <created>1621262870941</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
+    <task id="LOCAL-00121" summary="bug fix">
+      <created>1622457251191</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
       <option name="project" value="LOCAL" />
-      <updated>1621262870941</updated>
+      <updated>1622457251191</updated>
     </task>
-    <task id="LOCAL-00040" summary="consultant api bug fix">
-      <created>1621325913384</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
+    <task id="LOCAL-00122" summary="driver license api">
+      <created>1622462110623</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
       <option name="project" value="LOCAL" />
-      <updated>1621325913384</updated>
+      <updated>1622462110623</updated>
     </task>
-    <task id="LOCAL-00041" summary="consultant api bug fix">
-      <created>1621335640651</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
+    <task id="LOCAL-00123" summary="bug fix">
+      <created>1622463973040</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
       <option name="project" value="LOCAL" />
-      <updated>1621335640651</updated>
+      <updated>1622463973040</updated>
     </task>
-    <task id="LOCAL-00042" summary="consultant api bug fix">
-      <created>1621335998133</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
+    <task id="LOCAL-00124" summary="bug fix">
+      <created>1622464582721</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
       <option name="project" value="LOCAL" />
-      <updated>1621335998133</updated>
+      <updated>1622464582721</updated>
     </task>
-    <task id="LOCAL-00043" summary="consultant api bug fix">
-      <created>1621339482842</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
+    <task id="LOCAL-00125" summary="job post list api">
+      <created>1622471376723</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
       <option name="project" value="LOCAL" />
-      <updated>1621339482842</updated>
+      <updated>1622471376724</updated>
     </task>
-    <task id="LOCAL-00044" summary="consultant api bug fix">
-      <created>1621340291510</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
+    <task id="LOCAL-00126" summary="bug fix">
+      <created>1622472230815</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
       <option name="project" value="LOCAL" />
-      <updated>1621340291510</updated>
+      <updated>1622472230815</updated>
     </task>
-    <task id="LOCAL-00045" summary="consultant api bug fix">
-      <created>1621341097919</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
+    <task id="LOCAL-00127" summary="bug fix">
+      <created>1622473555846</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1621341097919</updated>
+      <updated>1622473555846</updated>
     </task>
-    <task id="LOCAL-00046" summary="city district api">
-      <created>1621349545384</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
+    <task id="LOCAL-00128" summary="bug fix">
+      <created>1622473941262</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
       <option name="project" value="LOCAL" />
-      <updated>1621349545384</updated>
+      <updated>1622473941262</updated>
     </task>
-    <task id="LOCAL-00047" summary="city district api">
-      <created>1621349727110</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
+    <task id="LOCAL-00129" summary="jop application apply">
+      <created>1622488669456</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
       <option name="project" value="LOCAL" />
-      <updated>1621349727110</updated>
+      <updated>1622488669456</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00130" summary="cover letter api">
+      <created>1622533826895</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1622533826895</updated>
+    </task>
+    <task id="LOCAL-00131" summary="student blog api">
+      <created>1622548470832</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1622548470832</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,220 +544,54 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="serializer modified" />
-    <MESSAGE value="student api delete" />
-    <MESSAGE value="student aktif pasif etme bugfix" />
-    <MESSAGE value="company delete" />
-    <MESSAGE value="admin company api" />
-    <MESSAGE value="instructor api" />
-    <MESSAGE value="blog api bug fix" />
-    <MESSAGE value="location api bug fix" />
-    <MESSAGE value="lecture api" />
-    <MESSAGE value="consultant api bug fix" />
-    <MESSAGE value="city district api" />
-    <option name="LAST_COMMIT_MESSAGE" value="city district api" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="440" y="155" key="#Deployment" timestamp="1620080826806">
-      <screen x="0" y="25" width="1680" height="935" />
-    </state>
-    <state x="440" y="155" key="#Deployment/0.25.1680.935@0.25.1680.935" timestamp="1620080826806" />
-    <state x="184" y="80" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1618158755365">
-      <screen x="0" y="25" width="1440" height="793" />
-    </state>
-    <state x="184" y="80" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.793@0.25.1440.793" timestamp="1618158755365" />
-    <state x="588" y="-902" key="#com.intellij.ide.util.MemberChooser" timestamp="1621344629444">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="533" y="141" key="#com.intellij.ide.util.MemberChooser/0.25.1440.798@0.25.1440.798" timestamp="1619344745032" />
-    <state x="588" y="-902" key="#com.intellij.ide.util.MemberChooser/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621344629444" />
-    <state x="588" y="-915" key="#com.intellij.ide.util.MemberChooser/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722544948" />
-    <state x="622" y="161" key="#com.intellij.ide.util.MemberChooser/0.25.1680.938@0.25.1680.938" timestamp="1620209313004" />
-    <state x="592" y="-812" key="#xdebugger.evaluate" timestamp="1621262110614">
-      <screen x="-123" y="-1055" width="1920" height="967" />
-    </state>
-    <state x="600" y="-869" key="#xdebugger.evaluate/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620117267817" />
-    <state x="592" y="-813" key="#xdebugger.evaluate/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620716312292" />
-    <state x="592" y="-812" key="#xdebugger.evaluate/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262110614" />
-    <state x="633" y="207" key="#xdebugger.evaluate/0.25.1680.938@0.25.1680.938" timestamp="1620221708590" />
-    <state x="626" y="261" key="#xdebugger.evaluate/0.25.1680.941@0.25.1680.941" timestamp="1620740997934" />
-    <state x="323" y="-896" key="CommitChangelistDialog2" timestamp="1621349726934">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="222" y="-1055" key="CommitChangelistDialog2/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620286895309" />
-    <state x="259" y="25" key="CommitChangelistDialog2/0.25.1440.798@0.25.1440.798" timestamp="1619378114562" />
-    <state x="222" y="-1055" key="CommitChangelistDialog2/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804558846" />
-    <state x="323" y="-896" key="CommitChangelistDialog2/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252103128" />
-    <state x="323" y="-896" key="CommitChangelistDialog2/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621349726934" />
-    <state x="222" y="-1055" key="CommitChangelistDialog2/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620296275791" />
-    <state x="222" y="-1055" key="CommitChangelistDialog2/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620721213609" />
-    <state x="323" y="-938" key="CommitChangelistDialog2/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262870726" />
-    <state x="302" y="25" key="CommitChangelistDialog2/0.25.1680.935@0.25.1680.935" timestamp="1620083535916" />
-    <state x="302" y="25" key="CommitChangelistDialog2/0.25.1680.938@0.25.1680.938" timestamp="1620306433694" />
-    <state x="302" y="25" key="CommitChangelistDialog2/0.25.1680.941@0.25.1680.941" timestamp="1620818705708" />
-    <state x="302" y="25" key="CommitChangelistDialog2/0.25.1680.944@0.25.1680.944" timestamp="1620131723176" />
-    <state x="507" y="180" key="FileChooserDialogImpl" timestamp="1618155522054">
-      <screen x="0" y="25" width="1440" height="793" />
-    </state>
-    <state x="507" y="180" key="FileChooserDialogImpl/0.25.1440.793@0.25.1440.793" timestamp="1618155522054" />
-    <state width="1878" height="254" key="GridCell.Tab.0.bottom" timestamp="1621411812479">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="248" key="GridCell.Tab.0.bottom/0.25.1440.796/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620113110380" />
-    <state width="1878" height="248" key="GridCell.Tab.0.bottom/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620115600854" />
-    <state width="1878" height="227" key="GridCell.Tab.0.bottom/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620814029450" />
-    <state width="1878" height="218" key="GridCell.Tab.0.bottom/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252004316" />
-    <state width="1878" height="254" key="GridCell.Tab.0.bottom/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812479" />
-    <state width="1878" height="220" key="GridCell.Tab.0.bottom/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620197999151" />
-    <state width="1878" height="349" key="GridCell.Tab.0.bottom/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134401" />
-    <state width="1878" height="254" key="GridCell.Tab.0.bottom/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262049063" />
-    <state width="1638" height="228" key="GridCell.Tab.0.bottom/0.25.1680.938@0.25.1680.938" timestamp="1620304159046" />
-    <state width="1878" height="227" key="GridCell.Tab.0.bottom/0.25.1680.941@0.25.1680.941" timestamp="1620817517985" />
-    <state width="1638" height="218" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1621196619772" />
-    <state width="1878" height="254" key="GridCell.Tab.0.center" timestamp="1621411812478">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="248" key="GridCell.Tab.0.center/0.25.1440.796/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620113110378" />
-    <state width="1878" height="248" key="GridCell.Tab.0.center/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620115600852" />
-    <state width="1878" height="227" key="GridCell.Tab.0.center/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620814029448" />
-    <state width="1878" height="218" key="GridCell.Tab.0.center/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252004315" />
-    <state width="1878" height="254" key="GridCell.Tab.0.center/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812478" />
-    <state width="1878" height="220" key="GridCell.Tab.0.center/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620197999150" />
-    <state width="1878" height="349" key="GridCell.Tab.0.center/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134400" />
-    <state width="1878" height="254" key="GridCell.Tab.0.center/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262049062" />
-    <state width="1638" height="228" key="GridCell.Tab.0.center/0.25.1680.938@0.25.1680.938" timestamp="1620304159046" />
-    <state width="1878" height="227" key="GridCell.Tab.0.center/0.25.1680.941@0.25.1680.941" timestamp="1620817517985" />
-    <state width="1638" height="218" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1621196619771" />
-    <state width="1878" height="254" key="GridCell.Tab.0.left" timestamp="1621411812477">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="248" key="GridCell.Tab.0.left/0.25.1440.796/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620113110371" />
-    <state width="1878" height="248" key="GridCell.Tab.0.left/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620115600851" />
-    <state width="1878" height="227" key="GridCell.Tab.0.left/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620814029448" />
-    <state width="1878" height="218" key="GridCell.Tab.0.left/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252004314" />
-    <state width="1878" height="254" key="GridCell.Tab.0.left/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812477" />
-    <state width="1878" height="220" key="GridCell.Tab.0.left/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620197999149" />
-    <state width="1878" height="349" key="GridCell.Tab.0.left/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134399" />
-    <state width="1878" height="254" key="GridCell.Tab.0.left/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262049062" />
-    <state width="1638" height="228" key="GridCell.Tab.0.left/0.25.1680.938@0.25.1680.938" timestamp="1620304159045" />
-    <state width="1878" height="227" key="GridCell.Tab.0.left/0.25.1680.941@0.25.1680.941" timestamp="1620817517984" />
-    <state width="1638" height="218" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1621196619770" />
-    <state width="1878" height="254" key="GridCell.Tab.0.right" timestamp="1621411812479">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="248" key="GridCell.Tab.0.right/0.25.1440.796/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620113110379" />
-    <state width="1878" height="248" key="GridCell.Tab.0.right/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620115600853" />
-    <state width="1878" height="227" key="GridCell.Tab.0.right/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620814029449" />
-    <state width="1878" height="218" key="GridCell.Tab.0.right/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252004315" />
-    <state width="1878" height="254" key="GridCell.Tab.0.right/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812479" />
-    <state width="1878" height="220" key="GridCell.Tab.0.right/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620197999150" />
-    <state width="1878" height="349" key="GridCell.Tab.0.right/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134400" />
-    <state width="1878" height="254" key="GridCell.Tab.0.right/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262049063" />
-    <state width="1638" height="228" key="GridCell.Tab.0.right/0.25.1680.938@0.25.1680.938" timestamp="1620304159046" />
-    <state width="1878" height="227" key="GridCell.Tab.0.right/0.25.1680.941@0.25.1680.941" timestamp="1620817517985" />
-    <state width="1638" height="218" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1621196619771" />
-    <state width="1878" height="254" key="GridCell.Tab.1.bottom" timestamp="1621411812481">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="252" key="GridCell.Tab.1.bottom/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804449039" />
-    <state width="1878" height="254" key="GridCell.Tab.1.bottom/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812481" />
-    <state width="1878" height="316" key="GridCell.Tab.1.bottom/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620117802885" />
-    <state width="1878" height="349" key="GridCell.Tab.1.bottom/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134402" />
-    <state width="1878" height="254" key="GridCell.Tab.1.bottom/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262087148" />
-    <state width="1638" height="105" key="GridCell.Tab.1.bottom/0.25.1680.938@0.25.1680.938" timestamp="1620238203919" />
-    <state width="1638" height="252" key="GridCell.Tab.1.bottom/0.25.1680.941@0.25.1680.941" timestamp="1620741089126" />
-    <state width="1638" height="335" key="GridCell.Tab.1.bottom/0.25.1680.944@0.25.1680.944" timestamp="1620735140256" />
-    <state width="1878" height="254" key="GridCell.Tab.1.center" timestamp="1621411812480">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="252" key="GridCell.Tab.1.center/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804449038" />
-    <state width="1878" height="254" key="GridCell.Tab.1.center/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812480" />
-    <state width="1878" height="316" key="GridCell.Tab.1.center/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620117802884" />
-    <state width="1878" height="349" key="GridCell.Tab.1.center/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134401" />
-    <state width="1878" height="254" key="GridCell.Tab.1.center/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262087146" />
-    <state width="1638" height="105" key="GridCell.Tab.1.center/0.25.1680.938@0.25.1680.938" timestamp="1620238203919" />
-    <state width="1638" height="252" key="GridCell.Tab.1.center/0.25.1680.941@0.25.1680.941" timestamp="1620741089125" />
-    <state width="1638" height="335" key="GridCell.Tab.1.center/0.25.1680.944@0.25.1680.944" timestamp="1620735140256" />
-    <state width="1878" height="254" key="GridCell.Tab.1.left" timestamp="1621411812479">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="252" key="GridCell.Tab.1.left/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804449038" />
-    <state width="1878" height="254" key="GridCell.Tab.1.left/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812479" />
-    <state width="1878" height="316" key="GridCell.Tab.1.left/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620117802884" />
-    <state width="1878" height="349" key="GridCell.Tab.1.left/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134401" />
-    <state width="1878" height="254" key="GridCell.Tab.1.left/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262087146" />
-    <state width="1638" height="105" key="GridCell.Tab.1.left/0.25.1680.938@0.25.1680.938" timestamp="1620238203919" />
-    <state width="1638" height="252" key="GridCell.Tab.1.left/0.25.1680.941@0.25.1680.941" timestamp="1620741089125" />
-    <state width="1638" height="335" key="GridCell.Tab.1.left/0.25.1680.944@0.25.1680.944" timestamp="1620735140255" />
-    <state width="1878" height="254" key="GridCell.Tab.1.right" timestamp="1621411812480">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1878" height="252" key="GridCell.Tab.1.right/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804449038" />
-    <state width="1878" height="254" key="GridCell.Tab.1.right/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621411812480" />
-    <state width="1878" height="316" key="GridCell.Tab.1.right/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620117802885" />
-    <state width="1878" height="349" key="GridCell.Tab.1.right/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620722134402" />
-    <state width="1878" height="254" key="GridCell.Tab.1.right/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262087146" />
-    <state width="1638" height="105" key="GridCell.Tab.1.right/0.25.1680.938@0.25.1680.938" timestamp="1620238203919" />
-    <state width="1638" height="252" key="GridCell.Tab.1.right/0.25.1680.941@0.25.1680.941" timestamp="1620741089125" />
-    <state width="1638" height="335" key="GridCell.Tab.1.right/0.25.1680.944@0.25.1680.944" timestamp="1620735140256" />
-    <state x="168" y="99" key="MergeDialog" timestamp="1620072472274">
-      <screen x="0" y="25" width="1680" height="935" />
-    </state>
-    <state x="144" y="88" key="MergeDialog/0.25.1440.798@0.25.1440.798" timestamp="1619339657583" />
-    <state x="168" y="99" key="MergeDialog/0.25.1680.935@0.25.1680.935" timestamp="1620072472274" />
-    <state x="229" y="57" key="SettingsEditor" timestamp="1619342048376">
-      <screen x="0" y="25" width="1440" height="798" />
-    </state>
-    <state x="229" y="57" key="SettingsEditor/0.25.1440.798@0.25.1440.798" timestamp="1619342048376" />
-    <state x="303" y="-897" key="Vcs.Push.Dialog.v2" timestamp="1621349728829">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="303" y="-896" key="Vcs.Push.Dialog.v2/0.25.1440.798/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620286897399" />
-    <state x="320" y="145" key="Vcs.Push.Dialog.v2/0.25.1440.798@0.25.1440.798" timestamp="1619378117635" />
-    <state x="303" y="-897" key="Vcs.Push.Dialog.v2/0.25.1440.800/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1620804560573" />
-    <state x="303" y="-897" key="Vcs.Push.Dialog.v2/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621252105608" />
-    <state x="303" y="-897" key="Vcs.Push.Dialog.v2/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621349728829" />
-    <state x="303" y="-911" key="Vcs.Push.Dialog.v2/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620296280875" />
-    <state x="303" y="-911" key="Vcs.Push.Dialog.v2/0.25.1440.875/-123.-1055.1920.964@-123.-1055.1920.964" timestamp="1620721214961" />
-    <state x="303" y="-910" key="Vcs.Push.Dialog.v2/0.25.1440.875/-123.-1055.1920.967@-123.-1055.1920.967" timestamp="1621262872340" />
-    <state x="373" y="166" key="Vcs.Push.Dialog.v2/0.25.1680.935@0.25.1680.935" timestamp="1620083537924" />
-    <state x="373" y="166" key="Vcs.Push.Dialog.v2/0.25.1680.938@0.25.1680.938" timestamp="1620306434943" />
-    <state x="373" y="166" key="Vcs.Push.Dialog.v2/0.25.1680.941@0.25.1680.941" timestamp="1620818709538" />
-    <state x="373" y="167" key="Vcs.Push.Dialog.v2/0.25.1680.944@0.25.1680.944" timestamp="1620131724844" />
-    <state x="608" y="393" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1620072441770">
-      <screen x="0" y="25" width="1680" height="935" />
-    </state>
-    <state x="521" y="339" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1440.798@0.25.1440.798" timestamp="1619339612318" />
-    <state x="608" y="393" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1680.935@0.25.1680.935" timestamp="1620072441770" />
-    <state x="502" y="-824" width="670" height="676" key="search.everywhere.popup" timestamp="1621321403424">
-      <screen x="-123" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="502" y="-824" width="670" height="676" key="search.everywhere.popup/0.25.1440.803/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621248462902" />
-    <state x="502" y="-824" width="670" height="676" key="search.everywhere.popup/0.25.1440.805/-123.-1055.1920.1055@-123.-1055.1920.1055" timestamp="1621321403424" />
-    <state x="502" y="-845" key="search.everywhere.popup/0.25.1440.875/-123.-1055.1920.958@-123.-1055.1920.958" timestamp="1620296043188" />
-    <state x="547" y="232" key="search.everywhere.popup/0.25.1680.944@0.25.1680.944" timestamp="1620647276087" />
+    <MESSAGE value="password change" />
+    <MESSAGE value="JOB POST GET LİST" />
+    <MESSAGE value="jobpost single get api" />
+    <MESSAGE value="jobpost put api" />
+    <MESSAGE value="military status select api" />
+    <MESSAGE value="nationality select api" />
+    <MESSAGE value="info about api" />
+    <MESSAGE value="military status" />
+    <MESSAGE value="military status bug fix" />
+    <MESSAGE value="communication api" />
+    <MESSAGE value="certificate api" />
+    <MESSAGE value="Job info api" />
+    <MESSAGE value="reference api" />
+    <MESSAGE value="student foreign language" />
+    <MESSAGE value="job info bug fix" />
+    <MESSAGE value="education info bug fix" />
+    <MESSAGE value="delete logs" />
+    <MESSAGE value="qualificaation api" />
+    <MESSAGE value="exam api" />
+    <MESSAGE value="driver license api" />
+    <MESSAGE value="job post list api" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="jop application apply" />
+    <MESSAGE value="cover letter api" />
+    <MESSAGE value="student blog api" />
+    <option name="LAST_COMMIT_MESSAGE" value="student blog api" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
-          <line>96</line>
+          <line>100</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>71</line>
+          <line>85</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
-          <line>29</line>
+          <line>43</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
-          <line>15</line>
+          <line>24</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -772,13 +641,98 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
-          <line>47</line>
+          <line>74</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/BlogSerializer.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/career/Views/CompanyViews.py</url>
-          <line>107</line>
-          <option name="timeStamp" value="15" />
+          <line>197</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/CompanySerializer.py</url>
+          <line>113</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/AppointmentViews.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/AppointmentSerializer.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/serializers.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/JobPostSerializer.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>181</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
+          <line>372</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
+          <line>405</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>247</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>382</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>369</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>471</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>967</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>307</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>582</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

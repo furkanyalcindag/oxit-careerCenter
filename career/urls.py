@@ -21,7 +21,7 @@ from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
-    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi
+    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi
 
 app_name = 'career'
 
@@ -109,6 +109,7 @@ urlpatterns = [
     path('student/student-job-post-api/', JobPostStudentApi.as_view()),
     path('student/student-job-application-api/', JopStudentApplicationsApi.as_view()),
     path('student/student-job-application-cover-letter-api/', JobPostApplicationStudentCoverLetterApi.as_view()),
-    path('student/student-blog-api/', BlogStudentApi.as_view())
+    path('student/student-blog-api/', BlogStudentApi.as_view()),
+    path('student/student-export-cv-api/', StudentCVExportPDFApi.as_view())
 
 ]
