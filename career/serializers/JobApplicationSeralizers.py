@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from career.models import JobPost, Student
 from career.models.JobApplication import JobApplication
+from career.serializers.GeneralSerializers import PageSerializer
 from career.serializers.JobPostSerializer import JobPostSerializer
 from career.serializers.StudentSerializer import StudentSerializer
 
@@ -20,8 +21,8 @@ class JobApplicationSerializer(serializers.Serializer):
 
 
 class StudentJobApplicationSerializer(serializers.Serializer):
-    jobPostId = serializers.UUIDField(required=True, write_only=True)
-    coverLetter = serializers.CharField(required=False, allow_null=True)
+    jobPostId = serializers.UUIDField(required=True)
+    coverLetter = serializers.CharField(required=False, write_only=True, allow_null=True)
     jobPost = JobPostSerializer(read_only=True)
     title = serializers.CharField(read_only=True)
     companyName = serializers.CharField(read_only=True)
@@ -42,3 +43,13 @@ class StudentJobApplicationSerializer(serializers.Serializer):
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class StudentJobApplicationPageableSerializer(PageSerializer):
+    data = StudentJobApplicationSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
