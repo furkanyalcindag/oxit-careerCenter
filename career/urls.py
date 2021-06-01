@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.urls import path
 
 from career.Views.AppointmentViews import AppointmentApi
-from career.Views.BlogViews import BlogApi
+from career.Views.BlogViews import BlogApi, BlogStudentApi
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
@@ -108,6 +108,7 @@ urlpatterns = [
     path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view()),
     path('student/student-job-post-api/', JobPostStudentApi.as_view()),
     path('student/student-job-application-api/', JopStudentApplicationsApi.as_view()),
-    path('student/student-job-application-cover-letter-api/', JobPostApplicationStudentCoverLetterApi.as_view())
+    path('student/student-job-application-cover-letter-api/', JobPostApplicationStudentCoverLetterApi.as_view()),
+    path('student/student-blog-api/', BlogStudentApi.as_view())
 
 ]
