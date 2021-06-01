@@ -1,20 +1,20 @@
 import traceback
 
-from django.db.models import Q
-from rest_framework import status, response
+
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
-    Certificate, JobInfo, JobType, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
-from career.models.APIObject import APIObject
-from career.models.StudentDriverLicense import StudentDriverLicense
-from career.models.StudentEducationInfo import StudentEducationInfo
 
+from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
+    Certificate, JobInfo, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
+from career.models.APIObject import APIObject
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Reference import Reference
+from career.models.StudentDriverLicense import StudentDriverLicense
+from career.models.StudentEducationInfo import StudentEducationInfo
 from career.models.StudentExam import StudentExam
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
@@ -1234,3 +1234,44 @@ class StudentDriverLicenseApi(APIView):
         except Exception:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+'''class StudentCVExportPDFApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        student = Student.objects.get(profile__user=request.user)
+
+        api_dict = dict()
+        api_dict['email'] = student.profile.user.email
+        api_dict['firstName'] = student.profile.user.first_name
+        api_dict['lastName'] = student.profile.user.last_name
+        api_dict['telephoneNumber'] = student.profile.mobilePhone
+        api_dict['birthDate'] = student.profile.birthDate
+        api_dict['address'] = student.profile.address
+        api_dict['profileImage'] = student.profile.profileImage
+        api_dict['gender'] = GenderDescription.objects.get(gender=student.profile.gender, language__code=lang_code).name
+        api_dict['nationality'] = student.profile.nationality
+        api_dict['militaryStatus'] = MilitaryStatusDescription.objects.get(
+            militaryStatus=student.profile.militaryStatus, language__code=lang_code)
+        api_dict['maritalStatus'] = MaritalStatusDescription.objects.get(maritalStatus=student.profile,
+                                                                         language__code=lang_code)
+        api_dict['experiments'] = JobInfo.objects.filter(student=student)
+        api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
+        api_dict['foreignLanguages'] = StudentForeignLanguage.objects.filter(student=student)
+        api_dict['exams'] = StudentExam.objects.filter(student=student)
+        api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
+        api_dict['references'] = Reference.objects.filter(student=student)
+        api_dict['certificate'] = Certificate.objects.filter(student=student)
+
+        # Rendered
+        html_string = render_to_string('cv-print.html', {'data': api_dict})
+
+        html_string = html_string.encode('utf-8').strip()
+        html = HTML(string=html_string)
+        result = html.write_pdf('tmp/ekstre.pdf')
+
+        return FileResponse(open('tmp/ekstre.pdf', 'rb'), status=status.HTTP_200_OK,
+                            content_type='application/pdf')
+'''
