@@ -1,11 +1,12 @@
 import traceback
 
-
+from django.http import FileResponse
+from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from weasyprint import HTML
 
 from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
     Certificate, JobInfo, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
@@ -1236,7 +1237,7 @@ class StudentDriverLicenseApi(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-'''class StudentCVExportPDFApi(APIView):
+class StudentCVExportPDFApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -1254,9 +1255,9 @@ class StudentDriverLicenseApi(APIView):
         api_dict['gender'] = GenderDescription.objects.get(gender=student.profile.gender, language__code=lang_code).name
         api_dict['nationality'] = student.profile.nationality
         api_dict['militaryStatus'] = MilitaryStatusDescription.objects.get(
-            militaryStatus=student.profile.militaryStatus, language__code=lang_code)
-        api_dict['maritalStatus'] = MaritalStatusDescription.objects.get(maritalStatus=student.profile,
-                                                                         language__code=lang_code)
+            militaryStatus=student.profile.militaryStatus, language__code=lang_code).name
+        api_dict['maritalStatus'] = MaritalStatusDescription.objects.get(maritalStatus=student.profile.maritalStatus,
+                                                                         language__code=lang_code).name
         api_dict['experiments'] = JobInfo.objects.filter(student=student)
         api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
         api_dict['foreignLanguages'] = StudentForeignLanguage.objects.filter(student=student)
@@ -1270,8 +1271,7 @@ class StudentDriverLicenseApi(APIView):
 
         html_string = html_string.encode('utf-8').strip()
         html = HTML(string=html_string)
-        result = html.write_pdf('tmp/ekstre.pdf')
+        result = html.write_pdf('tmp/report.pdf')
 
-        return FileResponse(open('tmp/ekstre.pdf', 'rb'), status=status.HTTP_200_OK,
+        return FileResponse(open('tmp/report.pdf', 'rb'), status=status.HTTP_200_OK,
                             content_type='application/pdf')
-'''

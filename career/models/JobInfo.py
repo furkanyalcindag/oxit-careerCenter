@@ -11,6 +11,6 @@ class JobInfo(BaseModel):
     title = models.CharField(max_length=256)
     startDate = models.DateField()
     isContinue = models.BooleanField(default=True)
-    finishDate = models.DateField()
+    finishDate = models.DateField(null=True)
     description = models.TextField(null=True, blank=True)
     jobType = models.ForeignKey(JobType, on_delete=models.CASCADE)

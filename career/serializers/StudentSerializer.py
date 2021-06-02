@@ -161,7 +161,7 @@ class StudentHighSchoolEducationInformationSerializer(serializers.Serializer):
     gpa = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
     isQuaternarySystem = serializers.BooleanField(required=True)
     startDate = serializers.DateField(required=True)
-    graduationDate = serializers.DateField(required=True)
+    graduationDate = serializers.DateField(required=True, allow_null=True)
     highSchool = serializers.CharField(required=True)
 
     def create(self, validated_data):
@@ -302,7 +302,7 @@ class StudentCertificateSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
     name = serializers.CharField(required=True)
     institutionName = serializers.CharField(required=True)
-    certificateNo = serializers.CharField(required=False, allow_null=True)
+    certificateNo = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     description = serializers.CharField(required=False, allow_null=True)
     year = serializers.IntegerField()
 
