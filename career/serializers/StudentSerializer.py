@@ -29,6 +29,7 @@ class StudentSerializer(serializers.Serializer):
                                   validators=[UniqueValidator(queryset=User.objects.all())])
     # password = serializers.CharField(write_only=True)
     studentNumber = serializers.CharField(required=True)
+    isGraduated = serializers.BooleanField(required=True)
     isActive = serializers.BooleanField(read_only=True)
 
     def update(self, instance, validated_data):
@@ -51,7 +52,7 @@ class StudentSerializer(serializers.Serializer):
                 profile.save()
                 student = Student(profile=profile)
                 student.studentNumber = validated_data.get("studentNumber")
-                student.isGraduated = False
+                student.isGraduated = validated_data.get('isGraduated')
                 student.save()
                 return student
         except Exception as e:
