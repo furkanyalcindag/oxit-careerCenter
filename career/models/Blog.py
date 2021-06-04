@@ -12,4 +12,4 @@ class Blog(BaseModel):
     keyword = models.CharField(max_length=128, default=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    blogType = models.ForeignKey(BlogType, on_delete=models.CASCADE, default=None)
+    blogType = models.ForeignKey(BlogType, on_delete=models.CASCADE, null=True, default=None)
