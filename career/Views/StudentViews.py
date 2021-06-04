@@ -1,12 +1,10 @@
 import traceback
 
 from django.http import FileResponse
-from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from weasyprint import HTML
 
 from career.models import Student, MaritalStatusDescription, MilitaryStatusDescription, \
     Certificate, JobInfo, StudentForeignLanguage, ForeignLanguageLevelDescription, StudentQualification
@@ -33,8 +31,13 @@ class StudentApi(APIView):
 
         active_page = 1
         student_number = ''
+        is_graduated = False
+
         if request.GET.get('page') is not None:
             active_page = int(request.GET.get('page'))
+
+        if request.GET.get('type') is not None and request.GET.get('type') == 'graduated':
+            is_graduated = True
 
         if request.GET.get('studentNumber') is not None:
             student_number = request.GET.get('studentNumber')
@@ -42,7 +45,8 @@ class StudentApi(APIView):
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Student.objects.filter(studentNumber__icontains=student_number).order_by('-id')[lim_start:lim_end]
+        data = Student.objects.filter(studentNumber__icontains=student_number, isGraduated=is_graduated).order_by(
+            '-id')[lim_start:lim_end]
         arr = []
         for x in data:
             api_data = dict()
@@ -52,12 +56,14 @@ class StudentApi(APIView):
             api_data['studentNumber'] = x.studentNumber
             api_data['email'] = x.profile.user.username
             api_data['isActive'] = x.profile.user.is_active
+            api_data['isGraduated'] = x.isGraduated
             arr.append(api_data)
 
         api_object = APIObject()
         api_object.data = arr
         api_object.recordsFiltered = data.count()
-        api_object.recordsTotal = Student.objects.count()
+        api_object.recordsTotal = Student.objects.filter(studentNumber__icontains=student_number,
+                                                         isGraduated=is_graduated).count()
         api_object.activePage = active_page
 
         serializer = StudentPageableSerializer(
@@ -1268,11 +1274,11 @@ class StudentCVExportPDFApi(APIView):
         api_dict['certificate'] = Certificate.objects.filter(student=student)
 
         # Rendered
-       # html_string = render_to_string('cv-print.html', {'data': api_dict})
+        # html_string = render_to_string('cv-print.html', {'data': api_dict})
 
-        #html_string = html_string.encode('utf-8').strip()
-        #html = HTML(string=html_string)
-        #result = html.write_pdf('tmp/report.pdf')
+        # html_string = html_string.encode('utf-8').strip()
+        # html = HTML(string=html_string)
+        # result = html.write_pdf('tmp/report.pdf')
 
         pdf = render_to_pdf('cv-print.html', api_dict)
 
