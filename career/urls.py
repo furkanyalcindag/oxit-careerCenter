@@ -9,7 +9,7 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'foreign-language-select-api/$', ForeignLanguageSelectApi.as_view()),
     url(r'driver-license-select-api/$', DriverLicenseSelectApi.as_view()),
     url(r'blog-type-select-api/$', BlogTypeSelectApi.as_view()),
+    url(r'unit-select-api/$', UnitSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student

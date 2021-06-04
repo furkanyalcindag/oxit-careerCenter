@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
-    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType
+    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit
 from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
@@ -333,6 +333,25 @@ class BlogTypeSelectApi(APIView):
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
 
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+
+class UnitSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = Unit.objects.filter()
+        select_arr = []
+        for type in data:
+            select_object = SelectObject()
+            select_object.value = type.uuid
+            select_object.label = type.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
 
 
 
