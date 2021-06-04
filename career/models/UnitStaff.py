@@ -8,3 +8,4 @@ from career.models.Unit import Unit
 class UnitStaff(BaseModel):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
+

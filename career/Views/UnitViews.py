@@ -135,6 +135,7 @@ class UnitStaffApi(APIView):
                 api_data['firstName'] = x.person.firstName
                 api_data['lastName'] = x.person.lastName
                 api_data['title'] = x.person.title
+                api_data['cv'] = x.person.cvLink
 
 
                 arr.append(api_data)
