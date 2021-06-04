@@ -5,9 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Unit
+from career.models import Unit, UnitStaff
 from career.models.APIObject import APIObject
-from career.serializers.UnitSerializer import UnitSerializer, UnitPageableSerializer
+from career.serializers.UnitSerializer import UnitSerializer, UnitPageableSerializer, UnitStaffSerializer, \
+    UnitStaffPageableSerializer
 
 
 class UnitApi(APIView):
@@ -106,3 +107,61 @@ class UnitApi(APIView):
         except Exception:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UnitStaffApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+
+            active_page = 1
+            count = 10
+
+            if request.GET.get('count') is not None:
+                count = int(request.GET.get('count'))
+
+            lim_start = count * (int(active_page) - 1)
+            lim_end = lim_start + int(count)
+
+            data = UnitStaff.objects.filter(unit__uuid=request.GET.get('id'), isDeleted=False).order_by('-id')[
+                   lim_start:lim_end]
+
+            filtered_count = UnitStaff.objects.filter(unit__uuid=request.GET.get('id'), isDeleted=False).count()
+            arr = []
+            for x in data:
+                api_data = dict()
+                api_data['firstName'] = x.person.firstName
+                api_data['lastName'] = x.person.lastName
+                api_data['title'] = x.person.title
+
+
+                arr.append(api_data)
+
+            api_object = APIObject()
+            api_object.data = arr
+            api_object.recordsFiltered = filtered_count
+            api_object.recordsTotal = UnitStaff.objects.filter(isDeleted=False).count()
+            api_object.activePage = active_page
+
+            serializer = UnitStaffPageableSerializer(
+                api_object, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            raise Exception
+
+    def post(self, request, format=None):
+        serializer = UnitStaffSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "unit is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
