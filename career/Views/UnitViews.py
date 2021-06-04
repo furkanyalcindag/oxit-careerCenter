@@ -49,7 +49,7 @@ class UnitApi(APIView):
             for x in data:
                 api_data = dict()
                 api_data['name'] = x.name
-                api_data['website'] = x.description
+                api_data['website'] = x.website
                 api_data['uuid'] = x.uuid
 
                 arr.append(api_data)
