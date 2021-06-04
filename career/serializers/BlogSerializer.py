@@ -5,8 +5,8 @@ from django.db.models import Q
 from rest_framework import serializers
 from slugify import slugify
 
-from career.models import Blog, BlogDescription, Language
-from career.serializers.GeneralSerializers import PageSerializer
+from career.models import Blog, BlogDescription, Language, BlogType
+from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 
 
 class BlogSerializer(serializers.Serializer):
@@ -14,7 +14,9 @@ class BlogSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
     article = serializers.CharField(required=True)
     languageCode = serializers.CharField(required=False)
-    image = serializers.CharField(required=False,allow_blank=True,allow_null=True)
+    image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    typeId = serializers.CharField(required=True)
+    type = SelectSerializer(read_only=True)
 
     def update(self, instance, validated_data):
 
@@ -40,9 +42,9 @@ class BlogSerializer(serializers.Serializer):
         try:
             with transaction.atomic():
                 blog = Blog()
-
                 r = slugify(validated_data.get('title'))
                 blog.keyword = r
+                blog.blogType = BlogType.objects.get(uuid=validated_data.get('typeId'))
                 blog.save()
 
                 blog_tr = BlogDescription()
@@ -67,6 +69,33 @@ class BlogSerializer(serializers.Serializer):
 
 
         except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class BlogUpdateSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    title = serializers.CharField(required=True)
+    article = serializers.CharField(required=True)
+    languageCode = serializers.CharField(required=False)
+    image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+    def update(self, instance, validated_data):
+
+        try:
+            blog = instance
+
+            blog_description = BlogDescription.objects.get(blog=blog, language=Language.objects.get(
+                code=validated_data.get('languageCode')))
+
+            blog_description.title = validated_data.get('title')
+            blog_description.article = validated_data.get('article')
+            blog_description.image = validated_data.get('image')
+
+            blog_description.save()
+            return blog_description
+
+        except Exception:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 

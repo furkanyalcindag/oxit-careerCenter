@@ -23,6 +23,7 @@ from career.serializers.StudentSerializer import StudentSerializer, StudentPagea
     StudentCommunicationSerializer, StudentCertificateSerializer, StudentJobInformationSerializer, \
     StudentReferenceSerializer, StudentForeignLanguageSerializer, StudentQualificationSerializer, StudentExamSerializer, \
     StudentDriverLicenseSerializer
+from career.services.GeneralService import render_to_pdf
 
 
 class StudentApi(APIView):
@@ -1267,11 +1268,13 @@ class StudentCVExportPDFApi(APIView):
         api_dict['certificate'] = Certificate.objects.filter(student=student)
 
         # Rendered
-        html_string = render_to_string('cv-print.html', {'data': api_dict})
+       # html_string = render_to_string('cv-print.html', {'data': api_dict})
 
-        html_string = html_string.encode('utf-8').strip()
-        html = HTML(string=html_string)
-        result = html.write_pdf('tmp/report.pdf')
+        #html_string = html_string.encode('utf-8').strip()
+        #html = HTML(string=html_string)
+        #result = html.write_pdf('tmp/report.pdf')
 
-        return FileResponse(open('tmp/report.pdf', 'rb'), status=status.HTTP_200_OK,
+        pdf = render_to_pdf('cv-print.html', api_dict)
+
+        return FileResponse(pdf, status=status.HTTP_200_OK,
                             content_type='application/pdf')

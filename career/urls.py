@@ -9,9 +9,10 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi, DriverLicenseSelectApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
-    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc
+    EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
+    BlogTypeApi
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplicationsApi, \
     JobPostApplicationStudentCoverLetterApi
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
     url(r'initial-military-status-api/$', MilitaryStatusDataApi.as_view()),
     url(r'initial-nationality-data-api/$', NationalityDataApi.as_view()),
+    url(r'initial-language-blog-type-data-api/$', BlogTypeApi.as_view()),
     url(r'initial-language-level-data-api/$', LanguageLevelDesc.as_view()),
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
@@ -53,6 +55,7 @@ urlpatterns = [
     url(r'foreign-language-level-select-api/$', ForeignLanguageLevelSelectApi.as_view()),
     url(r'foreign-language-select-api/$', ForeignLanguageSelectApi.as_view()),
     url(r'driver-license-select-api/$', DriverLicenseSelectApi.as_view()),
+    url(r'blog-type-select-api/$', BlogTypeSelectApi.as_view()),
 
     # ----------------admin api---------------------------
     # student

@@ -9,7 +9,7 @@ from slugify import slugify
 from career.exceptions import LanguageCodeException
 from career.models import Blog, BlogDescription, Language
 from career.models.APIObject import APIObject
-from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer
+from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer, BlogUpdateSerializer
 
 
 class BlogApi(APIView):
@@ -30,6 +30,16 @@ class BlogApi(APIView):
             api_data['uuid'] = blog.uuid
             api_data['languageCode'] = lang.code
             api_data['image'] = blog_translation.image
+
+            api_select_blog_type = dict()
+
+            if blog.blogType is not None:
+                api_select_blog_type['label'] = blog.blogType.name
+                api_select_blog_type['value'] = blog.blogType.uuid
+            else:
+                api_select_blog_type = None
+
+            api_data['type'] = api_select_blog_type
 
             serializer = BlogSerializer(
                 api_data, context={'request': request})
@@ -67,6 +77,17 @@ class BlogApi(APIView):
                 api_data['article'] = blog_translation.article
                 api_data['uuid'] = x.uuid
                 api_data['image'] = blog_translation.image
+
+                api_select_blog_type = dict()
+
+                if x.blogType is not None:
+                    api_select_blog_type['label'] = x.blogType.name
+                    api_select_blog_type['value'] = x.blogType.uuid
+                else:
+                    api_select_blog_type = None
+
+                api_data['type'] = api_select_blog_type
+
                 arr.append(api_data)
 
             api_object = APIObject()
@@ -98,7 +119,7 @@ class BlogApi(APIView):
 
         try:
             instance = Blog.objects.get(uuid=request.GET.get('id'))
-            serializer = BlogSerializer(data=request.data, instance=instance, context={'request': request})
+            serializer = BlogUpdateSerializer(data=request.data, instance=instance, context={'request': request})
 
             if request.data['languageCode'] is None:
                 raise LanguageCodeException()
@@ -127,10 +148,6 @@ class BlogApi(APIView):
         except Exception:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
 
 
 class BlogStudentApi(APIView):

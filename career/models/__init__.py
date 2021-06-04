@@ -41,3 +41,4 @@ from .University import University
 from .StudentQualification import StudentQualification
 from .StudentExam import StudentExam
 from .StudentDriverLicense import StudentDriverLicense
+from .BlogType import BlogType

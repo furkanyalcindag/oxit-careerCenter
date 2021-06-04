@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
     EducationType, MaritalStatus, MilitaryStatusDescription, Nationality, ForeignLanguageLevel, \
-    ForeignLanguageLevelDescription
+    ForeignLanguageLevelDescription, BlogType
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
@@ -245,8 +245,6 @@ class LanguageLevelDesc(APIView):
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
 
 
-
-
 class LocationDataApi(APIView):
 
     def get(self, request, format=None):
@@ -472,5 +470,19 @@ class NationalityDataApi(APIView):
         nationality4 = Nationality()
         nationality4.name = 'A.B.D'
         nationality4.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class BlogTypeApi(APIView):
+
+    def get(self, request, format=None):
+        blog_type = BlogType()
+        blog_type.name = 'Blog'
+        blog_type.save()
+
+        blog_type1 = BlogType()
+        blog_type1.name = 'Duyuru'
+        blog_type1.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
