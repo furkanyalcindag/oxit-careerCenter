@@ -23,6 +23,7 @@ from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHi
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
     StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi
+from career.Views.UnitViews import UnitApi
 
 app_name = 'career'
 
@@ -70,6 +71,10 @@ urlpatterns = [
     # instructor
     url(r'instructor-api/$', InstructorApi.as_view()),
     url(r'instructor-select-api/$', InstructorSelectApi.as_view()),
+
+    #unit
+    path('unit-api/', UnitApi.as_view()),
+
 
     # language
     path('language-api/', LanguageApi.as_view()),
