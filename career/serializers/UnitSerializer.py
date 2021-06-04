@@ -9,6 +9,7 @@ from career.serializers.GeneralSerializers import PageSerializer
 class UnitSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     website = serializers.CharField(required=False)
+    uuid = serializers.UUIDField(read_only=True)
 
     def update(self, instance, validated_data):
         try:
