@@ -53,6 +53,7 @@ class UnitStaffSerializer(serializers.Serializer):
     cv = serializers.CharField(required=True)
     unitId = serializers.UUIDField(required=True, write_only=True)
     unit = serializers.CharField(required=False, read_only=True)
+    uuid = serializers.UUIDField(read_only=True)
 
     def update(self, instance, validated_data):
         pass

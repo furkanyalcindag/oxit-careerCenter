@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from career.models import Unit, UnitStaff
 from career.models.APIObject import APIObject
+from career.models.Person import Person
 from career.serializers.UnitSerializer import UnitSerializer, UnitPageableSerializer, UnitStaffSerializer, \
     UnitStaffPageableSerializer
 
@@ -136,7 +137,7 @@ class UnitStaffApi(APIView):
                 api_data['lastName'] = x.person.lastName
                 api_data['title'] = x.person.title
                 api_data['cv'] = x.person.cvLink
-
+                api_data['uuid'] = x.uuid
 
                 arr.append(api_data)
 
@@ -166,3 +167,18 @@ class UnitStaffApi(APIView):
                 if key == 'studentNumber':
                     errors_dict['Öğrenci Numarası'] = value
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        try:
+            unit_staff = UnitStaff.objects.get(uuid=request.GET.get('id'))
+            unit_staff.isDeleted = True
+            unit_staff.save()
+
+            person = Person.objects.get(uuid=unit_staff.person.uuid)
+            person.isDeleted = True
+            person.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except Exception:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
