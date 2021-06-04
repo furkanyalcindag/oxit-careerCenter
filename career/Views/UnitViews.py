@@ -126,15 +126,16 @@ class UnitStaffApi(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = UnitStaff.objects.filter(unit__uuid=request.GET.get('id'), isDeleted=False).order_by('-id')[
+            data = UnitStaff.objects.filter(isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = UnitStaff.objects.filter(unit__uuid=request.GET.get('id'), isDeleted=False).count()
+            filtered_count = UnitStaff.objects.filter(isDeleted=False).count()
             arr = []
             for x in data:
                 api_data = dict()
                 api_data['firstName'] = x.person.firstName
                 api_data['lastName'] = x.person.lastName
+                api_data['unit'] = x.unit.name
                 api_data['title'] = x.person.title
                 api_data['cv'] = x.person.cvLink
                 api_data['uuid'] = x.uuid
