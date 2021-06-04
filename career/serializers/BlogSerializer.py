@@ -15,7 +15,7 @@ class BlogSerializer(serializers.Serializer):
     article = serializers.CharField(required=True)
     languageCode = serializers.CharField(required=False)
     image = serializers.CharField(required=False, allow_blank=True, allow_null=True)
-    typeId = serializers.CharField(required=True)
+    typeId = serializers.CharField(required=True, write_only=True)
     type = SelectSerializer(read_only=True)
 
     def update(self, instance, validated_data):
