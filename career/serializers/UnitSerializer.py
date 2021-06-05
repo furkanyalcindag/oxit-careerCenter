@@ -89,3 +89,28 @@ class UnitStaffPageableSerializer(PageSerializer):
 
     def create(self, validated_data):
         pass
+
+
+class StaffSerializer(serializers.Serializer):
+    firstName = serializers.CharField()
+    lastName = serializers.CharField()
+    cvLink = serializers.CharField()
+    title = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
+
+class UnitStaffPublicSerializer(serializers.Serializer):
+    unitName = serializers.CharField()
+    unitNameLink = serializers.CharField()
+    staffs = StaffSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

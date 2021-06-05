@@ -18,6 +18,7 @@ from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplica
     JobPostApplicationStudentCoverLetterApi
 from career.Views.JobPostViews import JobPostApi, JobPostStudentApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi
+from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
@@ -36,7 +37,7 @@ urlpatterns = [
     url(r'initial-marital-status-api/$', MaritalStatusDataApi.as_view()),
     url(r'initial-military-status-api/$', MilitaryStatusDataApi.as_view()),
     url(r'initial-nationality-data-api/$', NationalityDataApi.as_view()),
-    url(r'initial-language-blog-type-data-api/$', BlogTypeApi.as_view()),
+    url(r'initial-blog-type-data-api/$', BlogTypeApi.as_view()),
     url(r'initial-language-level-data-api/$', LanguageLevelDesc.as_view()),
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
@@ -58,6 +59,11 @@ urlpatterns = [
     url(r'driver-license-select-api/$', DriverLicenseSelectApi.as_view()),
     url(r'blog-type-select-api/$', BlogTypeSelectApi.as_view()),
     url(r'unit-select-api/$', UnitSelectApi.as_view()),
+
+    # -------------public api--------------------------------
+
+    path('public/announcement-api/', AnnouncementPublicApi.as_view()),
+    path('public/unit-staff-api/', UnitPublicApi.as_view()),
 
     # ----------------admin api---------------------------
     # student
