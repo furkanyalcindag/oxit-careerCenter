@@ -385,7 +385,7 @@ class MenuApi(APIView):
                     api_child['title'] = child.title
                     api_child['icon'] = child.icon
                     api_child['route'] = child.route
-                    #menu
+                    # menu
                     x.append(api_child)
 
                 api_data['children'] = x
@@ -402,8 +402,6 @@ class MenuApi(APIView):
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
-
     def post(self, request, format=None):
         serializer = MenuSerializer(data=request.data, context={'request': request})
 
@@ -418,15 +416,15 @@ class MenuApi(APIView):
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
     def delete(self, request, format=None):
-        uuid = request.GET.get('id')
-        menu = Menu.objects.get(uuid=uuid)
-        menu.delete()
-        menu.save()
 
-        return Response({"message": "driver license is created"}, status=status.HTTP_200_OK)
+        try:
+            uuid = request.GET.get('id')
+            menu = Menu.objects.get(uuid=uuid)
+            menu.delete()
 
+            return Response({"message": "driver license is deleted"}, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
 
 
