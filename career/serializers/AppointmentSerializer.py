@@ -89,7 +89,6 @@ class AppointmentSerializer(serializers.Serializer):
 
 class AppointmentCalendarSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
-    isPaid = serializers.BooleanField(default=False)
     start = serializers.CharField()
     end = serializers.CharField()
     title = serializers.CharField()

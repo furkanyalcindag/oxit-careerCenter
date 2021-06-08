@@ -31,13 +31,14 @@ class AppointmentApi(APIView):
             for appointment in appointments:
                 api_object = dict()
                 api_object['uuid'] = appointment.uuid
-                api_object['title'] = appointment.price
-                api_object['start'] = appointment.date + ' ' + appointment.startTime
-                api_object['end'] = appointment.date + ' ' + appointment.finishTime
+                api_object[
+                    'title'] = appointment.consultant.profile.user.first_name + ' ' + appointment.consultant.profile.user.last_name
+                api_object['start'] = str(appointment.date) + ' ' + str(appointment.startTime)
+                api_object['end'] = str(appointment.date) + ' ' + str(appointment.finishTime)
                 if appointment.student is None:
-                    api_object['class'] = 'done'
+                    api_object['id'] = 'done'
                 else:
-                    api_object['class'] = 'undone'
+                    api_object['id'] = 'undone'
 
                 appointment_arr.append(api_object)
 
