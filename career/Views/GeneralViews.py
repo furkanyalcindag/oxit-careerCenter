@@ -423,7 +423,7 @@ class MenuApi(APIView):
             menu = Menu.objects.get(uuid=uuid)
             menu.delete()
 
-            return Response({"message": "driver license is deleted"}, status=status.HTTP_200_OK)
+            return Response({"message": "menu is deleted"}, status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
 
