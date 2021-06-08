@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
-    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit
+    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant
 from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
@@ -220,6 +220,9 @@ class DeleteLog(APIView):
 
     def delete(self, request, format=None):
         APILogsModel.objects.all().delete()
+
+        Menu.objects.filter(~Q(parent=None)).delete()
+        Menu.objects.all().delete()
         return Response("", status.HTTP_200_OK)
 
 
@@ -360,9 +363,20 @@ class MenuApi(APIView):
 
     def get(self, request, format=None):
         try:
-            licenses = Menu.objects.filter(parent=None, isDeleted=False)
+            type = request.GET.get('type')
+            menus = None
+
+            if type == 'student':
+                menus = MenuStudent.objects.filter(parent=None, isDeleted=False).order_by('order')
+            elif type == 'company':
+                menus = MenuCompany.objects.filter(parent=None, isDeleted=False).order_by('order')
+            elif type == 'consultant':
+                menus = MenuConsultant.objects.filter(parent=None, isDeleted=False).order_by('order')
+            else:
+                menus = Menu.objects.filter(parent=None, isDeleted=False).order_by('order')
+
             arr = []
-            for q in licenses:
+            for q in menus:
                 api_data = dict()
 
                 # api_data['uuid'] = q.uuid
@@ -372,7 +386,15 @@ class MenuApi(APIView):
                 api_data['icon'] = q.icon
                 # api_data['route'] = q.route
 
-                children = Menu.objects.filter(parent=q, isDeleted=False)
+                children = None
+                if type == 'student':
+                    children = MenuStudent.objects.filter(parent=q, isDeleted=False).order_by('order')
+                elif type == 'company':
+                    children = MenuCompany.objects.filter(parent=q, isDeleted=False).order_by('order')
+                elif type == 'consultant':
+                    children = MenuConsultant.objects.filter(parent=q, isDeleted=False).order_by('order')
+                else:
+                    children = Menu.objects.filter(parent=q, isDeleted=False).order_by('order')
 
                 x = []
                 for child in children:

@@ -3,7 +3,7 @@ from django.db import models
 from career.models import BaseModel
 
 
-class Menu(BaseModel):
+class MenuCompany(BaseModel):
     header = models.CharField(max_length=256, null=True)
     title = models.CharField(max_length=256, null=True)
     icon = models.CharField(max_length=256, null=True)

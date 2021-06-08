@@ -1,6 +1,9 @@
 from rest_framework import serializers
 
 from career.models.Menu import Menu
+from career.models.MenuCompany import MenuCompany
+from career.models.MenuConsultant import MenuConsultant
+from career.models.MenuStudent import MenuStudent
 
 
 class PageSerializer(serializers.Serializer):
@@ -36,15 +39,30 @@ class MenuChildrenSerializer(serializers.Serializer):
 
 class MenuSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(required=False,read_only=True)
+    type = serializers.CharField(write_only=True)
     header = serializers.CharField(required=True)
     title = serializers.CharField(required=True)
     route = serializers.CharField(required=False, allow_null=True)
     icon = serializers.CharField(required=True)
     parentId = serializers.UUIDField(write_only=True, allow_null=True)
     children = MenuChildrenSerializer(many=True, required=False, read_only=True)
+    order = serializers.IntegerField(required=True)
 
     def create(self, validated_data):
-        menu = Menu()
+
+        type = validated_data.get('type')
+
+        menu = None
+        if type == 'student':
+            menu = MenuStudent()
+        elif type == 'consultant':
+            menu = MenuConsultant()
+
+        elif type == 'company':
+            menu = MenuCompany()
+
+        else:
+            menu = Menu()
         menu.title = validated_data.get('title')
         menu.header = validated_data.get('header')
         menu.icon = validated_data.get('icon')
