@@ -382,12 +382,9 @@ class MenuApi(APIView):
                     api_child['uuid'] = child.uuid
 
                     api_child['header'] = child.header
-                    api_child['title'] = child.header
-                    api_child['icon'] = child.header
-                    api_child['route'] = child.header
-
-
-
+                    api_child['title'] = child.title
+                    api_child['icon'] = child.icon
+                    api_child['route'] = child.route
                     #menu
                     x.append(api_child)
 
@@ -420,3 +417,16 @@ class MenuApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+    def delete(self, request, format=None):
+        uuid = request.GET.get('id')
+        menu = Menu.objects.get(uuid=uuid)
+        menu.delete()
+        menu.save()
+
+        return Response({"message": "driver license is created"}, status=status.HTTP_200_OK)
+
+
+
