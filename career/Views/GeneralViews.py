@@ -386,6 +386,9 @@ class MenuApi(APIView):
                     api_child['icon'] = child.header
                     api_child['route'] = child.header
 
+
+
+                    #menu
                     x.append(api_child)
 
                 api_data['children'] = x
