@@ -35,10 +35,10 @@ class MenuChildrenSerializer(serializers.Serializer):
 
 
 class MenuSerializer(serializers.Serializer):
-    uuid = serializers.UUIDField(read_only=True)
+    uuid = serializers.UUIDField(required=False,read_only=True)
     header = serializers.CharField(required=True)
     title = serializers.CharField(required=True)
-    route = serializers.CharField(required=True, allow_null=True)
+    route = serializers.CharField(required=False, allow_null=True)
     icon = serializers.CharField(required=True)
     parentId = serializers.UUIDField(write_only=True, allow_null=True)
     children = MenuChildrenSerializer(many=True, read_only=True)

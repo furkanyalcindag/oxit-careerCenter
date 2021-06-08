@@ -365,19 +365,19 @@ class MenuApi(APIView):
             for q in licenses:
                 api_data = dict()
 
-                api_data['uuid'] = q.uuid
+                #api_data['uuid'] = q.uuid
 
                 api_data['header'] = q.header
                 api_data['title'] = q.title
                 api_data['icon'] = q.icon
-                api_data['route'] = q.route
+                #api_data['route'] = q.route
 
                 children = Menu.objects.filter(parent=q, isDeleted=False)
 
                 x = []
                 for child in children:
                     api_child = dict()
-                    api_child['uuid'] = child.uuid
+                    #api_child['uuid'] = child.uuid
 
                     api_child['header'] = child.header
                     api_child['title'] = child.title
