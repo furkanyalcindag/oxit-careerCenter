@@ -370,9 +370,9 @@ class MenuApi(APIView):
                 api_data['uuid'] = q.uuid
 
                 api_data['header'] = q.header
-                api_data['title'] = q.header
-                api_data['icon'] = q.header
-                api_data['route'] = q.header
+                api_data['title'] = q.title
+                api_data['icon'] = q.icon
+                api_data['route'] = q.route
 
                 children = Menu.objects.filter(parent=q, isDeleted=False)
 
