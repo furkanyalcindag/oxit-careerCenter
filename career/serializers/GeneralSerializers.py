@@ -41,7 +41,7 @@ class MenuSerializer(serializers.Serializer):
     route = serializers.CharField(required=False, allow_null=True)
     icon = serializers.CharField(required=True)
     parentId = serializers.UUIDField(write_only=True, allow_null=True)
-    children = MenuChildrenSerializer(many=True, read_only=True)
+    children = MenuChildrenSerializer(many=True, required=False, read_only=True)
 
     def create(self, validated_data):
         menu = Menu()
