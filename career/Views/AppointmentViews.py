@@ -1,3 +1,4 @@
+import datetime
 import traceback
 
 from rest_framework import status
@@ -6,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from career.models import Appointment, Consultant
-from career.serializers.AppointmentSerializer import AppointmentSerializer
+from career.serializers.AppointmentSerializer import AppointmentSerializer, AppointmentCalendarSerializer
 
 
 class AppointmentApi(APIView):
@@ -21,26 +22,26 @@ class AppointmentApi(APIView):
 
         if request.GET.get('id') is None:
 
-            appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False)
+            date_start = request.GET.get('startDate').split(' ')[0]
+            date_end = request.GET.get('endDate').split(' ')[0]
+            appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end, consultant=consultant,
+                                                      isDeleted=False)
 
             appointment_arr = []
             for appointment in appointments:
                 api_object = dict()
                 api_object['uuid'] = appointment.uuid
-                api_object['price'] = appointment.price
-                api_object['isPaid'] = appointment.isPaid
-                api_object['date'] = appointment.date
-                api_object['startTime'] = appointment.startTime
-                api_object['finishTime'] = appointment.finishTime
-                api_object['isSuitable'] = appointment.isSuitable
-                api_object['room'] = appointment.room
-                select_location = dict()
-                select_location['label'] = appointment.location.name
-                select_location['value'] = appointment.location.uuid
-                api_object['location'] = select_location
+                api_object['title'] = appointment.price
+                api_object['start'] = appointment.date + ' ' + appointment.startTime
+                api_object['end'] = appointment.date + ' ' + appointment.finishTime
+                if appointment.student is None:
+                    api_object['class'] = 'done'
+                else:
+                    api_object['class'] = 'undone'
+
                 appointment_arr.append(api_object)
 
-            serializer = AppointmentSerializer(appointment_arr, many=True, context={'request': request})
+            serializer = AppointmentCalendarSerializer(appointment_arr, many=True, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
 

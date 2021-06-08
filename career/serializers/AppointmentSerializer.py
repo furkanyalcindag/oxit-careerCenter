@@ -29,7 +29,6 @@ class AppointmentSerializer(serializers.Serializer):
             start_time = validated_data.get('startTime')
             finish_time = validated_data.get('finishTime')
 
-
             appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False,
                                                       startTime__lte=start_time,
                                                       finishTime__gt=start_time).filter(~Q(uuid=instance.uuid))
@@ -86,3 +85,12 @@ class AppointmentSerializer(serializers.Serializer):
         except Exception:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class AppointmentCalendarSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    isPaid = serializers.BooleanField(default=False)
+    start = serializers.CharField()
+    end = serializers.CharField()
+    title = serializers.CharField()
+    id = serializers.CharField()

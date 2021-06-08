@@ -359,9 +359,7 @@ class MenuApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-
         try:
-
             licenses = Menu.objects.filter(parent=None, isDeleted=False)
             arr = []
             for q in licenses:
