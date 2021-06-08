@@ -9,7 +9,7 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -42,89 +42,100 @@ urlpatterns = [
     url(r'delete-logs-api/$', DeleteLog.as_view()),
 
     # general
-    url(r'location-select-api/$', LocationSelectApi.as_view()),
-    url(r'city-district-select-api/$', CityDistrictSelectApi.as_view()),
-    url(r'job-type-select-api/$', JobTypeSelectApi.as_view()),
-    url(r'company-select-api/$', CompanySelectApi.as_view()),
-    url(r'university-select-api/$', UniversitySelectApi.as_view()),
-    url(r'faculty-select-api/$', FacultySelectApi.as_view()),
-    url(r'department-select-api/$', FacultySelectApi.as_view()),
-    url(r'education-type-select-api/$', EducationTypeSelectApi.as_view()),
-    url(r'marital-status-select-api/$', MaritalStatusSelectApi.as_view()),
-    url(r'military-status-select-api/$', MilitaryStatusSelectApi.as_view()),
-    url(r'nationality-status-select-api/$', NationalitySelectApi.as_view()),
-    url(r'gender-select-api/$', GenderSelectApi.as_view()),
-    url(r'foreign-language-level-select-api/$', ForeignLanguageLevelSelectApi.as_view()),
-    url(r'foreign-language-select-api/$', ForeignLanguageSelectApi.as_view()),
-    url(r'driver-license-select-api/$', DriverLicenseSelectApi.as_view()),
-    url(r'blog-type-select-api/$', BlogTypeSelectApi.as_view()),
-    url(r'unit-select-api/$', UnitSelectApi.as_view()),
+    path('location-select-api/', LocationSelectApi.as_view(), name='location-select-api'),
+    path('city-district-select-api/', CityDistrictSelectApi.as_view(), name='city-district-select-api'),
+    path('job-type-select-api/', JobTypeSelectApi.as_view(), name='job-type-select-api'),
+    path('company-select-api/', CompanySelectApi.as_view(), name='company-select-api'),
+    path('university-select-api/', UniversitySelectApi.as_view(), name='university-select-api'),
+    path('faculty-select-api/', FacultySelectApi.as_view(), name='faculty-select-api'),
+    path('department-select-api/', FacultySelectApi.as_view(), name='department-select-api'),
+    path('education-type-select-api/', EducationTypeSelectApi.as_view(), name='education-type-select-api'),
+    path('marital-status-select-api/', MaritalStatusSelectApi.as_view(), name='marital-status-select-api'),
+    path('military-status-select-api/', MilitaryStatusSelectApi.as_view(), name='military-status-select-api'),
+    path('nationality-status-select-api/', NationalitySelectApi.as_view(), name='national-status-select-api'),
+    path('gender-select-api/', GenderSelectApi.as_view(), name='gender-select-api'),
+    path('foreign-language-level-select-api/', ForeignLanguageLevelSelectApi.as_view(),
+         name='foreign-language-level-select-api'),
+    path('foreign-language-select-api/', ForeignLanguageSelectApi.as_view(), name='foreign-language-select-api'),
+    path('driver-license-select-api/', DriverLicenseSelectApi.as_view(), name='driver-licence-select-api'),
+    path('blog-type-select-api/', BlogTypeSelectApi.as_view(), name='blog-type-select-api'),
+    path('unit-select-api/', UnitSelectApi.as_view(), name='unit-select-api'),
+    path('menu-create-api/', MenuApi.as_view(), name='menu-create-api'),
 
     # -------------public api--------------------------------
 
-    path('public/announcement-api/', AnnouncementPublicApi.as_view()),
-    path('public/unit-staff-api/', UnitPublicApi.as_view()),
+    path('public/announcement-api/', AnnouncementPublicApi.as_view(), name='public-announcement-api'),
+    path('public/unit-staff-api/', UnitPublicApi.as_view(), name="public-unit-staff-api"),
 
     # ----------------admin api---------------------------
     # student
-    url(r'student-api/$', StudentApi.as_view()),
+    path('student-api/', StudentApi.as_view(), name='admin-student-api'),
 
     # company
-    path('company-api/', CompanyApi.as_view()),
+    path('company-api/', CompanyApi.as_view(), name='admin-company-api'),
 
     # consultant
-    url(r'consultant-api/$', ConsultantApi.as_view()),
+    path('consultant-api/', ConsultantApi.as_view(), name='admin-student-api'),
 
     # instructor
-    url(r'instructor-api/$', InstructorApi.as_view()),
-    url(r'instructor-select-api/$', InstructorSelectApi.as_view()),
+    path('instructor-api/', InstructorApi.as_view(), name='admin-instructor-api'),
+    path('instructor-select-api/', InstructorSelectApi.as_view(), name='admin-instructor-select-api'),
 
     # unit
-    path('unit-api/', UnitApi.as_view()),
-    path('unit-staff-api/', UnitStaffApi.as_view()),
+    path('unit-api/', UnitApi.as_view(), name='admin-unit-api'),
+    path('unit-staff-api/', UnitStaffApi.as_view(), name='admin-unit-staff-api'),
 
     # language
-    path('language-api/', LanguageApi.as_view()),
+    path('language-api/', LanguageApi.as_view(), name='admin-language-api'),
 
     # blog
-    url(r'blog-api/$', BlogApi.as_view()),
+    path('blog-api/', BlogApi.as_view(), name='admin-blog-api'),
 
     # lecture
-    url(r'lecture-api/$', LectureApi.as_view()),
-    url(r'lecture-info-api/$', LectureInfoApi.as_view()),
+    path('lecture-api/', LectureApi.as_view(), name='admin-lecture-api'),
+    path('lecture-info-api/', LectureInfoApi.as_view(), name='admin-lecture-info-api'),
 
     # scholarship
-    url(r'scholarship-api/$', ScholarshipApi.as_view()),
+    path('scholarship-api/', ScholarshipApi.as_view(), name='admin-scholarship-api'),
 
     # --------------------------------company api-------------------------------------------------------
-    url(r'company/company-general-information-api/$', CompanyGeneralInformationApi.as_view()),
-    url(r'company/company-about-information-api/$', CompanyAboutInformationApi.as_view()),
-    url(r'company/company-communication-information-api/$', CompanyCommunicationInformationApi.as_view()),
-    url(r'company/company-job-post-api/$', JobPostApi.as_view()),
-    url(r'company/job-applicant-api/$', JopApplicantsApi.as_view()),
-    path('company/scholarship-company-api/', CompanyScholarshipApi.as_view()),
+    path('company/company-general-information-api/', CompanyGeneralInformationApi.as_view(),
+         name='company-general-information-api'),
+    path('company/company-about-information-api/', CompanyAboutInformationApi.as_view(),
+         name='company-about-information-lecture-api'),
+    path('company/company-communication-information-api/', CompanyCommunicationInformationApi.as_view(),
+         name='company-communication-information-api'),
+    path('company/company-job-post-api/', JobPostApi.as_view(), name='company-job-post-api'),
+    path('company/job-applicant-api/', JopApplicantsApi.as_view(), name='company-job-applicants-api'),
+    path('company/scholarship-company-api/', CompanyScholarshipApi.as_view(), name='company-scholarship-api'),
 
     # -----------------------------consultant api----------------------------------------
-    url(r'consultant/appointment-api/$', AppointmentApi.as_view()),
+    path('consultant/appointment-api/', AppointmentApi.as_view(), name='consultant-appointment-api'),
 
     # ------------------------------student api-----------------------------
-    path('student/student-education-api/', StudentEducationApi.as_view()),
-    path('student/student-high-school-education-api/', StudentHighSchoolEducationApi.as_view()),
-    path('student/student-profile-image-api/', StudentProfileImageApi.as_view()),
-    path('student/student-general-information-api/', StudentGeneralInformationApi.as_view()),
-    path('student/student-military-status-api/', StudentMilitaryStatusApi.as_view()),
-    path('student/student-communication-api/', StudentCommunicationApi.as_view()),
-    path('student/student-certificate-api/', StudentCertificateApi.as_view()),
-    path('student/student-job-info-api/', StudentJobInfoApi.as_view()),
-    path('student/student-reference-api/', StudentReferenceApi.as_view()),
-    path('student/student-foreign-language-api/', StudentForeignLanguageApi.as_view()),
-    path('student/student-qualification-api/', StudentQualificationApi.as_view()),
-    path('student/student-exam-api/', StudentExamApi.as_view()),
-    path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view()),
-    path('student/student-job-post-api/', JobPostStudentApi.as_view()),
-    path('student/student-job-application-api/', JopStudentApplicationsApi.as_view()),
-    path('student/student-job-application-cover-letter-api/', JobPostApplicationStudentCoverLetterApi.as_view()),
-    path('student/student-blog-api/', BlogStudentApi.as_view()),
-    path('student/student-export-cv-api/', StudentCVExportPDFApi.as_view())
+    path('student/student-education-api/', StudentEducationApi.as_view(), name='student-education-api'),
+    path('student/student-high-school-education-api/', StudentHighSchoolEducationApi.as_view(),
+         name='student-high-school-education-api'),
+    path('student/student-profile-image-api/', StudentProfileImageApi.as_view(), name='student-profile-image-api'),
+    path('student/student-general-information-api/', StudentGeneralInformationApi.as_view(),
+         name='student-general-information-api'),
+    path('student/student-military-status-api/', StudentMilitaryStatusApi.as_view(),
+         name='student-military-status-api'),
+    path('student/student-communication-api/', StudentCommunicationApi.as_view(), name='student-communication-api'),
+    path('student/student-certificate-api/', StudentCertificateApi.as_view(), name='student-certificate-api'),
+    path('student/student-job-info-api/', StudentJobInfoApi.as_view(), name='student-job-info-api'),
+    path('student/student-reference-api/', StudentReferenceApi.as_view(), name='student-reference-api'),
+    path('student/student-foreign-language-api/', StudentForeignLanguageApi.as_view(),
+         name='student-foreign-language-api'),
+    path('student/student-qualification-api/', StudentQualificationApi.as_view(), name='student-qualification-api'),
+    path('student/student-exam-api/', StudentExamApi.as_view(), name='student-exam-api'),
+    path('student/student-license-driver-api/', StudentDriverLicenseApi.as_view(), name='student-driver-license-api'),
+    path('student/student-job-post-api/', JobPostStudentApi.as_view(), name='student-job-post-api'),
+    path('student/student-job-application-api/', JopStudentApplicationsApi.as_view(),
+         name='student-job-application-api'),
+    path('student/student-job-application-cover-letter-api/', JobPostApplicationStudentCoverLetterApi.as_view(),
+         name='student-job-application-cover-letter-api'),
+    path('student/student-blog-api/', BlogStudentApi.as_view(), name='student-blog-api'),
+    path('student/student-export-cv-api/', StudentCVExportPDFApi.as_view(), name='student-export-cv-api')
 
 ]

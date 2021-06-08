@@ -44,3 +44,4 @@ from .StudentDriverLicense import StudentDriverLicense
 from .BlogType import BlogType
 from .Unit import Unit
 from .UnitStaff import UnitStaff
+from .Menu import Menu

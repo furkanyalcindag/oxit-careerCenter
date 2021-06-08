@@ -6,7 +6,48 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Create your Views here.
+from accounts.models import UrlName, UrlMethod
 from accounts.serializers import PasswordChangeSerializer
+
+import career.urls
+
+
+def show_urls(urllist, depth=0):
+    for entry in urllist:
+        if entry.name is not None:
+            url_name = UrlName()
+            url_name.name = entry.name
+            url_name.lookupString = entry.lookup_str
+            url_name.pattern = str(entry.pattern)
+            url_name.save()
+
+            url_method = UrlMethod()
+            url_method.method_Name = 'GET'
+            url_method.url = url_name
+            url_method.save()
+
+            url_method2 = UrlMethod()
+            url_method2.method_Name = 'PUT'
+            url_method2.url = url_name
+            url_method2.save()
+
+            url_method3 = UrlMethod()
+            url_method3.method_Name = 'POST'
+            url_method3.url = url_name
+            url_method3.save()
+
+            url_method4 = UrlMethod()
+            url_method4.method_Name = 'DELETE'
+            url_method4.url = url_name
+            url_method4.save()
+
+            print("  " * depth, entry.name)
+            print(str(entry.pattern))
+        if hasattr(entry, 'url_patterns'):
+            show_urls(entry.url_patterns, depth + 1)
+
+
+# show_urls(career.urls.urlpatterns)
 
 
 def index(request):
@@ -48,3 +89,12 @@ class ChangePasswordApi(APIView):
             return Response({"message": "password is updated"}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PermissionCreates(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        show_urls(career.urls.urlpatterns, 0)
+
+        return Response({"message": "password is updated"}, status=status.HTTP_200_OK)

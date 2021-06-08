@@ -1,5 +1,6 @@
 import traceback
 
+from django.urls import resolve
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -107,15 +108,21 @@ class AnnouncementPublicApi(APIView):
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+
+
+
 class UnitPublicApi(APIView):
 
     def get(self, request, format=None):
         try:
 
+
+
             data = Unit.objects.filter(isDeleted=False).order_by(
                 '-id')
 
             arr = []
+            x = resolve(request.path_info).url_name
             for x in data:
 
                 api_data = dict()

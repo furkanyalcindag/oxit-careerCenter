@@ -1,3 +1,5 @@
+import traceback
+
 from django.db.models import Q
 from drf_api_logger.models import APILogsModel
 from rest_framework import status
@@ -13,9 +15,10 @@ from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Location import Location
 from career.models.MaritalStatusDescription import MaritalStatusDescription
+from career.models.Menu import Menu
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.SelectObject import SelectObject
-from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer
+from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer, MenuSerializer
 
 
 class LanguageApi(APIView):
@@ -335,12 +338,11 @@ class BlogTypeSelectApi(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-
 class UnitSelectApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        data = Unit.objects.filter()
+        data = Unit.objects.filter(isDeleted=False)
         select_arr = []
         for type in data:
             select_object = SelectObject()
@@ -353,5 +355,65 @@ class UnitSelectApi(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+class MenuApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+
+            licenses = Menu.objects.filter(parent=None, isDeleted=False)
+            arr = []
+            for q in licenses:
+                api_data = dict()
+
+                api_data['uuid'] = q.uuid
+
+                api_data['header'] = q.header
+                api_data['title'] = q.header
+                api_data['icon'] = q.header
+                api_data['route'] = q.header
+
+                children = Menu.objects.filter(parent=q, isDeleted=False)
+
+                x = []
+                for child in children:
+                    api_child = dict()
+                    api_child['uuid'] = child.uuid
+
+                    api_child['header'] = child.header
+                    api_child['title'] = child.header
+                    api_child['icon'] = child.header
+                    api_child['route'] = child.header
+
+                    x.append(api_child)
+
+                api_data['children'] = x
+
+                arr.append(api_data)
+
+            serializer = MenuSerializer(arr, many=True, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
+
+        except Exception as e:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+    def post(self, request, format=None):
+        serializer = MenuSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "driver license is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
