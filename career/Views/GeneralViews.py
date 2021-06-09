@@ -379,7 +379,7 @@ class MenuApi(APIView):
             for q in menus:
                 api_data = dict()
 
-                #api_data['uuid'] = q.uuid
+                # api_data['uuid'] = q.uuid
 
                 api_data['header'] = q.header
                 api_data['title'] = q.title
@@ -442,7 +442,17 @@ class MenuApi(APIView):
 
         try:
             uuid = request.GET.get('id')
-            menu = Menu.objects.get(uuid=uuid)
+            type = request.GET.get('type')
+            menu = None
+            if type == 'student':
+                menu = MenuStudent.objects.get(uuid=uuid)
+            elif type == 'company':
+                menu = MenuCompany.objects.get(uuid=uuid)
+            elif type == 'consultant':
+                menu = MenuConsultant.objects.get(uuid=uuid)
+            else:
+                menu = Menu.objects.get(uuid=uuid)
+
             menu.delete()
 
             return Response({"message": "menu is deleted"}, status=status.HTTP_200_OK)
