@@ -46,7 +46,7 @@ class MenuSerializer(serializers.Serializer):
     icon = serializers.CharField(required=True)
     parentId = serializers.UUIDField(write_only=True, allow_null=True)
     children = MenuChildrenSerializer(many=True, required=False, read_only=True)
-    order = serializers.IntegerField(required=True)
+    order = serializers.IntegerField(required=True, write_only=True)
 
     def create(self, validated_data):
 
@@ -57,10 +57,8 @@ class MenuSerializer(serializers.Serializer):
             menu = MenuStudent()
         elif type == 'consultant':
             menu = MenuConsultant()
-
         elif type == 'company':
             menu = MenuCompany()
-
         else:
             menu = Menu()
         menu.title = validated_data.get('title')
