@@ -384,7 +384,8 @@ class MenuApi(APIView):
                 api_data['header'] = q.header
                 api_data['title'] = q.title
                 api_data['icon'] = q.icon
-                # api_data['route'] = q.route
+                if q.route is not None:
+                    api_data['route'] = q.route
 
                 children = None
                 if type == 'student':
