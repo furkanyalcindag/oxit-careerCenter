@@ -92,4 +92,16 @@ class AppointmentCalendarSerializer(serializers.Serializer):
     start = serializers.CharField()
     end = serializers.CharField()
     title = serializers.CharField()
-    id = serializers.CharField()
+    id = serializers.CharField(read_only=False)
+
+    def to_representation(self, obj):
+        return {
+
+                'uuid': obj['uuid'],
+                'start': obj['start'],
+                'end': obj['end'],
+                'title': obj['title'],
+                'class': obj['id'],
+
+
+        }
