@@ -38,7 +38,7 @@ class MenuChildrenSerializer(serializers.Serializer):
 
 
 class MenuSerializer(serializers.Serializer):
-    uuid = serializers.UUIDField(required=False,read_only=True)
+    uuid = serializers.UUIDField(required=False, read_only=True)
     type = serializers.CharField(write_only=True)
     header = serializers.CharField(required=True)
     title = serializers.CharField(required=True)
@@ -66,7 +66,14 @@ class MenuSerializer(serializers.Serializer):
         menu.icon = validated_data.get('icon')
         menu.route = validated_data.get('route')
         if validated_data.get('parentId') is not None:
-            menu.parent = Menu.objects.get(uuid=validated_data.get('parentId'))
+            if type == 'student':
+                menu.parent = MenuStudent.objects.get(uuid=validated_data.get('parentId'))
+            elif type == 'consultant':
+                menu.parent = MenuConsultant.objects.get(uuid=validated_data.get('parentId'))
+            elif type == 'company':
+                menu.parent = MenuCompany.objects.get(uuid=validated_data.get('parentId'))
+            else:
+                menu.parent = Menu.objects.get(uuid=validated_data.get('parentId'))
 
         menu.save()
         return menu
