@@ -379,7 +379,7 @@ class MenuApi(APIView):
             for q in menus:
                 api_data = dict()
 
-                api_data['uuid'] = q.uuid
+                #api_data['uuid'] = q.uuid
 
                 api_data['header'] = q.header
                 api_data['title'] = q.title
