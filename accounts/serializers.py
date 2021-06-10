@@ -36,3 +36,19 @@ class PasswordChangeSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class PermissionSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField()
+    groupId = serializers.IntegerField(write_only=True)
+    moduleName = serializers.CharField()
+    get = serializers.BooleanField()
+    post = serializers.BooleanField()
+    put = serializers.BooleanField()
+    delete = serializers.BooleanField()
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

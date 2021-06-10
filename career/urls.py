@@ -76,7 +76,7 @@ urlpatterns = [
     path('company-job-post-api/', JobPostAdminApi.as_view(), name='admin-company-api'),
 
     # consultant
-    path('consultant-api/', ConsultantApi.as_view(), name='admin-student-api'),
+    path('consultant-api/', ConsultantApi.as_view(), name='admin-consultant-api'),
 
     # instructor
     path('instructor-api/', InstructorApi.as_view(), name='admin-instructor-api'),

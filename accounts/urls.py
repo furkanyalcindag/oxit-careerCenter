@@ -10,7 +10,8 @@ from . import views
 urlpatterns = [
    #path('', views.index, name='index'),
    path('login/', views.login),
-   path('permission-change/', views.PermissionCreates.as_view())
+   path('permission-change/', views.PermissionCreates.as_view()),
+   path('permission-api/', views.PermissionApi.as_view())
 
 ]
 
