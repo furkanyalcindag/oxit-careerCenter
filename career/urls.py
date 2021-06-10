@@ -9,7 +9,7 @@ from career.Views.ConsultantViews import ConsultantApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi, GroupSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -25,6 +25,7 @@ from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHi
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
     StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi
 from career.Views.UnitViews import UnitApi, UnitStaffApi
+from career.Views.UserViews import UserAPI, GroupAPI
 
 app_name = 'career'
 
@@ -54,6 +55,7 @@ urlpatterns = [
     path('military-status-select-api/', MilitaryStatusSelectApi.as_view(), name='military-status-select-api'),
     path('nationality-status-select-api/', NationalitySelectApi.as_view(), name='national-status-select-api'),
     path('gender-select-api/', GenderSelectApi.as_view(), name='gender-select-api'),
+    path('group-select-api/', GroupSelectApi.as_view(), name='group-select-api'),
     path('foreign-language-level-select-api/', ForeignLanguageLevelSelectApi.as_view(),
          name='foreign-language-level-select-api'),
     path('foreign-language-select-api/', ForeignLanguageSelectApi.as_view(), name='foreign-language-select-api'),
@@ -98,6 +100,10 @@ urlpatterns = [
 
     # scholarship
     path('scholarship-api/', ScholarshipApi.as_view(), name='admin-scholarship-api'),
+
+    # user
+    path('user-api/', UserAPI.as_view(), name='admin-user-api'),
+    path('group-api/', GroupAPI.as_view(), name='admin-group-api'),
 
     # --------------------------------company api-------------------------------------------------------
     path('company/company-general-information-api/', CompanyGeneralInformationApi.as_view(),

@@ -1,5 +1,6 @@
 import traceback
 
+from django.contrib.auth.models import Group
 from django.db.models import Q
 from drf_api_logger.models import APILogsModel
 from rest_framework import status
@@ -458,3 +459,20 @@ class MenuApi(APIView):
             return Response({"message": "menu is deleted"}, status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
+
+
+class GroupSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        data = Group.objects.exclude(name__in=['Admin', 'Consultant', 'Student', 'Company'])
+        select_arr = []
+        for type in data:
+            select_object = SelectObject()
+            select_object.value = type.id
+            select_object.label = type.name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
