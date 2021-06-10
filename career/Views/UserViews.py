@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from career.models import Profile
 from career.serializers.UserSerializer import UserSerializer, GroupSerializer
 
 
@@ -13,8 +14,7 @@ class UserAPI(APIView):
 
     def get(self, request, format=None):
 
-
-        if request.GET.get('id') is  None:
+        if request.GET.get('id') is None:
             users = User.objects.exclude(groups__name__in=['Admin', 'Consultant', 'Company', 'Student'])
             arr = []
             for user in users:
@@ -60,6 +60,21 @@ class UserAPI(APIView):
                         errors_dict['Öğrenci Numarası'] = value
 
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        try:
+            id = request.GET.get('id')
+            user = User.objects.get(id=int(id))
+            profile = Profile.objects.get(user=user)
+            profile.delete()
+
+            user.delete()
+
+            return Response({"message": "user is deleted"}, status=status.HTTP_200_OK)
 
         except:
             traceback.print_exc()
