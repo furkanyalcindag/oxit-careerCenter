@@ -141,3 +141,19 @@ class GroupAPI(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        try:
+            id = request.GET.get('id')
+            group = Group.objects.get(id=int(id))
+            users = User.objects.filter(groups__name__in=[group.name])
+            if len(users) == 0:
+                group.delete()
+
+                return Response({"message": "user is deleted"}, status=status.HTTP_200_OK)
+            else:
+                return Response({"message": "user is deleted"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
