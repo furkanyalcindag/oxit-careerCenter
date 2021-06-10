@@ -12,9 +12,10 @@ from career.serializers.UserSerializer import UserSerializer, GroupSerializer
 class UserAPI(APIView):
 
     def get(self, request, format=None):
-        users = User.objects.exclude(groups__name__in=['Admin', 'Consultant', 'Company', 'Student'])
 
-        if request.GET.get('id') is not None:
+
+        if request.GET.get('id') is  None:
+            users = User.objects.exclude(groups__name__in=['Admin', 'Consultant', 'Company', 'Student'])
             arr = []
             for user in users:
                 api_data = dict()
