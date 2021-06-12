@@ -5,7 +5,9 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from career import urls
 from career.models import Profile
+from career.services.GeneralService import show_urls_by_group
 
 
 class UserSerializer(serializers.Serializer):
@@ -63,6 +65,8 @@ class GroupSerializer(serializers.Serializer):
             group = Group()
             group.name = validated_data.get('groupName')
             group.save()
+
+            show_urls_by_group(urls.urlpatterns, group, depth=0)
             return group
         except:
             traceback.print_exc()

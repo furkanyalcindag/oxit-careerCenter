@@ -175,6 +175,8 @@ class UnitStaffApi(APIView):
             unit_staff.isDeleted = True
             unit_staff.save()
 
+
+
             person = Person.objects.get(uuid=unit_staff.person.uuid)
             person.isDeleted = True
             person.save()

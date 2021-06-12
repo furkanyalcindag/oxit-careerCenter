@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from accounts.models import GroupUrlMethod
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
     ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant
@@ -222,8 +223,8 @@ class DeleteLog(APIView):
     def delete(self, request, format=None):
         APILogsModel.objects.all().delete()
 
-        Menu.objects.filter(~Q(parent=None)).delete()
-        Menu.objects.all().delete()
+        '''Menu.objects.filter(~Q(parent=None)).delete()
+        Menu.objects.all().delete()'''
         return Response("", status.HTTP_200_OK)
 
 
@@ -374,7 +375,18 @@ class MenuApi(APIView):
             elif type == 'consultant':
                 menus = MenuConsultant.objects.filter(parent=None, isDeleted=False).order_by('order')
             else:
-                menus = Menu.objects.filter(parent=None, isDeleted=False).order_by('order')
+
+                user = request.user
+
+                group = Group.objects.get(user=user)
+
+                urls = GroupUrlMethod.objects.filter(group=group)
+                menu_arr = []
+                # yukarıdakilerle entegre bir şekilde url ve izinlere göre menuler çekilecek.
+                for url_method in urls:
+                    menus = Menu.objects.filter(parent=None, isDeleted=False,
+                                                relationField__in=url_method.url).order_by('order')
+                    menu_arr.append(menus)
 
             arr = []
             for q in menus:

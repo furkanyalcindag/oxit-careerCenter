@@ -13,24 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, re_path
-from django.conf.urls import url, include
-
 from django.conf import settings
+from django.conf.urls import include
 from django.conf.urls.static import static
-from rest_framework import routers
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
 
+from accounts import views
 from accounts.views import ChangePasswordApi
 from oxiterp.views import CustomTokenObtainPairView
-from rest_framework_simplejwt.views import TokenRefreshView
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
-import accounts
-
-from accounts import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),

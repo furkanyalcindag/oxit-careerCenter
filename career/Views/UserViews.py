@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from accounts.models import GroupUrlMethod
 from career.models import Profile
 from career.serializers.UserSerializer import UserSerializer, GroupSerializer
 
@@ -148,12 +149,11 @@ class GroupAPI(APIView):
             group = Group.objects.get(id=int(id))
             users = User.objects.filter(groups__name__in=[group.name])
             if len(users) == 0:
+                GroupUrlMethod.objects.filter(group=group).delete()
                 group.delete()
-
                 return Response({"message": "user is deleted"}, status=status.HTTP_200_OK)
             else:
-                return Response({"message": "user is deleted"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+                return Response({"message": "user is deleted"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
