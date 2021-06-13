@@ -4,7 +4,7 @@ from django.db.models import Q
 from rest_framework import serializers
 
 from career.exceptions import AppointmentValidationException
-from career.models import Consultant, Appointment
+from career.models import Consultant, Appointment, Student
 from career.models.Location import Location
 from career.serializers.GeneralSerializers import SelectSerializer
 
@@ -20,6 +20,7 @@ class AppointmentSerializer(serializers.Serializer):
     locationId = serializers.UUIDField(write_only=True)
     isSuitable = serializers.BooleanField(read_only=True)
     location = SelectSerializer(read_only=True)
+    studentId = serializers.UUIDField(required=False, allow_null=True)
 
     def update(self, instance, validated_data):
         try:
@@ -43,6 +44,11 @@ class AppointmentSerializer(serializers.Serializer):
                 instance.finishTime = finish_time
                 instance.room = validated_data.get('room')
                 instance.location = Location.objects.get(uuid=validated_data.get('locationId'))
+                if validated_data.get('studentId') is not None:
+                    instance.student = Student.objects.get(uuid=validated_data.get('studentId'))
+                    instance.isSuitable = False
+                else:
+                    instance.isSuitable = False
                 instance.save()
                 return instance
         except AppointmentValidationException:
@@ -97,11 +103,10 @@ class AppointmentCalendarSerializer(serializers.Serializer):
     def to_representation(self, obj):
         return {
 
-                'uuid': obj['uuid'],
-                'start': obj['start'],
-                'end': obj['end'],
-                'title': obj['title'],
-                'class': obj['id'],
-
+            'uuid': obj['uuid'],
+            'start': obj['start'],
+            'end': obj['end'],
+            'title': obj['title'],
+            'class': obj['id'],
 
         }

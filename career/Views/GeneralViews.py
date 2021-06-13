@@ -374,13 +374,15 @@ class MenuApi(APIView):
                 menus = MenuCompany.objects.filter(parent=None, isDeleted=False).order_by('order')
             elif type == 'consultant':
                 menus = MenuConsultant.objects.filter(parent=None, isDeleted=False).order_by('order')
+            elif type == 'admin':
+                menus = Menu.objects.filter(parent=None, isDeleted=False).order_by('order')
             else:
 
                 user = request.user
 
                 group = Group.objects.get(user=user)
 
-                urls = GroupUrlMethod.objects.filter(group=group)
+                urls = GroupUrlMethod.objects.filter(group=group, isAccess=True)
                 menu_arr = []
                 # yukarıdakilerle entegre bir şekilde url ve izinlere göre menuler çekilecek.
                 for url_method in urls:
