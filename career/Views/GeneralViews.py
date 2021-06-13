@@ -385,8 +385,11 @@ class MenuApi(APIView):
                 # yukarıdakilerle entegre bir şekilde url ve izinlere göre menuler çekilecek.
                 for url_method in urls:
                     menus = Menu.objects.filter(parent=None, isDeleted=False,
-                                                relationField__in=url_method.url).order_by('order')
-                    menu_arr.append(menus)
+                                                relationField=url_method.urlMethod.url).order_by('order')
+                    for menu in menus:
+                        menu_arr.append(menu)
+
+                menus = menu_arr
 
             arr = []
             for q in menus:
