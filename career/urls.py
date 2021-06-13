@@ -23,7 +23,8 @@ from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
-    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi
+    StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi, \
+    StudentSelectApi
 from career.Views.UnitViews import UnitApi, UnitStaffApi
 from career.Views.UserViews import UserAPI, GroupAPI
 
@@ -63,6 +64,8 @@ urlpatterns = [
     path('blog-type-select-api/', BlogTypeSelectApi.as_view(), name='blog-type-select-api'),
     path('unit-select-api/', UnitSelectApi.as_view(), name='unit-select-api'),
     path('menu-create-api/', MenuApi.as_view(), name='menu-create-api'),
+    path('student-select-api/', StudentSelectApi.as_view(), name='student-select-api'),
+    path('instructor-select-api/', InstructorSelectApi.as_view(), name='instructor-select-api'),
 
     # -------------public api--------------------------------
 
@@ -82,7 +85,6 @@ urlpatterns = [
 
     # instructor
     path('instructor-api/', InstructorApi.as_view(), name='admin-instructor-api'),
-    path('instructor-select-api/', InstructorSelectApi.as_view(), name='admin-instructor-select-api'),
 
     # unit
     path('unit-api/', UnitApi.as_view(), name='admin-unit-api'),

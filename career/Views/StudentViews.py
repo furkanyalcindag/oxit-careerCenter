@@ -12,9 +12,11 @@ from career.models.APIObject import APIObject
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
 from career.models.Reference import Reference
+from career.models.SelectObject import SelectObject
 from career.models.StudentDriverLicense import StudentDriverLicense
 from career.models.StudentEducationInfo import StudentEducationInfo
 from career.models.StudentExam import StudentExam
+from career.serializers.GeneralSerializers import SelectSerializer
 from career.serializers.StudentSerializer import StudentSerializer, StudentPageableSerializer, \
     StudentUniversityEducationInformationSerializer, StudentHighSchoolEducationInformationSerializer, \
     StudentProfileImageSerializer, StudentGeneralInformationSerializer, StudentMilitaryStatusSerializer, \
@@ -1284,3 +1286,34 @@ class StudentCVExportPDFApi(APIView):
 
         return FileResponse(pdf, status=status.HTTP_200_OK,
                             content_type='application/pdf')
+
+
+class StudentSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        student_name = ''
+        student_surname = ''
+
+        if request.GET.get('studentName') is not None:
+            x = str(request.GET.get('studentName')).split(' ')
+            if len(x) > 1:
+                student_name = x[0]
+                student_surname = x[1]
+            elif len(x) == 1:
+                student_name = x[0]
+
+        data = Student.objects.filter(profile__user__first_name__icontains=student_name,
+                                      profile__user__last_name__icontains=student_surname, isDeleted=False).order_by(
+            '-id')[:20]
+
+        select_arr = []
+        for student in data:
+            select_object = SelectObject()
+            select_object.value = student.uuid
+            select_object.label = student.profile.user.first_name + ' ' + student.profile.user.last_name
+            select_arr.append(select_object)
+
+        serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

@@ -21,6 +21,7 @@ class AppointmentSerializer(serializers.Serializer):
     isSuitable = serializers.BooleanField(read_only=True)
     location = SelectSerializer(read_only=True)
     studentId = serializers.UUIDField(required=False, allow_null=True)
+    student = SelectSerializer(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         try:

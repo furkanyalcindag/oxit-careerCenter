@@ -60,6 +60,18 @@ class AppointmentApi(APIView):
             select_location = dict()
             select_location['label'] = appointment.location.name
             select_location['value'] = appointment.location.uuid
+
+            select_student = dict()
+
+            if appointment.student is not None:
+                select_student[
+                    'label'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
+                select_student['value'] = appointment.student.uuid
+
+            else:
+                select_student = None
+
+            api_object['student'] = select_student
             api_object['location'] = select_location
             serializer = AppointmentSerializer(api_object, context={'request': request})
 
