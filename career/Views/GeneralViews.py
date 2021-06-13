@@ -387,7 +387,8 @@ class MenuApi(APIView):
                     menus = Menu.objects.filter(parent=None, isDeleted=False,
                                                 relationField=url_method.urlMethod.url).order_by('order')
                     for menu in menus:
-                        menu_arr.append(menu)
+                        if menu not in menu_arr:
+                            menu_arr.append(menu)
 
                 menus = menu_arr
 
