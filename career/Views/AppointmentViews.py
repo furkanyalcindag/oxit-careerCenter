@@ -202,8 +202,8 @@ class AppointmentStudentApi(APIView):
 
         if request.GET.get('id') is None:
 
-            date_start = request.GET.get('startDate').split(' ')[0]
-            date_end = request.GET.get('endDate').split(' ')[0]
+            date_start = request.GET.get('startDate')
+            date_end = request.GET.get('endDate')
             appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end, consultant=consultant,
                                                       isDeleted=False)
 
