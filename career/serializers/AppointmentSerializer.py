@@ -111,5 +111,6 @@ class AppointmentCalendarSerializer(serializers.Serializer):
             'end': obj['end'],
             'title': obj['title'],
             'class': obj['id'],
+            'studentName': obj['studentName'],
 
         }
