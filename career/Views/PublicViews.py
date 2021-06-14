@@ -30,7 +30,7 @@ class AnnouncementPublicApi(APIView):
                 api_data['uuid'] = blog.uuid
                 api_data['languageCode'] = lang.code
                 api_data['image'] = blog_translation.image
-                api_data['creationDate'] = blog.creationDate
+                api_data['creationDate'] = blog.creationDate.date()
 
                 api_select_blog_type = dict()
 
@@ -81,7 +81,7 @@ class AnnouncementPublicApi(APIView):
                     api_data['article'] = blog_translation.article
                     api_data['uuid'] = x.uuid
                     api_data['image'] = blog_translation.image
-                    api_data['creationDate'] = x.creationDate
+                    api_data['creationDate'] = x.creationDate.date()
 
                     api_select_blog_type = dict()
 

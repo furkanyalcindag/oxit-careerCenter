@@ -49,6 +49,7 @@ class AppointmentSerializer(serializers.Serializer):
                     instance.student = Student.objects.get(uuid=validated_data.get('studentId'))
                     instance.isSuitable = False
                 else:
+                    instance.student = None
                     instance.isSuitable = False
                 instance.save()
                 return instance
