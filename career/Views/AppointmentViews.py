@@ -22,7 +22,6 @@ class AppointmentApi(APIView):
 
         if request.GET.get('id') is None:
 
-
             date_start = request.GET.get('startDate').split(' ')[0]
             date_end = request.GET.get('endDate').split(' ')[0]
             appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end, consultant=consultant,
@@ -124,10 +123,6 @@ class AppointmentApi(APIView):
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
-
 class AppointmentAdminApi(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -136,10 +131,7 @@ class AppointmentAdminApi(APIView):
 
         user = request.user
 
-
-
         if request.GET.get('id') is None:
-
 
             date_start = request.GET.get('startDate').split(' ')[0]
             date_end = request.GET.get('endDate').split(' ')[0]
@@ -159,7 +151,8 @@ class AppointmentAdminApi(APIView):
                     api_object['id'] = 'done'
                     api_object['studentName'] = None
                 else:
-                    api_object['studentName'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
+                    api_object[
+                        'studentName'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
                     api_object['id'] = 'undone'
 
                 appointment_arr.append(api_object)
@@ -200,3 +193,37 @@ class AppointmentAdminApi(APIView):
             return Response(serializer.data, status.HTTP_200_OK)
 
 
+class AppointmentStudentApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        consultant = Consultant.objects.get(uuid=request.GET.get('id'))
+
+        if request.GET.get('id') is None:
+
+            date_start = request.GET.get('startDate').split(' ')[0]
+            date_end = request.GET.get('endDate').split(' ')[0]
+            appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end, consultant=consultant,
+                                                      isDeleted=False)
+
+            appointment_arr = []
+            for appointment in appointments:
+                api_object = dict()
+                api_object['uuid'] = appointment.uuid
+                api_object['price'] = appointment.price
+                api_object['isPaid'] = appointment.isPaid
+                api_object['date'] = appointment.date
+                api_object['startTime'] = appointment.startTime
+                api_object['finishTime'] = appointment.finishTime
+                api_object['isSuitable'] = appointment.isSuitable
+                api_object['room'] = appointment.room
+                select_location = dict()
+                select_location['label'] = appointment.location.name
+                select_location['value'] = appointment.location.uuid
+
+                appointment_arr.append(api_object)
+
+            serializer = AppointmentSerializer(appointment_arr, many=True, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
