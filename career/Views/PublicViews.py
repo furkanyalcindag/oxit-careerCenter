@@ -78,7 +78,7 @@ class AnnouncementPublicApi(APIView):
                                                                    language=Language.objects.get(code=lang_code))
                     api_data = dict()
                     api_data['title'] = blog_translation.title
-                    api_data['article'] = blog_translation.article
+                    api_data['article'] = blog_translation.article[0:70]
                     api_data['uuid'] = x.uuid
                     api_data['image'] = blog_translation.image
                     api_data['creationDate'] = x.creationDate.date()
