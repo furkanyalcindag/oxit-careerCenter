@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Student, Company, Consultant, JobPost, Lecture, Appointment
+from career.models import Student, Company, Consultant, JobPost, Lecture, Appointment, Scholarship
+from career.models.JobApplication import JobApplication
 
 
 class AdminDashboardApi(APIView):
@@ -40,5 +41,21 @@ class ConsultantDashboardApi(APIView):
         api_data['appointmentUnDoneCount'] = Appointment.objects.filter(consultant__profile__user=request.user,
                                                                         isDeleted=False, isCome=False,
                                                                         date__lt=datetime.datetime.today().date()).count()
+
+        return Response(api_data, status=status.HTTP_200_OK)
+
+
+class CompanyDashboardApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        api_data = dict()
+        api_data['activeJobPostCount'] = JobPost.objects.filter(company__profile__user=request.user, isDeleted=False,
+                                                                finishDate__lte=datetime.datetime.today().date()).count()
+        api_data['totalJobApplicantCount'] = JobApplication.objects.filter(jobPost__company__profile__user=request.user,
+                                                                           isDeleted=False).count()
+
+        api_data['totalScholarshipCount'] = Scholarship.objects.filter(company__profile__user=request.user,
+                                                                       isDeleted=False).count()
 
         return Response(api_data, status=status.HTTP_200_OK)
