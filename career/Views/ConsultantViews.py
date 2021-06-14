@@ -18,6 +18,7 @@ class ConsultantApi(APIView):
         active_page = 1
         consultant_name = ''
         consultant_surname = ''
+        consultant_speciality = ''
         if request.GET.get('page') is not None:
             active_page = int(request.GET.get('page'))
 
@@ -29,15 +30,20 @@ class ConsultantApi(APIView):
             elif len(x) == 1:
                 consultant_name = x[0]
 
+        if request.GET.get('specialityName') is not None:
+            consultant_speciality = str(request.GET.get('specialityName'))
+
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
         data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                         profile__user__last_name__icontains=consultant_surname).order_by('-id')[
+                                         profile__user__last_name__icontains=consultant_surname,
+                                         speciality__icontains=consultant_speciality).order_by('-id')[
                lim_start:lim_end]
 
         filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                                   profile__user__last_name__icontains=consultant_surname).count()
+                                                   profile__user__last_name__icontains=consultant_surname,
+                                                   speciality__icontains=consultant_speciality).count()
         arr = []
         for x in data:
             api_data = dict()
