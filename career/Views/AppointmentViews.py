@@ -213,32 +213,32 @@ class AppointmentStudentApi(APIView):
                 for day in days:
                     appointments = Appointment.objects.filter(date=day.date(),
                                                               consultant=consultant,
-                                                              isDeleted=False)
+                                                              isDeleted=False).order_by('startTime')
+                    if len(appointments) > 0:
+                        api_parent = dict()
 
-                    api_parent = dict()
+                        api_parent['date'] = day.date()
 
-                    api_parent['date'] = day.date()
+                        appointment_arr = []
+                        for appointment in appointments:
+                            api_object = dict()
+                            api_object['uuid'] = appointment.uuid
+                            api_object['price'] = appointment.price
+                            api_object['isPaid'] = appointment.isPaid
+                            api_object['date'] = appointment.date
+                            api_object['startTime'] = appointment.startTime
+                            api_object['finishTime'] = appointment.finishTime
+                            api_object['isSuitable'] = appointment.isSuitable
+                            api_object['room'] = appointment.room
+                            select_location = dict()
+                            select_location['label'] = appointment.location.name
+                            select_location['value'] = appointment.location.uuid
 
-                    appointment_arr = []
-                    for appointment in appointments:
-                        api_object = dict()
-                        api_object['uuid'] = appointment.uuid
-                        api_object['price'] = appointment.price
-                        api_object['isPaid'] = appointment.isPaid
-                        api_object['date'] = appointment.date
-                        api_object['startTime'] = appointment.startTime
-                        api_object['finishTime'] = appointment.finishTime
-                        api_object['isSuitable'] = appointment.isSuitable
-                        api_object['room'] = appointment.room
-                        select_location = dict()
-                        select_location['label'] = appointment.location.name
-                        select_location['value'] = appointment.location.uuid
+                            appointment_arr.append(api_object)
 
-                        appointment_arr.append(api_object)
+                        api_parent['hours'] = appointment_arr
 
-                    api_parent['hours'] = appointment_arr
-
-                    hours_arr.append(api_parent)
+                        hours_arr.append(api_parent)
 
                 return Response(hours_arr, status.HTTP_200_OK)
         except:
