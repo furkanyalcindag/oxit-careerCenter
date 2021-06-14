@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from career.models import Appointment, Consultant
 from career.serializers.AppointmentSerializer import AppointmentSerializer, AppointmentCalendarSerializer
+from career.services import GeneralService
 
 
 class AppointmentApi(APIView):
@@ -202,34 +203,44 @@ class AppointmentStudentApi(APIView):
 
             consultant = Consultant.objects.get(uuid=request.GET.get('id'))
 
-            if request.GET.get('id') is not None:
+            if request.GET.get('startDate') is not None:
 
-                date_start = request.GET.get('startDate')
-                date_end = request.GET.get('endDate')
-                appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end,
-                                                          consultant=consultant,
-                                                          isDeleted=False)
+                date_start = datetime.datetime.strptime(request.GET.get('startDate'), '%Y-%m-%d')
+                date_end = datetime.datetime.strptime(request.GET.get('endDate'), '%Y-%m-%d')
 
-                appointment_arr = []
-                for appointment in appointments:
-                    api_object = dict()
-                    api_object['uuid'] = appointment.uuid
-                    api_object['price'] = appointment.price
-                    api_object['isPaid'] = appointment.isPaid
-                    api_object['date'] = appointment.date
-                    api_object['startTime'] = appointment.startTime
-                    api_object['finishTime'] = appointment.finishTime
-                    api_object['isSuitable'] = appointment.isSuitable
-                    api_object['room'] = appointment.room
-                    select_location = dict()
-                    select_location['label'] = appointment.location.name
-                    select_location['value'] = appointment.location.uuid
+                days = GeneralService.date_range(date_start, date_end)
+                hours_arr = []
+                for day in days:
+                    appointments = Appointment.objects.filter(date=day.date(),
+                                                              consultant=consultant,
+                                                              isDeleted=False)
 
-                    appointment_arr.append(api_object)
+                    api_parent = dict()
 
-                serializer = AppointmentSerializer(appointment_arr, many=True, context={'request': request})
+                    api_parent['date'] = day.date()
 
-                return Response(serializer.data, status.HTTP_200_OK)
+                    appointment_arr = []
+                    for appointment in appointments:
+                        api_object = dict()
+                        api_object['uuid'] = appointment.uuid
+                        api_object['price'] = appointment.price
+                        api_object['isPaid'] = appointment.isPaid
+                        api_object['date'] = appointment.date
+                        api_object['startTime'] = appointment.startTime
+                        api_object['finishTime'] = appointment.finishTime
+                        api_object['isSuitable'] = appointment.isSuitable
+                        api_object['room'] = appointment.room
+                        select_location = dict()
+                        select_location['label'] = appointment.location.name
+                        select_location['value'] = appointment.location.uuid
+
+                        appointment_arr.append(api_object)
+
+                    api_parent['hours'] = appointment_arr
+
+                    hours_arr.append(api_parent)
+
+                return Response(hours_arr, status.HTTP_200_OK)
         except:
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)

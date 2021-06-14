@@ -1,3 +1,4 @@
+from datetime import timedelta
 from io import BytesIO
 
 from django.contrib.auth.models import Group
@@ -127,7 +128,10 @@ def show_urls_by_group(urllist, group, depth=0):
 
 
 
-
+def date_range(start, end):
+    delta = end - start  # as timedelta
+    days = [start + timedelta(days=i) for i in range(delta.days + 1)]
+    return days
 
 
 def render_to_pdf(template_src, context_dict={}):
