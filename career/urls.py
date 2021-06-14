@@ -6,6 +6,7 @@ from career.Views.BlogViews import BlogApi, BlogStudentApi
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi
 from career.Views.ConsultantViews import ConsultantApi
+from career.Views.DashboardViews import AdminDashboardApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
@@ -75,6 +76,9 @@ urlpatterns = [
     # ----------------admin api---------------------------
     # student
     path('student-api/', StudentApi.as_view(), name='admin-student-api'),
+
+    # dashboard
+    path('admin-dashboard-api/', AdminDashboardApi.as_view(), name='admin-dashboard-api'),
 
     # company
     path('company-api/', CompanyApi.as_view(), name='admin-company-api'),
