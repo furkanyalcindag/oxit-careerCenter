@@ -122,3 +122,81 @@ class AppointmentApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+
+class AppointmentAdminApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        date = request.GET.get('date')
+
+        user = request.user
+
+
+
+        if request.GET.get('id') is None:
+
+
+            date_start = request.GET.get('startDate').split(' ')[0]
+            date_end = request.GET.get('endDate').split(' ')[0]
+            appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end,
+                                                      isDeleted=False)
+
+            appointment_arr = []
+            for appointment in appointments:
+                api_object = dict()
+                api_object['uuid'] = appointment.uuid
+                api_object[
+                    'title'] = appointment.consultant.profile.user.first_name + ' ' + appointment.consultant.profile.user.last_name
+                api_object['start'] = str(appointment.date) + ' ' + str(appointment.startTime)
+                api_object['end'] = str(appointment.date) + ' ' + str(appointment.finishTime)
+
+                if appointment.student is None:
+                    api_object['id'] = 'done'
+                    api_object['studentName'] = None
+                else:
+                    api_object['studentName'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
+                    api_object['id'] = 'undone'
+
+                appointment_arr.append(api_object)
+
+            serializer = AppointmentCalendarSerializer(appointment_arr, many=True, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        else:
+            appointment = Appointment.objects.get(uuid=request.GET.get('id'))
+            api_object = dict()
+            api_object['uuid'] = appointment.uuid
+            api_object['price'] = appointment.price
+            api_object['isPaid'] = appointment.isPaid
+            api_object['date'] = appointment.date
+            api_object['startTime'] = appointment.startTime
+            api_object['finishTime'] = appointment.finishTime
+            api_object['isSuitable'] = appointment.isSuitable
+            api_object['room'] = appointment.room
+            select_location = dict()
+            select_location['label'] = appointment.location.name
+            select_location['value'] = appointment.location.uuid
+
+            select_student = dict()
+
+            if appointment.student is not None:
+                select_student[
+                    'label'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
+                select_student['value'] = appointment.student.uuid
+
+            else:
+                select_student = None
+
+            api_object['student'] = select_student
+            api_object['location'] = select_location
+            serializer = AppointmentSerializer(api_object, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+
