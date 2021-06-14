@@ -202,7 +202,7 @@ class AppointmentStudentApi(APIView):
 
             consultant = Consultant.objects.get(uuid=request.GET.get('id'))
 
-            if request.GET.get('id') is None:
+            if request.GET.get('id') is not None:
 
                 date_start = request.GET.get('startDate')
                 date_end = request.GET.get('endDate')
