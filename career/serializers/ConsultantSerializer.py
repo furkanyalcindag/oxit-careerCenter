@@ -3,6 +3,7 @@ import traceback
 from django.contrib.auth.models import User, Group
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework.serializers import Serializer
 from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Consultant, Appointment
@@ -63,3 +64,28 @@ class ConsultantPageableSerializer(PageSerializer):
         pass
 
 
+class ConsultantStudentSerializer(serializers.Serializer):
+    # TODO: Consultant student serializer
+    uuid = serializers.UUIDField(read_only=True)
+    firstName = serializers.CharField(read_only=True)
+    lastName = serializers.CharField(read_only=True)
+    speciality = serializers.CharField(read_only=True)
+    profileImage = serializers.CharField(read_only=True)
+    email = serializers.CharField(read_only=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
+
+
+class ConsultantStudentPageableSerializer(PageSerializer):
+    data = ConsultantStudentSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

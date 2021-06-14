@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 
 from career.models import Consultant
 from career.models.APIObject import APIObject
-from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer
+from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer, \
+    ConsultantStudentPageableSerializer, ConsultantStudentSerializer
 
 
 class ConsultantApi(APIView):
@@ -107,3 +108,78 @@ class ConsultantApi(APIView):
         except:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConsultantStudentApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        if request.GET.get('id') is None:
+            active_page = 1
+            consultant_name = ''
+            consultant_surname = ''
+            consultant_speciality = ''
+            if request.GET.get('page') is not None:
+                active_page = int(request.GET.get('page'))
+
+            if request.GET.get('consultantName') is not None:
+                x = str(request.GET.get('consultantName')).split(' ')
+                if len(x) > 1:
+                    consultant_name = x[0]
+                    consultant_surname = [1]
+                elif len(x) == 1:
+                    consultant_name = x[0]
+
+            if request.GET.get('specialityName') is not None:
+                consultant_speciality = str(request.GET.get('specialityName'))
+
+            lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
+            lim_end = lim_start + int(request.GET.get('count'))
+
+            data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
+                                             profile__user__last_name__icontains=consultant_surname,
+                                             speciality__icontains=consultant_speciality).order_by('-id')[
+                   lim_start:lim_end]
+
+            filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
+                                                       profile__user__last_name__icontains=consultant_surname,
+                                                       speciality__icontains=consultant_speciality).count()
+            arr = []
+            for x in data:
+                api_data = dict()
+                api_data['firstName'] = x.profile.user.first_name
+                api_data['lastName'] = x.profile.user.last_name
+                api_data['uuid'] = x.uuid
+                api_data['speciality'] = x.speciality
+                api_data['profileImage'] = x.profile.profileImage
+                api_data['email'] = x.profile.user.email
+                arr.append(api_data)
+
+            api_object = APIObject()
+            api_object.data = arr
+            api_object.recordsFiltered = filtered_count
+            api_object.recordsTotal = Consultant.objects.count()
+            api_object.activePage = 1
+
+            serializer = ConsultantStudentPageableSerializer(
+                api_object, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        else:
+
+            x = Consultant.objects.get(uuid=request.GET.get('id'))
+
+            api_data = dict()
+            api_data['firstName'] = x.profile.user.first_name
+            api_data['lastName'] = x.profile.user.last_name
+            api_data['uuid'] = x.uuid
+            api_data['speciality'] = x.speciality
+            api_data['profileImage'] = x.profile.profileImage
+            api_data['email'] = x.profile.user.email
+
+            serializer = ConsultantStudentSerializer(
+                api_data, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
