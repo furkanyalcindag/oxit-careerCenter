@@ -20,7 +20,10 @@ class AnnouncementPublicApi(APIView):
             if request.GET.get('id') is not None:
                 blog = Blog.objects.get(uuid=request.GET.get('id'), blogType__name='Duyuru')
 
-                lang = Language.objects.get(code=request.GET.get('langCode'))
+                lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+
+                lang = Language.objects.get(code=lang_code)
+
 
                 blog_translation = BlogDescription.objects.get(blog=blog, language=lang)
 
