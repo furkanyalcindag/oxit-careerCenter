@@ -282,6 +282,7 @@ class AppointmentStudentApi(APIView):
             appointment = Appointment.objects.get(uuid=appointment_id)
             appointment.student = student
             appointment.isSuitable = False
+            appointment.save()
 
             return Response("başarılı", status=status.HTTP_200_OK)
 
