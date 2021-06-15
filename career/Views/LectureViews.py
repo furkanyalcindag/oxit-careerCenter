@@ -205,7 +205,7 @@ class LectureStudentApi(APIView):
                 api_data['name'] = lecture_translation.name
                 api_data['description'] = lecture_translation.description
                 api_data['uuid'] = lecture.uuid
-                api_data['languageCode'] = lang.code
+                api_data['languageCode'] = lang
 
                 select_instructor = dict()
                 select_instructor[
