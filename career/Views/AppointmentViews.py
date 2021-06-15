@@ -201,9 +201,10 @@ class AppointmentStudentApi(APIView):
 
         try:
 
-            consultant = Consultant.objects.get(uuid=request.GET.get('id'))
+
 
             if request.GET.get('startDate') is not None:
+                consultant = Consultant.objects.get(uuid=request.GET.get('id'))
 
                 date_start = datetime.datetime.strptime(request.GET.get('startDate'), '%Y-%m-%d')
                 date_end = datetime.datetime.strptime(request.GET.get('endDate'), '%Y-%m-%d')
@@ -269,17 +270,6 @@ class AppointmentStudentApi(APIView):
                 api_object['location'] = select_location
 
                 return Response(api_object, status.HTTP_200_OK)
-
-
-
-
-
-
-
-
-
-
-
         except:
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
