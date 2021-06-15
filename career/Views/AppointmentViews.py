@@ -275,17 +275,16 @@ class AppointmentStudentApi(APIView):
     def post(self, request, format=None):
         try:
 
-
             appointment_id = request.data['appointmentId']
             student = Student.objects.get(profile__user=request.user)
-
             appointment = Appointment.objects.get(uuid=appointment_id)
-            appointment.student = student
-            appointment.isSuitable = False
-            appointment.save()
-
-            return Response("başarılı", status=status.HTTP_200_OK)
-
+            if appointment.isSuitable:
+                appointment.student = student
+                appointment.isSuitable = False
+                appointment.save()
+                return Response("başarılı", status=status.HTTP_200_OK)
+            else:
+                return Response("Dolu Randevu", status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
