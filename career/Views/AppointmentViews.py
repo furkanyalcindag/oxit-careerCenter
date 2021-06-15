@@ -249,14 +249,37 @@ class AppointmentStudentApi(APIView):
 
                 return Response(hours_arr, status.HTTP_200_OK)
 
+            else:
+                appointment = Appointment.objects.get(uuid=request.GET.get('id'))
+
+                api_object = dict()
+                api_object['uuid'] = appointment.uuid
+                api_object['price'] = appointment.price
+                api_object['isPaid'] = appointment.isPaid
+                api_object['date'] = appointment.date
+                api_object['startTime'] = appointment.startTime
+                api_object['finishTime'] = appointment.finishTime
+                api_object['isSuitable'] = appointment.isSuitable
+
+                api_object['room'] = appointment.room
+                select_location = dict()
+                select_location['label'] = appointment.location.name
+                select_location['value'] = appointment.location.uuid
+
+                api_object['location'] = select_location
+
+                return Response(api_object, status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
 
         except:
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-
-
-
-
