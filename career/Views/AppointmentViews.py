@@ -210,6 +210,7 @@ class AppointmentStudentApi(APIView):
 
                 days = GeneralService.date_range(date_start, date_end)
                 hours_arr = []
+                index = 0
                 for day in days:
                     appointments = Appointment.objects.filter(date=day.date(),
                                                               consultant=consultant,
@@ -218,8 +219,13 @@ class AppointmentStudentApi(APIView):
                         api_parent = dict()
 
                         api_parent['date'] = day.date()
-
+                        if index == 0:
+                            api_parent['isVisible'] = True
+                        else:
+                            api_parent['isVisible'] = True
+                        index = 0
                         appointment_arr = []
+
                         for appointment in appointments:
                             api_object = dict()
                             api_object['uuid'] = appointment.uuid
@@ -229,6 +235,7 @@ class AppointmentStudentApi(APIView):
                             api_object['startTime'] = appointment.startTime
                             api_object['finishTime'] = appointment.finishTime
                             api_object['isSuitable'] = appointment.isSuitable
+
                             api_object['room'] = appointment.room
                             select_location = dict()
                             select_location['label'] = appointment.location.name
@@ -241,6 +248,15 @@ class AppointmentStudentApi(APIView):
                         hours_arr.append(api_parent)
 
                 return Response(hours_arr, status.HTTP_200_OK)
+
+
         except:
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+
+
