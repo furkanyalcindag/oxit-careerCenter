@@ -342,3 +342,54 @@ class ScholarshipStudentApi(APIView):
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ScholarshipApplicants(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        student = Student.objects.get(profile__user=request.user)
+
+        active_page = 1
+        count = 10
+
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('count') is not None:
+            count = int(request.GET.get('count'))
+
+        lim_start = int(count) * (int(active_page) - 1)
+        lim_end = lim_start + int(count)
+
+        data = ScholarshipApplication.objects.filter(student=student).order_by('-id')[lim_start:lim_end]
+
+        filtered_count = ScholarshipApplication.objects.filter(student=student).count()
+        arr = []
+        for x in data:
+            api_data = dict()
+            api_data['name'] = x.name
+            api_data['description'] = x.description
+            api_data['uuid'] = x.uuid
+            api_data['amount'] = x.amount
+            api_data['isApprove'] = x.isApprove
+            select_company = dict()
+            select_company[
+                'label'] = x.company.name
+            select_company['value'] = x.company.uuid
+
+            api_data['company'] = select_company
+            api_data['companyLogo'] = x.company.logo
+            arr.append(api_data)
+
+        api_object = APIObject()
+        api_object.data = arr
+        api_object.recordsFiltered = filtered_count
+        api_object.recordsTotal = ScholarshipApplication.objects.filter(student=student).count()
+        api_object.activePage = active_page
+
+        serializer = ScholarshipPageableSerializer(
+            api_object, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

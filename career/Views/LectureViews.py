@@ -312,7 +312,7 @@ class LectureStudentApi(APIView):
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class LectureApplicants(APIView):
+class LectureStudentApplicants(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
