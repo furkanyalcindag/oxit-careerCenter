@@ -199,7 +199,7 @@ class LectureStudentApi(APIView):
 
             lang = request.META.get('HTTP_ACCEPT_LANGUAGE')
 
-            lecture_translation = LectureDescription.objects.get(lecture=lecture, language=lang)
+            lecture_translation = LectureDescription.objects.get(lecture=lecture, language__code=lang)
 
             api_data = dict()
             api_data['name'] = lecture_translation.name
