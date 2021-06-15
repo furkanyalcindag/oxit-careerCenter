@@ -330,7 +330,7 @@ class ScholarshipStudentApi(APIView):
             scholarship_id = request.data['scholarshipId']
             student = Student.objects.get(profile__user=request.user)
             scholarship = Scholarship.objects.get(uuid=scholarship_id)
-            applications = ScholarshipApplication.objects.filter(scholarship=scholarship, student=student)
+            applications = ScholarshipApplication.objects.filter(scholarShip=scholarship, student=student)
             if scholarship.isApprove and len(applications) == 0:
                 scholarship_application = ScholarshipApplication()
                 scholarship_application.student = student
