@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Appointment, Consultant
+from career.models import Appointment, Consultant, Student
 from career.serializers.AppointmentSerializer import AppointmentSerializer, AppointmentCalendarSerializer
 from career.services import GeneralService
 
@@ -198,9 +198,7 @@ class AppointmentStudentApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-
         try:
-
             if request.GET.get('startDate') is not None:
                 consultant = Consultant.objects.get(uuid=request.GET.get('id'))
 
@@ -273,3 +271,20 @@ class AppointmentStudentApi(APIView):
         except:
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request, format=None):
+        try:
+
+            student_id = request.data['studentId']
+            appointment_id = request.data['appointmentId']
+            student = Student.objects.get(uuid=student_id)
+
+            appointment = Appointment.objects.get(uuid=appointment_id)
+            appointment.student = student
+            appointment.isSuitable = False
+
+            return Response("başarılı", status=status.HTTP_200_OK)
+
+        except:
+            traceback.print_exc()
+            return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
