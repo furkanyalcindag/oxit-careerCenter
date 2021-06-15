@@ -310,3 +310,68 @@ class LectureStudentApi(APIView):
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class LectureApplicants(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+
+        student = Student.objects.get(profile__user=request.user)
+
+        active_page = 1
+        count = 10
+
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('count') is not None:
+            count = int(request.GET.get('count'))
+
+        lim_start = int(count) * (int(active_page) - 1)
+        lim_end = lim_start + int(count)
+
+        data = LectureApplication.objects.filter(student=student).order_by('-id')[lim_start:lim_end]
+
+        filtered_count = LectureApplication.objects.filter(student=student).count()
+        arr = []
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        for x in data:
+            lecture_translation = LectureDescription.objects.get(lecture=x,
+                                                                 language=Language.objects.get(code=lang_code))
+            api_data = dict()
+            api_data['name'] = lecture_translation.name
+            api_data['description'] = lecture_translation.description
+            api_data['uuid'] = x.uuid
+            api_data['image'] = lecture_translation.image
+            api_data['room'] = x.room
+            api_data['capacity'] = x.capacity
+
+            select_instructor = dict()
+            select_instructor[
+                'label'] = x.instructor.person.firstName + ' ' + x.instructor.person.lastName
+            select_instructor['value'] = x.instructor.uuid
+
+            select_location = dict()
+            select_location['label'] = x.location.name
+            select_location['value'] = x.location.uuid
+
+            api_data['instructor'] = select_instructor
+            api_data['location'] = select_location
+            api_data['date'] = str(x.date)
+            api_data['time'] = str(x.time)
+            api_data['isPaid'] = x.isPaid
+            api_data['price'] = x.price
+            arr.append(api_data)
+
+        api_object = APIObject()
+        api_object.data = arr
+        api_object.recordsFiltered = filtered_count
+        api_object.recordsTotal = LectureApplication.objects.filter(student=student).count()
+        api_object.activePage = active_page
+
+        serializer = LecturePageableSerializer(
+            api_object, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)

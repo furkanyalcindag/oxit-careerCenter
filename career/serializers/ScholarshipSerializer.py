@@ -12,6 +12,7 @@ class ScholarshipSerializer(serializers.Serializer):
     description = serializers.CharField(required=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2, required=True)
     company = SelectSerializer(read_only=True)
+    companyLogo = serializers.CharField(read_only=True, required=False)
     companyId = serializers.UUIDField(write_only=True, required=True)
     isApprove = serializers.BooleanField()
 

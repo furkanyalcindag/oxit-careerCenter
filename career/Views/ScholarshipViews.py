@@ -273,6 +273,7 @@ class ScholarshipStudentApi(APIView):
             select_company['value'] = scholarship.company.uuid
 
             api_data['company'] = select_company
+            api_data['companyLogo'] = scholarship.company.logo
 
             serializer = ScholarshipSerializer(
                 api_data, context={'request': request})
@@ -310,6 +311,7 @@ class ScholarshipStudentApi(APIView):
                 select_company['value'] = x.company.uuid
 
                 api_data['company'] = select_company
+                api_data['companyLogo'] = x.company.logo
                 arr.append(api_data)
 
             api_object = APIObject()
