@@ -275,9 +275,9 @@ class AppointmentStudentApi(APIView):
     def post(self, request, format=None):
         try:
 
-            student_id = request.data['studentId']
+
             appointment_id = request.data['appointmentId']
-            student = Student.objects.get(uuid=student_id)
+            student = Student.objects.get(profile__user=request.user)
 
             appointment = Appointment.objects.get(uuid=appointment_id)
             appointment.student = student
