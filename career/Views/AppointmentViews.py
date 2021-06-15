@@ -201,8 +201,6 @@ class AppointmentStudentApi(APIView):
 
         try:
 
-
-
             if request.GET.get('startDate') is not None:
                 consultant = Consultant.objects.get(uuid=request.GET.get('id'))
 
@@ -261,6 +259,8 @@ class AppointmentStudentApi(APIView):
                 api_object['startTime'] = appointment.startTime
                 api_object['finishTime'] = appointment.finishTime
                 api_object['isSuitable'] = appointment.isSuitable
+                api_object[
+                    'consultant'] = appointment.consultant.profile.user.first_name + ' ' + appointment.consultant.profile.user.last_name
 
                 api_object['room'] = appointment.room
                 select_location = dict()
