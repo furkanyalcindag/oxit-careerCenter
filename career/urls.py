@@ -18,7 +18,7 @@ from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplicationsApi, \
     JobPostApplicationStudentCoverLetterApi
 from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdminApi
-from career.Views.LectureViews import LectureApi, LectureInfoApi
+from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
@@ -158,6 +158,7 @@ urlpatterns = [
     path('student/student-blog-api/', BlogStudentApi.as_view(), name='student-blog-api'),
     path('student/student-export-cv-api/', StudentCVExportPDFApi.as_view(), name='student-export-cv-api'),
     path('student/student-consultant-api/', ConsultantStudentApi.as_view(), name='student-consultant-api'),
-    path('student/student-appointment-api/', AppointmentStudentApi.as_view(), name='student-appointment-api')
+    path('student/student-appointment-api/', AppointmentStudentApi.as_view(), name='student-appointment-api'),
+    path('student/student-lecture-api/', LectureStudentApi.as_view(), name='student-lecture-api'),
 
 ]
