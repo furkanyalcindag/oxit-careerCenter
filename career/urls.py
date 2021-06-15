@@ -20,7 +20,7 @@ from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplica
 from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdminApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
-from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi
+from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
@@ -160,5 +160,6 @@ urlpatterns = [
     path('student/student-consultant-api/', ConsultantStudentApi.as_view(), name='student-consultant-api'),
     path('student/student-appointment-api/', AppointmentStudentApi.as_view(), name='student-appointment-api'),
     path('student/student-lecture-api/', LectureStudentApi.as_view(), name='student-lecture-api'),
+    path('student/student-scholarship-api/', ScholarshipStudentApi.as_view(), name='student-scholar-api'),
 
 ]

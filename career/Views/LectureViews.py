@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from slugify import slugify
 
 from career.exceptions import LanguageCodeException
-from career.models import Language, Lecture, LectureDescription
+from career.models import Language, Lecture, LectureDescription, Student, LectureApplication
 from career.models.APIObject import APIObject
 from career.serializers.LectureSerializer import LectureSerializer, LecturePageableSerializer, LectureDescSerializer, \
     LectureInformationSerializer
@@ -76,7 +76,7 @@ class LectureApi(APIView):
             data = Lecture.objects.filter(name__icontains=name, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Lecture.objects.filter(name__icontains=name,isDeleted=False).count()
+            filtered_count = Lecture.objects.filter(name__icontains=name, isDeleted=False).count()
             arr = []
             for x in data:
                 lecture_translation = LectureDescription.objects.get(lecture=x,
@@ -189,13 +189,6 @@ class LectureInfoApi(APIView):
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
-
-
-
-
 class LectureStudentApi(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -259,7 +252,7 @@ class LectureStudentApi(APIView):
             data = Lecture.objects.filter(name__icontains=name, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Lecture.objects.filter(name__icontains=name,isDeleted=False).count()
+            filtered_count = Lecture.objects.filter(name__icontains=name, isDeleted=False).count()
             arr = []
             for x in data:
                 lecture_translation = LectureDescription.objects.get(lecture=x,
@@ -299,3 +292,21 @@ class LectureStudentApi(APIView):
                 api_object, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        try:
+            scholarship_id = request.data['lectureId']
+            student = Student.objects.get(profile__user=request.user)
+            lecture = Lecture.objects.get(uuid=scholarship_id)
+            applications = LectureApplication.objects.filter(lecture=lecture, student=student)
+            if len(applications) == 0:
+                lecture_application = LectureApplication()
+                lecture_application.student = student
+                lecture_application.lecture = lecture
+                lecture_application.save()
+                return Response("başarılı", status=status.HTTP_200_OK)
+            else:
+                return Response("Başvurulamaz", status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

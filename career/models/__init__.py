@@ -25,6 +25,7 @@ from .JobType import JobType
 from .Language import Language
 from .Lecture import Lecture
 from .LectureDescription import LectureDescription
+from .LectureApplication import LectureApplication
 from .MaritalStatus import MaritalStatus
 from .MaritalStatusDescription import MaritalStatusDescription
 from .MilitaryStatusDescription import MilitaryStatusDescription
