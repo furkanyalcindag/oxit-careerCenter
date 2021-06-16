@@ -5,8 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import JobPost
+from career.models import JobPost, Student
 from career.models.APIObject import APIObject
+from career.models.JobApplication import JobApplication
 from career.serializers.JobPostSerializer import JobPostSerializer, JobPostPageableSerializer
 
 
@@ -444,6 +445,12 @@ class JobPostAdminApi(APIView):
                 api_data['district'] = select_district
                 api_data['finishDate'] = x.finishDate
                 api_data['startDate'] = x.startDate
+
+                if len(Student.objects.filter(profile__user=request.user)) > 0 and len(
+                        JobApplication.objects.filter(student__profile__user=request.user, jobPost=x)) == 0:
+                    api_data['isApplied'] = True
+                else:
+                    api_data['isApplied'] = False
 
                 serializer = JobPostSerializer(api_data, context={'request': request})
 

@@ -25,6 +25,7 @@ class JobPostSerializer(serializers.Serializer):
     logo = serializers.CharField(required=False, read_only=True)
     companyName = serializers.CharField(required=False, read_only=True)
     staffCount = serializers.IntegerField(required=False, read_only=True)
+    isApplied = serializers.BooleanField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         try:

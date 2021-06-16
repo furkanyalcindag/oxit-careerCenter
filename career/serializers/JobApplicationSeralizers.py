@@ -1,6 +1,7 @@
 import traceback
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from career.models import JobPost, Student
 from career.models.JobApplication import JobApplication
@@ -27,6 +28,7 @@ class StudentJobApplicationSerializer(serializers.Serializer):
     title = serializers.CharField(read_only=True)
     companyName = serializers.CharField(read_only=True)
     companyLogo = serializers.CharField(read_only=True)
+    isApplied = serializers.BooleanField(read_only=True,required=False)
 
     def update(self, instance, validated_data):
         pass
@@ -38,8 +40,11 @@ class StudentJobApplicationSerializer(serializers.Serializer):
             job_application.jobPost = JobPost.objects.get(uuid=validated_data.get('jobPostId'))
             job_application.student = Student.objects.get(profile__user=self.context['request'].user)
             job_application.coverLetter = validated_data.get('coverLetter')
-            job_application.save()
-            return job_application
+            if len(JobApplication.objects.filter(jobPost=job_application.jobPost, student=job_application.student))==0:
+                job_application.save()
+                return job_application
+            else:
+                raise ValidationError("daha önce başvuruldu")
         except:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
