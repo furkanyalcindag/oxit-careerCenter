@@ -525,7 +525,7 @@ class ConsultantCategorySelectApi(APIView):
                 arr.append(api_data)
 
             serializer = SelectSerializer(
-                arr, context={'request': request})
+                arr, many=True, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
 
