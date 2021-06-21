@@ -197,14 +197,27 @@ class PermissionApi(APIView):
 
     def put(self, request, format=None):
 
+        group = Group.objects.get(id=int(request.GET.get('groupId')))
 
-        x = request.GET.get()
+        for data in request.data:
+            url_name = UrlName.objects.get(id=int(data['uuid']))
 
+            url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url_name)
 
+            get = url_method_groups.get(urlMethod__method_Name='GET')
+            get.isAccess = data['GET'].isAccess
+            get.save()
 
+            get = url_method_groups.get(urlMethod__method_Name='POST')
+            get.isAccess = data['POST'].isAccess
+            get.save()
 
+            get = url_method_groups.get(urlMethod__method_Name='PUT')
+            get.isAccess = data['PUT'].isAccess
+            get.save()
 
+            get = url_method_groups.get(urlMethod__method_Name='DELETE')
+            get.isAccess = data['DELETE'].isAccess
+            get.save()
 
-
-
-
+        return Response(True, status=status.HTTP_200_OK)
