@@ -1,3 +1,5 @@
+import traceback
+
 from django.contrib import auth, messages
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
@@ -196,28 +198,34 @@ class PermissionApi(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, format=None):
+        try:
+            group = Group.objects.get(id=int(request.GET.get('groupId')))
 
-        group = Group.objects.get(id=int(request.GET.get('groupId')))
+            for data in request.data:
+                url_name = UrlName.objects.get(id=int(data['uuid']))
 
-        for data in request.data:
-            url_name = UrlName.objects.get(id=int(data['uuid']))
+                url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url_name)
 
-            url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url_name)
+                get = url_method_groups.get(urlMethod__method_Name='GET')
+                get.isAccess = data['GET'].isAccess
+                get.save()
 
-            get = url_method_groups.get(urlMethod__method_Name='GET')
-            get.isAccess = data['GET'].isAccess
-            get.save()
+                get = url_method_groups.get(urlMethod__method_Name='POST')
+                get.isAccess = data['POST'].isAccess
+                get.save()
 
-            get = url_method_groups.get(urlMethod__method_Name='POST')
-            get.isAccess = data['POST'].isAccess
-            get.save()
+                get = url_method_groups.get(urlMethod__method_Name='PUT')
+                get.isAccess = data['PUT'].isAccess
+                get.save()
 
-            get = url_method_groups.get(urlMethod__method_Name='PUT')
-            get.isAccess = data['PUT'].isAccess
-            get.save()
+                get = url_method_groups.get(urlMethod__method_Name='DELETE')
+                get.isAccess = data['DELETE'].isAccess
+                get.save()
 
-            get = url_method_groups.get(urlMethod__method_Name='DELETE')
-            get.isAccess = data['DELETE'].isAccess
-            get.save()
+            return Response(True, status=status.HTTP_200_OK)
 
-        return Response(True, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(True, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
