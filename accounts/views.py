@@ -201,7 +201,7 @@ class PermissionApi(APIView):
         try:
             group = Group.objects.get(id=int(request.GET.get('groupId')))
 
-            for data in request.data:
+            for data in request.data['permissions']:
                 url_name = UrlName.objects.get(id=int(data['uuid']))
 
                 url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url_name)
