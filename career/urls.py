@@ -5,7 +5,7 @@ from career.Views.AppointmentViews import AppointmentApi, AppointmentAdminApi, A
 from career.Views.BlogViews import BlogApi, BlogStudentApi
 from career.Views.CategoryViews import ConsultantCategoryView
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
-    CompanyCommunicationInformationApi, CompanySelectApi
+    CompanyCommunicationInformationApi, CompanySelectApi, CompanyGeneralInformationStudentApi, CompanyListApi
 from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi
 from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
@@ -85,13 +85,13 @@ urlpatterns = [
     # company
     path('company-api/', CompanyApi.as_view(), name='admin-company-api'),
     path('company-job-post-api/', JobPostAdminApi.as_view(), name='admin-company-api'),
+    path('company-general-information-api/', CompanyGeneralInformationStudentApi.as_view(),
+         name='admin-company-general-information-api'),
 
     # consultant
     path('consultant-api/', ConsultantApi.as_view(), name='admin-consultant-api'),
     path('consultant-appointment-api/', AppointmentAdminApi.as_view(), name='admin-consultant-appointment-api'),
     path('consultant-category-api/', ConsultantCategoryView.as_view(), name='admin-consultant-category-api'),
-
-
 
     # instructor
     path('instructor-api/', InstructorApi.as_view(), name='admin-instructor-api'),
@@ -170,5 +170,9 @@ urlpatterns = [
          name='student-lecture-application-api'),
     path('student/student-scholarship-application-api/', ScholarshipApplicants.as_view(),
          name='student-scholarship-application-api'),
+    path('student/student-company-general-information-api/', CompanyGeneralInformationStudentApi.as_view(),
+         name='student-company-general-information-api'),
+    path('student/student-company-list-api/', CompanyListApi.as_view(),
+         name='student-company-list-information-api'),
 
 ]

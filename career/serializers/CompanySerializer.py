@@ -69,6 +69,10 @@ class CompanyGeneralInformationSerializer(serializers.Serializer):
     staffCount = serializers.IntegerField(required=False, allow_null=True)
     website = serializers.CharField(required=False, allow_null=True)
     year = serializers.IntegerField(required=False, allow_null=True)
+    address = serializers.CharField(read_only=True, required=False)
+    phone = serializers.CharField(read_only=True, required=False)
+    city = serializers.CharField(read_only=True, required=False)
+    fax = serializers.CharField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name')
@@ -118,6 +122,28 @@ class CompanyCommunicationInformationSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+    def create(self, validated_data):
+        pass
+
+
+class CompanyListSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField()
+    logo = serializers.CharField()
+    name = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
+
+class CompanyListPageableSerializer(PageSerializer):
+    data = CompanyListSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
 
     def create(self, validated_data):
         pass
