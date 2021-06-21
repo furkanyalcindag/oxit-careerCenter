@@ -50,10 +50,10 @@ class ConsultantCategoryView(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Category.objects.filter(keyword__icontains=title, isDeleted=False).order_by('-id')[
+            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Category.objects.filter(keyword__icontains=title).count()
+            filtered_count = Category.objects.filter(keyword__icontains=title,type='Consultant').count()
             arr = []
             for x in data:
                 blog_translation = CategoryDescription.objects.get(category=x, language=Language.objects.get(code=lang_code))

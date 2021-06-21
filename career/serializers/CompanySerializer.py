@@ -73,6 +73,7 @@ class CompanyGeneralInformationSerializer(serializers.Serializer):
     phone = serializers.CharField(read_only=True, required=False)
     city = serializers.CharField(read_only=True, required=False)
     fax = serializers.CharField(read_only=True, required=False)
+    about = serializers.CharField(read_only=True,required=False)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name')

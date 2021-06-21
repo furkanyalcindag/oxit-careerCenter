@@ -297,6 +297,7 @@ class CompanyGeneralInformationStudentApi(APIView):
             api_object['year'] = company.year
             # api_object['locationMap'] = company.locationMap
             api_object['phone'] = company.phone
+            api_object['about'] = company.about
             # api_object['fax'] = company.fax
             serializer = CompanyGeneralInformationSerializer(api_object, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -305,10 +306,8 @@ class CompanyGeneralInformationStudentApi(APIView):
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
 class CompanyListApi(APIView):
     permission_classes = (IsAuthenticated,)
-
 
     def get(self, request, format=None):
 

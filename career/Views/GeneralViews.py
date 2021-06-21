@@ -7,11 +7,14 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from slugify import slugify
 
 from accounts.models import GroupUrlMethod
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
-    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant
+    ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant, \
+    Category, CategoryDescription
+from career.models.APIObject import APIObject
 from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
@@ -20,6 +23,7 @@ from career.models.MaritalStatusDescription import MaritalStatusDescription
 from career.models.Menu import Menu
 from career.models.MilitaryStatus import MilitaryStatus
 from career.models.SelectObject import SelectObject
+from career.serializers.CategorySerializer import CategoryPageableSerializer
 from career.serializers.GeneralSerializers import LanguageSerializer, SelectSerializer, MenuSerializer
 
 
@@ -492,5 +496,33 @@ class GroupSelectApi(APIView):
             select_arr.append(select_object)
 
         serializer = SelectSerializer(select_arr, many=True, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ConsultantCategorySelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        active_page = 1
+        count = 10
+
+        title = ''
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+
+        data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')
+
+        arr = []
+        for x in data:
+            blog_translation = CategoryDescription.objects.get(category=x,
+                                                               language=Language.objects.get(code=lang_code))
+            api_data = dict()
+            api_data['value'] = x.uuid
+            api_data['label'] = blog_translation.name
+
+            arr.append(api_data)
+
+        serializer = SelectSerializer(
+            arr, context={'request': request})
 
         return Response(serializer.data, status.HTTP_200_OK)

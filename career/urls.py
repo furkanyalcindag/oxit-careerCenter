@@ -11,7 +11,8 @@ from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardAp
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
-    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi, GroupSelectApi
+    ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi, GroupSelectApi, \
+    ConsultantCategorySelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -69,6 +70,7 @@ urlpatterns = [
     path('menu-create-api/', MenuApi.as_view(), name='menu-create-api'),
     path('student-select-api/', StudentSelectApi.as_view(), name='student-select-api'),
     path('instructor-select-api/', InstructorSelectApi.as_view(), name='instructor-select-api'),
+    path('category-select-api/', ConsultantCategorySelectApi.as_view(), name='category-select-api'),
 
     # -------------public api--------------------------------
 
