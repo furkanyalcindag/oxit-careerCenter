@@ -194,3 +194,17 @@ class PermissionApi(APIView):
         serializer = PermissionSerializer(arr, many=True, context={'request', request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, format=None):
+
+
+        x = request.GET.get()
+
+
+
+
+
+
+
+
+

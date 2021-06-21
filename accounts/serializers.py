@@ -3,6 +3,7 @@ import traceback
 from rest_framework import serializers
 
 from accounts.exceptions import PasswordConfirmException, PasswordValidationException
+from accounts.models import GroupUrlMethod
 
 
 class PasswordChangeSerializer(serializers.Serializer):
@@ -47,8 +48,18 @@ class PermissionSerializer(serializers.Serializer):
     put = serializers.BooleanField()
     delete = serializers.BooleanField()
 
-    def update(self, instance, validated_data):
-        pass
+
+
+
+
+
+
+
+
+
+
+
+
 
     def create(self, validated_data):
         pass

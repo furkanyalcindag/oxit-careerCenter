@@ -504,25 +504,31 @@ class ConsultantCategorySelectApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        active_page = 1
-        count = 10
 
-        title = ''
-        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+        try:
+            active_page = 1
+            count = 10
 
-        data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')
+            title = ''
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
 
-        arr = []
-        for x in data:
-            blog_translation = CategoryDescription.objects.get(category=x,
-                                                               language=Language.objects.get(code=lang_code))
-            api_data = dict()
-            api_data['value'] = x.uuid
-            api_data['label'] = blog_translation.name
+            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')
 
-            arr.append(api_data)
+            arr = []
+            for x in data:
+                blog_translation = CategoryDescription.objects.get(category=x,
+                                                                   language=Language.objects.get(code=lang_code))
+                api_data = dict()
+                api_data['value'] = x.uuid
+                api_data['label'] = blog_translation.name
 
-        serializer = SelectSerializer(
-            arr, context={'request': request})
+                arr.append(api_data)
 
-        return Response(serializer.data, status.HTTP_200_OK)
+            serializer = SelectSerializer(
+                arr, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            traceback.print_exc()
+            return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
