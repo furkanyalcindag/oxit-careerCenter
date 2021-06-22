@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from slugify import slugify
 
-from career.models import Category, Language, CategoryDescription
+from career.models import Category, Language, CategoryDescription, ConsultantCategory
 from career.models.APIObject import APIObject
 from career.serializers.CategorySerializer import CategorySerializer, CategoryPageableSerializer
 
@@ -50,13 +50,15 @@ class ConsultantCategoryView(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')[
+            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by(
+                '-id')[
                    lim_start:lim_end]
 
-            filtered_count = Category.objects.filter(keyword__icontains=title,type='Consultant').count()
+            filtered_count = Category.objects.filter(keyword__icontains=title, type='Consultant').count()
             arr = []
             for x in data:
-                blog_translation = CategoryDescription.objects.get(category=x, language=Language.objects.get(code=lang_code))
+                blog_translation = CategoryDescription.objects.get(category=x,
+                                                                   language=Language.objects.get(code=lang_code))
                 api_data = dict()
                 api_data['name'] = blog_translation.name
 
@@ -74,7 +76,6 @@ class ConsultantCategoryView(APIView):
                 api_object, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
-
 
     def post(self, request, format=None):
 
@@ -110,4 +111,17 @@ class ConsultantCategoryView(APIView):
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def delete(self, request, format=None):
+        try:
+            instance = Category.objects.get(uuid=request.GET.get('id'))
+            if ConsultantCategory.objects.filter(category=instance).count() == 0:
+                instance.delete()
+                return Response({"message": "category is deleted"}, status=status.HTTP_200_OK)
 
+            else:
+                return Response({"message": "category can not delete"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+        except:
+            traceback.print_exc()
+            return Response({"error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

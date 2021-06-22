@@ -151,9 +151,9 @@ class GroupAPI(APIView):
             if len(users) == 0:
                 GroupUrlMethod.objects.filter(group=group).delete()
                 group.delete()
-                return Response({"message": "user is deleted"}, status=status.HTTP_200_OK)
+                return Response({"message": "group is deleted"}, status=status.HTTP_200_OK)
             else:
-                return Response({"message": "user is deleted"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+                return Response({"message": "group can not deleted"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

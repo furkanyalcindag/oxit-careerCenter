@@ -49,3 +49,4 @@ from .Menu import Menu
 from .MenuConsultant import MenuConsultant
 from .MenuCompany import MenuCompany
 from .MenuStudent import MenuStudent
+from .ConsultantCategory import ConsultantCategory
