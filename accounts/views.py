@@ -200,6 +200,7 @@ class PermissionApi(APIView):
     def put(self, request, format=None):
         try:
             group = Group.objects.get(id=int(request.GET.get('groupId')))
+            print(request.data)
 
             for data in request.data['permissions']:
                 url_name = UrlName.objects.get(id=int(data['uuid']))
@@ -227,5 +228,3 @@ class PermissionApi(APIView):
         except:
             traceback.print_exc()
             return Response(True, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
