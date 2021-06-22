@@ -207,19 +207,19 @@ class PermissionApi(APIView):
                 url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url_name)
 
                 get = url_method_groups.get(urlMethod__method_Name='GET')
-                get.isAccess = data['GET'].isAccess
+                get.isAccess = data['get'].isAccess
                 get.save()
 
                 get = url_method_groups.get(urlMethod__method_Name='POST')
-                get.isAccess = data['POST'].isAccess
+                get.isAccess = data['post'].isAccess
                 get.save()
 
                 get = url_method_groups.get(urlMethod__method_Name='PUT')
-                get.isAccess = data['PUT'].isAccess
+                get.isAccess = data['put'].isAccess
                 get.save()
 
                 get = url_method_groups.get(urlMethod__method_Name='DELETE')
-                get.isAccess = data['DELETE'].isAccess
+                get.isAccess = data['delete'].isAccess
                 get.save()
 
             return Response(True, status=status.HTTP_200_OK)
