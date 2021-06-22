@@ -72,16 +72,18 @@ def render_to_pdf(template_src, context_dict={}):
     return None
 
 
-
-
 def show_urls_by_group(urllist, group, depth=0):
     for entry in urllist:
         if entry.name is not None and len(UrlName.objects.filter(name=entry.name)) == 0 and 'admin' in str(entry.name):
-            url_name = UrlName()
-            url_name.name = entry.name
-            url_name.lookupString = entry.lookup_str
-            url_name.pattern = str(entry.pattern)
-            url_name.save()
+            url_name = None
+            if len(UrlName.objects.filter(lookupString=entry.lookup_str)) > 0:
+                url_name = UrlName.objects.filter(lookupString=entry.lookup_str)
+            else:
+                url_name = UrlName()
+                url_name.name = entry.name
+                url_name.lookupString = entry.lookup_str
+                url_name.pattern = str(entry.pattern)
+                url_name.save()
 
             arr = []
             url_method = UrlMethod()
@@ -126,8 +128,6 @@ def show_urls_by_group(urllist, group, depth=0):
             show_urls_by_group(entry.url_patterns, group, depth + 1)
 
 
-
-
 def date_range(start, end):
     delta = end - start  # as timedelta
     days = [start + timedelta(days=i) for i in range(delta.days + 1)]
@@ -136,12 +136,10 @@ def date_range(start, end):
 
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
-    html  = template.render(context_dict)
-
-
+    html = template.render(context_dict)
 
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8",'replace')), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8", 'replace')), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
