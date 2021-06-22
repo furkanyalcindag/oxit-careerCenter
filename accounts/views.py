@@ -200,7 +200,7 @@ class PermissionApi(APIView):
 
         except:
             traceback.print_exc()
-            return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response("", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
