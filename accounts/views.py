@@ -175,27 +175,34 @@ class PermissionCreates(APIView):
 class PermissionApi(APIView):
 
     def get(self, request, format=None):
-        group = Group.objects.get(name=request.GET.get('group'))
+        try:
+            group = Group.objects.get(name=request.GET.get('group'))
 
-        urls = UrlName.objects.all()
+            urls = UrlName.objects.all()
 
-        arr = []
-        for url in urls:
-            url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url)
+            arr = []
+            for url in urls:
+                url_method_groups = GroupUrlMethod.objects.filter(group=group, urlMethod__url=url)
 
-            api_data = dict()
-            api_data['moduleName'] = url.name
-            api_data['get'] = url_method_groups.get(urlMethod__method_Name='GET').isAccess
-            api_data['post'] = url_method_groups.get(urlMethod__method_Name='POST').isAccess
-            api_data['put'] = url_method_groups.get(urlMethod__method_Name='PUT').isAccess
-            api_data['delete'] = url_method_groups.get(urlMethod__method_Name='DELETE').isAccess
-            api_data['uuid'] = url.id
+                api_data = dict()
+                api_data['moduleName'] = url.name
+                api_data['get'] = url_method_groups.get(urlMethod__method_Name='GET').isAccess
+                api_data['post'] = url_method_groups.get(urlMethod__method_Name='POST').isAccess
+                api_data['put'] = url_method_groups.get(urlMethod__method_Name='PUT').isAccess
+                api_data['delete'] = url_method_groups.get(urlMethod__method_Name='DELETE').isAccess
+                api_data['uuid'] = url.id
 
-            arr.append(api_data)
+                arr.append(api_data)
 
-        serializer = PermissionSerializer(arr, many=True, context={'request', request})
+            serializer = PermissionSerializer(arr, many=True, context={'request', request})
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except:
+            traceback.print_exc()
+            return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
     def put(self, request, format=None):
         try:
