@@ -22,30 +22,6 @@ def is_integer(param):
         return False
 
 
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-
 from io import BytesIO  # A stream implementation using an in-memory bytes buffer
 # It inherits BufferIOBase
 
@@ -74,10 +50,10 @@ def render_to_pdf(template_src, context_dict={}):
 
 def show_urls_by_group(urllist, group, depth=0):
     for entry in urllist:
-        if entry.name is not None and len(UrlName.objects.filter(name=entry.name)) == 0 and 'admin' in str(entry.name):
+        if entry.name is not None and 'admin' in str(entry.name):
             url_name = None
             if len(UrlName.objects.filter(lookupString=entry.lookup_str)) > 0:
-                url_name = UrlName.objects.filter(lookupString=entry.lookup_str)
+                url_name = UrlName.objects.get(lookupString=entry.lookup_str)
             else:
                 url_name = UrlName()
                 url_name.name = entry.name
@@ -122,10 +98,7 @@ def show_urls_by_group(urllist, group, depth=0):
                     group_url.isAccess = False
                     group_url.save()
 
-            print("  " * depth, entry.name)
             print(str(entry.pattern))
-        if hasattr(entry, 'url_patterns'):
-            show_urls_by_group(entry.url_patterns, group, depth + 1)
 
 
 def date_range(start, end):
