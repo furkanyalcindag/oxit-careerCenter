@@ -177,4 +177,7 @@ urlpatterns = [
     path('student/student-company-list-api/', CompanyListApi.as_view(),
          name='student-company-list-information-api'),
 
+    path('student/student-job-post-by-company-api/', JobPostStudentApi.as_view(),
+         name='student-job-post-by-company-api'),
+
 ]

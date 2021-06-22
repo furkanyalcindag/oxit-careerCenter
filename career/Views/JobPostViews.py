@@ -458,3 +458,86 @@ class JobPostAdminApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class JobPostStudentCompanyApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            user = request.user
+            if request.GET.get('id') is None:
+
+                active_page = 1
+
+                if request.GET.get('page') is not None:
+                    active_page = int(request.GET.get('page'))
+
+                lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
+                lim_end = lim_start + int(request.GET.get('count'))
+
+                kwargs = dict()
+
+                if request.GET.get('companyId') is not None:
+                    kwargs['company__uuid'] = request.GET.get('companyId')
+
+                kwargs['isDeleted'] = False
+
+                data = JobPost.objects.filter(**kwargs).order_by('-id')[
+                       lim_start:lim_end]
+
+                filtered_count = JobPost.objects.filter(**kwargs).count()
+
+                arr = []
+                for x in data:
+                    api_data = dict()
+                    api_data['uuid'] = x.uuid
+                    api_data['title'] = x.title
+                    api_data['quality'] = x.quality
+                    api_data['jobDescription'] = x.jobDescription
+                    api_data['logo'] = x.company.logo
+                    api_data['companyName'] = x.company.name
+                    api_data['staffCount'] = x.company.staffCount
+
+                    select_type = dict()
+                    select_type['label'] = x.type.name
+                    select_type['value'] = x.type.id
+
+                    api_data['type'] = select_type
+                    api_data['viewCount'] = x.viewCount
+                    api_data['experienceYear'] = x.experienceYear
+
+                    select_city = dict()
+
+                    if x.city is not None:
+                        select_city['label'] = x.city.name
+                        select_city['value'] = x.city.id
+                    else:
+                        select_city = None
+
+                    select_district = dict()
+                    if x.district is not None:
+                        select_district['label'] = x.district.name
+                        select_district['value'] = x.district.id
+                    else:
+                        select_district = None
+
+                    api_data['city'] = select_city
+                    api_data['district'] = select_district
+                    api_data['finishDate'] = x.finishDate
+                    api_data['startDate'] = x.startDate
+                    arr.append(api_data)
+
+                api_object = APIObject()
+                api_object.data = arr
+                api_object.recordsFiltered = filtered_count
+                api_object.recordsTotal = JobPost.objects.filter(isDeleted=False).count()
+                api_object.activePage = active_page
+
+                serializer = JobPostPageableSerializer(api_object, context={'request': request})
+
+                return Response(serializer.data, status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
