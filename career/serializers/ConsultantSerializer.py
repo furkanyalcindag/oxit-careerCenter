@@ -25,6 +25,7 @@ class ConsultantSerializer(serializers.Serializer):
     isActive = serializers.BooleanField(read_only=True)
 
     categories = serializers.ListSerializer(write_only=True, child=serializers.UUIDField())
+    categoryList = serializers.ListSerializer(read_only=True, required=False, child=serializers.CharField())
 
     def update(self, instance, validated_data):
         pass

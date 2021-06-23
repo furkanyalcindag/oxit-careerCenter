@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Consultant
+from career.models import Consultant, ConsultantCategory, CategoryDescription
 from career.models.APIObject import APIObject
 from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer, \
     ConsultantStudentPageableSerializer, ConsultantStudentSerializer
@@ -20,6 +20,7 @@ class ConsultantApi(APIView):
         consultant_name = ''
         consultant_surname = ''
         consultant_speciality = ''
+        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
         if request.GET.get('page') is not None:
             active_page = int(request.GET.get('page'))
 
@@ -54,6 +55,14 @@ class ConsultantApi(APIView):
             api_data['speciality'] = x.speciality
             api_data['email'] = x.profile.user.username
             api_data['isActive'] = x.profile.user.is_active
+            arr_cat = []
+            for consultant_category in ConsultantCategory.objects.filter(consultant=x):
+                category = consultant_category.category
+                category_desc = CategoryDescription.objects.get(category=category, language__code=lang_code)
+
+                arr_cat.append(category_desc.name)
+
+            api_data['categoryList'] = arr_cat
             arr.append(api_data)
 
         api_object = APIObject()
