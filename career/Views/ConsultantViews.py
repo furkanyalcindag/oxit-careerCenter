@@ -146,14 +146,20 @@ class ConsultantStudentApi(APIView):
             lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
             lim_end = lim_start + int(request.GET.get('count'))
 
-            data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                             profile__user__last_name__icontains=consultant_surname,
-                                             speciality__icontains=consultant_speciality).order_by('-id')[
+            kwargs = dict()
+
+            if request.GET.get('categoryId') is not None:
+                kwargs['consultantcategory__uuid'] = request.GET.get('categoryId')
+
+            kwargs['isDeleted'] = False
+            kwargs['profile__user__first_name__icontains'] = consultant_name
+
+            kwargs[' speciality__icontains'] = consultant_speciality
+
+            data = Consultant.objects.filter(**kwargs).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                                       profile__user__last_name__icontains=consultant_surname,
-                                                       speciality__icontains=consultant_speciality).count()
+            filtered_count = Consultant.objects.filter(**kwargs).count()
             arr = []
             for x in data:
                 api_data = dict()
