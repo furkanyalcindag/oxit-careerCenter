@@ -159,7 +159,7 @@ class ConsultantStudentApi(APIView):
             kwargs['isDeleted'] = False
             kwargs['profile__user__first_name__icontains'] = consultant_name
 
-            kwargs[' speciality__icontains'] = consultant_speciality
+            kwargs['speciality__icontains'] = consultant_speciality
 
             data = Consultant.objects.filter(**kwargs).order_by('-id')[
                    lim_start:lim_end]
