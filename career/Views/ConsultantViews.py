@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Consultant, ConsultantCategory, CategoryDescription
+from career.models import Consultant, ConsultantCategory, CategoryDescription, Category
 from career.models.APIObject import APIObject
 from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer, \
     ConsultantStudentPageableSerializer, ConsultantStudentSerializer
@@ -149,7 +149,12 @@ class ConsultantStudentApi(APIView):
             kwargs = dict()
 
             if request.GET.get('categoryId') is not None:
-                kwargs['consultantcategory__uuid'] = request.GET.get('categoryId')
+                category = Category.objects.get(uuid=request.GET.get('categoryId'))
+                consultant_category = ConsultantCategory.objects.filter(category=category)
+                arr = []
+                for con_cat in consultant_category:
+                    arr.append(con_cat.consultant.uuid)
+                kwargs['uuid__in'] = arr
 
             kwargs['isDeleted'] = False
             kwargs['profile__user__first_name__icontains'] = consultant_name
