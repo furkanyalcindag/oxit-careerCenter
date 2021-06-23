@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.serializers import Serializer
 from rest_framework.validators import UniqueValidator
 
-from career.models import Profile, Consultant, Appointment
+from career.models import Profile, Consultant, Appointment, Category, ConsultantCategory
 from career.serializers.GeneralSerializers import PageSerializer
 from oxiterp.serializers import UserSerializer
 
@@ -23,6 +23,8 @@ class ConsultantSerializer(serializers.Serializer):
     speciality = serializers.CharField(required=True)
 
     isActive = serializers.BooleanField(read_only=True)
+
+    categories = serializers.ListSerializer(write_only=True, child=serializers.UUIDField())
 
     def update(self, instance, validated_data):
         pass
@@ -45,8 +47,15 @@ class ConsultantSerializer(serializers.Serializer):
                 profile.save()
                 consultant = Consultant(profile=profile)
                 consultant.speciality = validated_data.get("speciality")
-
                 consultant.save()
+
+                for categoryUUID in validated_data.get('categories'):
+                    category = Category.objects.get(uuid=categoryUUID)
+                    consultant_category = ConsultantCategory()
+                    consultant_category.consultant = consultant
+                    consultant_category.category = category
+                    consultant_category.save()
+
                 return consultant
 
         except Exception as e:
@@ -78,7 +87,6 @@ class ConsultantStudentSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
-
 
 
 class ConsultantStudentPageableSerializer(PageSerializer):
