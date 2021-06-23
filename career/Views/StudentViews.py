@@ -1251,9 +1251,10 @@ class StudentCVExportPDFApi(APIView):
 
     def get(self, request, format=None):
         lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
-        student = Student.objects.get(profile__user=request.user)
-
         api_dict = dict()
+        '''student = Student.objects.get(profile__user=request.user)
+
+       
         api_dict['email'] = student.profile.user.email
         api_dict['firstName'] = student.profile.user.first_name
         api_dict['lastName'] = student.profile.user.last_name
@@ -1273,7 +1274,7 @@ class StudentCVExportPDFApi(APIView):
         api_dict['exams'] = StudentExam.objects.filter(student=student)
         api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
         api_dict['references'] = Reference.objects.filter(student=student)
-        api_dict['certificate'] = Certificate.objects.filter(student=student)
+        api_dict['certificate'] = Certificate.objects.filter(student=student)'''
 
         # Rendered
         # html_string = render_to_string('cv-print.html', {'data': api_dict})
@@ -1282,7 +1283,7 @@ class StudentCVExportPDFApi(APIView):
         # html = HTML(string=html_string)
         # result = html.write_pdf('tmp/report.pdf')
 
-        pdf = render_to_pdf('cv-print.html', api_dict)
+        pdf = render_to_pdf('resume.html', api_dict)
 
         return FileResponse(pdf, status=status.HTTP_200_OK,
                             content_type='application/pdf')

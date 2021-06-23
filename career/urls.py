@@ -7,7 +7,8 @@ from career.Views.CategoryViews import ConsultantCategoryView
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi, CompanyGeneralInformationStudentApi, CompanyListApi
 from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi
-from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi
+from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi, \
+    StudentDashboardApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
@@ -176,6 +177,8 @@ urlpatterns = [
          name='student-company-general-information-api'),
     path('student/student-company-list-api/', CompanyListApi.as_view(),
          name='student-company-list-information-api'),
+    path('student/student-dashboard-api/', StudentDashboardApi.as_view(),
+         name='student-dashboard-api'),
 
     path('student/student-job-post-by-company-api/', JobPostStudentApi.as_view(),
          name='student-job-post-by-company-api'),
