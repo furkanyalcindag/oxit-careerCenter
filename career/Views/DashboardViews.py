@@ -67,8 +67,8 @@ class StudentDashboardApi(APIView):
 
     def get(self, request, format=None):
         api_data = dict()
-        api_data['totalLectureApplicationsCount'] = LectureApplication.objects.filter(student__profile__user=request.user, isDeleted=False,
-                                                               finishDate__lte=datetime.datetime.today().date()).count()
+        api_data['totalLectureApplicationsCount'] = LectureApplication.objects.filter(
+            student__profile__user=request.user, isDeleted=False).count()
         api_data['totalJobApplicationsCount'] = JobApplication.objects.filter(student__profile__user=request.user,
                                                                               isDeleted=False).count()
 

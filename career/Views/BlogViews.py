@@ -52,6 +52,7 @@ class BlogApi(APIView):
             count = 10
 
             title = ''
+            blog_type = 'Blog'
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
             if request.GET.get('page') is not None:
                 active_page = int(request.GET.get('page'))
@@ -59,16 +60,21 @@ class BlogApi(APIView):
             if request.GET.get('title') is not None:
                 title = slugify(request.GET.get('title'))
 
+            if request.GET.get('type') is not None:
+                blog_type = request.GET.get('type')
+
             if request.GET.get('count') is not None:
                 count = int(request.GET.get('count'))
 
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Blog.objects.filter(keyword__icontains=title, isDeleted=False).order_by('-id')[
+            data = Blog.objects.filter(keyword__icontains=title, blogType__name=blog_type, isDeleted=False).order_by(
+                '-id')[
                    lim_start:lim_end]
 
-            filtered_count = Blog.objects.filter(keyword__icontains=title).count()
+            filtered_count = Blog.objects.filter(keyword__icontains=title, blogType__name=blog_type,
+                                                 isDeleted=False).count()
             arr = []
             for x in data:
                 blog_translation = BlogDescription.objects.get(blog=x, language=Language.objects.get(code=lang_code))
@@ -180,9 +186,14 @@ class BlogStudentApi(APIView):
             count = 10
 
             title = ''
+            blog_type = 'Blog'
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
             if request.GET.get('page') is not None:
                 active_page = int(request.GET.get('page'))
+
+
+            if request.GET.get('type') is not None:
+                blog_type = request.GET.get('type')
 
             if request.GET.get('title') is not None:
                 title = slugify(request.GET.get('title'))
@@ -193,10 +204,10 @@ class BlogStudentApi(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Blog.objects.filter(keyword__icontains=title, isDeleted=False).order_by('-id')[
+            data = Blog.objects.filter(keyword__icontains=title, blogType__name=blog_type, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Blog.objects.filter(keyword__icontains=title).count()
+            filtered_count = Blog.objects.filter(keyword__icontains=title,blogType__name=blog_type,isDeleted=False).count()
             arr = []
             for x in data:
                 blog_translation = BlogDescription.objects.get(blog=x, language=Language.objects.get(code=lang_code))
