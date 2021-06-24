@@ -345,7 +345,7 @@ class LectureStudentApplicants(APIView):
             arr = []
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
             for x in data:
-                lecture_translation = LectureDescription.objects.get(lecture=x,
+                lecture_translation = LectureDescription.objects.get(lecture=x.lecture,
                                                                      language=Language.objects.get(code=lang_code))
                 api_data = dict()
                 api_data['name'] = lecture_translation.name

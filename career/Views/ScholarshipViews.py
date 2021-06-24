@@ -372,18 +372,18 @@ class ScholarshipApplicants(APIView):
         arr = []
         for x in data:
             api_data = dict()
-            api_data['name'] = x.name
-            api_data['description'] = x.description
+            api_data['name'] = x.scholarShip.name
+            api_data['description'] = x.scholarShip.description
             api_data['uuid'] = x.uuid
-            api_data['amount'] = x.amount
-            api_data['isApprove'] = x.isApprove
+            api_data['amount'] = x.scholarShip.amount
+            api_data['isApprove'] = x.scholarShip.isApprove
             select_company = dict()
             select_company[
                 'label'] = x.company.name
-            select_company['value'] = x.company.uuid
+            select_company['value'] = x.scholarShip.company.uuid
 
             api_data['company'] = select_company
-            api_data['companyLogo'] = x.company.logo
+            api_data['companyLogo'] = x.scholarShip.company.logo
             arr.append(api_data)
 
         api_object = APIObject()
