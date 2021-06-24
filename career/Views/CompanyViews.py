@@ -10,7 +10,7 @@ from career.models.APIObject import APIObject
 from career.models.SelectObject import SelectObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
     CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer, CompanyCommunicationInformationSerializer, \
-    CompanyListPageableSerializer
+    CompanyListPageableSerializer, CompanyLogoSerializer
 from career.serializers.GeneralSerializers import SelectSerializer
 
 
@@ -210,7 +210,7 @@ class CompanyCommunicationInformationApi(APIView):
                 select_city['value'] = company.city.id
             else:
                 select_city = None
-            api_object['city'] = select_city
+
             select_district = dict()
             if company.district is not None:
                 select_district['label'] = company.district.name
@@ -345,3 +345,35 @@ class CompanyListApi(APIView):
             api_object, context={'request': request})
 
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+class CompanyLogoApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            company = Company.objects.get(profile__user=request.user)
+            api_data = dict()
+            api_data['logo'] = company.logo
+
+            serializer = CompanyLogoSerializer(api_data, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Company.objects.get(profile__user=request.user)
+            serializer = CompanyLogoSerializer(data=request.data, instance=instance,
+                                               context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "logo is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -73,7 +73,7 @@ class CompanyGeneralInformationSerializer(serializers.Serializer):
     phone = serializers.CharField(read_only=True, required=False)
     city = serializers.CharField(read_only=True, required=False)
     fax = serializers.CharField(read_only=True, required=False)
-    about = serializers.CharField(read_only=True,required=False)
+    about = serializers.CharField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name')
@@ -145,6 +145,23 @@ class CompanyListPageableSerializer(PageSerializer):
 
     def update(self, instance, validated_data):
         pass
+
+    def create(self, validated_data):
+        pass
+
+
+class CompanyLogoSerializer(serializers.Serializer):
+    logo = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        try:
+
+            instance.logo = validated_data.get('logo')
+            instance.save()
+            return instance
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
 
     def create(self, validated_data):
         pass
