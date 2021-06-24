@@ -51,8 +51,7 @@ class CompanyDashboardApi(APIView):
 
     def get(self, request, format=None):
         api_data = dict()
-        api_data['activeJobPostCount'] = JobPost.objects.filter(company__profile__user=request.user, isDeleted=False,
-                                                                finishDate__lte=datetime.datetime.today().date()).count()
+        api_data['activeJobPostCount'] = JobPost.objects.filter(company__profile__user=request.user, isDeleted=False,).count()
         api_data['totalJobApplicantCount'] = JobApplication.objects.filter(jobPost__company__profile__user=request.user,
                                                                            isDeleted=False).count()
 
