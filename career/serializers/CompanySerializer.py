@@ -64,6 +64,42 @@ class CompanyPageableSerializer(PageSerializer):
         pass
 
 
+class CompanySocialMediaSerializer(serializers.Serializer):
+    link = serializers.CharField(required=True)
+    socialMediaId = serializers.IntegerField(write_only=True, required=True)
+    socialMedia = SelectSerializer(read_only=True)
+
+    def update(self, instance, validated_data):
+        try:
+            user = self.context['request'].user
+            company = Company.objects.get(profile__user=user)
+            instance.company = company
+            instance.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
+            instance.link = validated_data.get('link')
+            instance.save()
+            return instance
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
+
+    def create(self, validated_data):
+        try:
+            user = self.context['request'].user
+            company = Company.objects.get(profile__user=user)
+
+            social_media = CompanySocialMedia()
+            social_media.company = company
+            social_media.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
+            social_media.link = validated_data.get('link')
+            social_media.save()
+            return social_media
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('Lütfen tekrar deneyiniz')
+
+
 class CompanyGeneralInformationSerializer(serializers.Serializer):
     name = serializers.CharField()
     logo = serializers.CharField(required=False, allow_null=True)
@@ -75,6 +111,8 @@ class CompanyGeneralInformationSerializer(serializers.Serializer):
     city = serializers.CharField(read_only=True, required=False)
     fax = serializers.CharField(read_only=True, required=False)
     about = serializers.CharField(read_only=True, required=False)
+    socialMedias = CompanySocialMediaSerializer(many=True, read_only=True, required=False)
+    email = serializers.CharField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name')
@@ -166,39 +204,3 @@ class CompanyLogoSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
-
-
-class CompanySocialMediaSerializer(serializers.Serializer):
-    link = serializers.CharField(required=True)
-    socialMediaId = serializers.IntegerField(write_only=True, required=True)
-    socialMedia = SelectSerializer(read_only=True)
-
-    def update(self, instance, validated_data):
-        try:
-            user = self.context['request'].user
-            company = Company.objects.get(profile__user=user)
-            instance.company = company
-            instance.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
-            instance.link = validated_data.get('link')
-            instance.save()
-            return instance
-
-        except:
-            traceback.print_exc()
-            raise serializers.ValidationError('lütfen tekrar deneyiniz')
-
-    def create(self, validated_data):
-        try:
-            user = self.context['request'].user
-            company = Company.objects.get(profile__user=user)
-
-            social_media = CompanySocialMedia()
-            social_media.company = company
-            social_media.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
-            social_media.link = validated_data.get('link')
-            social_media.save()
-            return social_media
-
-        except:
-            traceback.print_exc()
-            raise serializers.ValidationError('Lütfen tekrar deneyiniz')

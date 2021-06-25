@@ -291,6 +291,7 @@ class CompanyGeneralInformationStudentApi(APIView):
                 select_district = None
             api_object['district'] = select_district
             api_object['address'] = company.address
+            api_object['email'] = company.email
             api_object['staffCount'] = company.staffCount
             api_object['website'] = company.website
             api_object['name'] = company.name
@@ -298,6 +299,23 @@ class CompanyGeneralInformationStudentApi(APIView):
             # api_object['locationMap'] = company.locationMap
             api_object['phone'] = company.phone
             api_object['about'] = company.about
+
+            company_social_medias = CompanySocialMedia.objects.filter(company=company)
+            sm_arr = []
+            for sm in company_social_medias:
+                api_data = dict()
+                api_data['link'] = sm.link
+
+                api_select = dict()
+                api_select['label'] = sm.socialMedia.name
+                api_select['value'] = sm.socialMedia.id
+
+                api_data['link'] = sm.link
+                api_data['socialMedia'] = api_select
+                arr.append(api_data)
+
+            api_object['socialMedias'] = sm_arr
+
             # api_object['fax'] = company.fax
             serializer = CompanyGeneralInformationSerializer(api_object, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -385,7 +403,7 @@ class CompanySocialMediaApi(APIView):
     def get(self, request, format=None):
         try:
             if request.GET.get(id) is None:
-                company_social_medias = CompanySocialMedia.objects.filter(profile__user=request.user)
+                company_social_medias = CompanySocialMedia.objects.filter(company__profile__user=request.user)
                 arr = []
                 for sm in company_social_medias:
                     api_data = dict()
@@ -404,7 +422,7 @@ class CompanySocialMediaApi(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
 
             else:
-                company_social_media = CompanySocialMedia.objects.get(profile__user=request.user,
+                company_social_media = CompanySocialMedia.objects.get(company__profile__user=request.user,
                                                                       uuid=request.GET.get(id))
 
                 api_data = dict()
