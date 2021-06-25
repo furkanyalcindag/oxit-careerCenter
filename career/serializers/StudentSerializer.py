@@ -351,6 +351,7 @@ class StudentJobInformationSerializer(serializers.Serializer):
     description = serializers.CharField(required=False)
     jobType = SelectSerializer(read_only=True)
     jobTypeId = serializers.CharField(write_only=True)
+    isApplied = serializers.BooleanField(read_only=True, required=False)
 
     def create(self, validated_data):
         try:

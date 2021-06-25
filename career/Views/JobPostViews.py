@@ -237,6 +237,10 @@ class JobPostStudentApi(APIView):
                     api_data['district'] = select_district
                     api_data['finishDate'] = x.finishDate
                     api_data['startDate'] = x.startDate
+                    if len(JobApplication.objects.filter(student__profile__user=request.user, jobPost=x)) > 0:
+                        api_data['isApplied'] = False
+                    else:
+                        api_data['isApplied'] = True
                     arr.append(api_data)
 
                 api_object = APIObject()
@@ -287,6 +291,11 @@ class JobPostStudentApi(APIView):
                 api_data['district'] = select_district
                 api_data['finishDate'] = x.finishDate
                 api_data['startDate'] = x.startDate
+
+                if len(JobApplication.objects.filter(student__profile__user=request.user, jobPost=x)) > 0:
+                    api_data['isApplied'] = False
+                else:
+                    api_data['isApplied'] = True
 
                 serializer = JobPostSerializer(api_data, context={'request': request})
 
@@ -527,6 +536,9 @@ class JobPostStudentCompanyApi(APIView):
                     api_data['district'] = select_district
                     api_data['finishDate'] = x.finishDate
                     api_data['startDate'] = x.startDate
+
+
+
                     arr.append(api_data)
 
                 api_object = APIObject()

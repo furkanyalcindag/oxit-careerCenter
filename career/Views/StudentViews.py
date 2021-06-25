@@ -676,6 +676,7 @@ class StudentJobInfoApi(APIView):
                     api_data['isContinue'] = job_info.isContinue
                     api_data['finishDate'] = job_info.finishDate
                     api_data['description'] = job_info.description
+                    api_data['student'] = job_info.description
 
                     job_type_select = dict()
                     if job_info.jobType is not None:
