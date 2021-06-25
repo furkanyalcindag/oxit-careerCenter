@@ -6,7 +6,7 @@ from career.Views.BlogViews import BlogApi, BlogStudentApi
 from career.Views.CategoryViews import ConsultantCategoryView
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi, CompanyGeneralInformationStudentApi, CompanyListApi, \
-    CompanyLogoApi
+    CompanyLogoApi, CompanySocialMediaApi
 from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi
 from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi, \
     StudentDashboardApi
@@ -134,6 +134,7 @@ urlpatterns = [
     path('company/company-job-post-api/', JobPostApi.as_view(), name='company-job-post-api'),
     path('company/job-applicant-api/', JopApplicantsApi.as_view(), name='company-job-applicants-api'),
     path('company/scholarship-company-api/', CompanyScholarshipApi.as_view(), name='company-scholarship-api'),
+    path('company/company-social-media-api/', CompanySocialMediaApi.as_view(), name='company-social-media-api'),
 
     # -----------------------------dashboard api------------------------------------------------------
     path('company-dashboard-api/', CompanyDashboardApi.as_view(), name='company-dashboard-api'),

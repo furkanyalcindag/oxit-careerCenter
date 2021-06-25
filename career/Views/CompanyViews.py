@@ -5,12 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Company
+from career.models import Company, CompanySocialMedia
 from career.models.APIObject import APIObject
 from career.models.SelectObject import SelectObject
 from career.serializers.CompanySerializer import CompanyPageableSerializer, CompanySerializer, \
     CompanyGeneralInformationSerializer, CompanyAboutInformationSerializer, CompanyCommunicationInformationSerializer, \
-    CompanyListPageableSerializer, CompanyLogoSerializer
+    CompanyListPageableSerializer, CompanyLogoSerializer, CompanySocialMediaSerializer
 from career.serializers.GeneralSerializers import SelectSerializer
 
 
@@ -374,6 +374,91 @@ class CompanyLogoApi(APIView):
                 return Response({"message": "logo is updated"}, status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CompanySocialMediaApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            if request.GET.get(id) is None:
+                company_social_medias = CompanySocialMedia.objects.filter(profile__user=request.user)
+                arr = []
+                for sm in company_social_medias:
+                    api_data = dict()
+                    api_data['link'] = sm.link
+
+                    api_select = dict()
+                    api_select['label'] = sm.socialMedia.name
+                    api_select['value'] = sm.socialMedia.id
+
+                    api_data['link'] = sm.link
+                    api_data['socialMedia'] = api_select
+                    arr.append(api_data)
+
+                serializer = CompanySocialMediaSerializer(arr, many=True, context={'request': request})
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+            else:
+                company_social_media = CompanySocialMedia.objects.get(profile__user=request.user,
+                                                                      uuid=request.GET.get(id))
+
+                api_data = dict()
+                api_data['link'] = company_social_media.link
+
+                api_select = dict()
+                api_select['label'] = company_social_media.socialMedia.name
+                api_select['value'] = company_social_media.socialMedia.id
+
+                api_data['link'] = company_social_media.link
+                api_data['socialMedia'] = api_select
+
+                serializer = CompanySocialMediaSerializer(api_data, context={'request': request})
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, format=None):
+        try:
+            serializer = CompanySocialMediaSerializer(data=request.data, context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "social media is updated"}, status=status.HTTP_200_OK)
+            else:
+                errors_dict = dict()
+                for key, value in serializer.errors.items():
+                    if key == 'studentNumber':
+                        errors_dict['Öğrenci Numarası'] = value
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, format=None):
+        try:
+            instance = CompanySocialMedia.objects.get(profile__user=request.user, uuid=request.GET.get('id'))
+            serializer = CompanySocialMediaSerializer(data=request.data, instance=instance,
+                                                      context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "social media is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        try:
+            instance = CompanySocialMedia.objects.get(profile__user=request.user, uuid=request.GET.get('id'))
+            instance.delete()
+            instance.save()
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
