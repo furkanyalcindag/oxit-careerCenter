@@ -258,7 +258,7 @@ class ScholarshipStudentApi(APIView):
     def get(self, request, format=None):
 
         if request.GET.get('id') is not None:
-            scholarship = Scholarship.objects.get(uuid=request.GET.get('id'), isDeleted=False)
+            scholarship = Scholarship.objects.get(uuid=request.GET.get('id'), isApprove=True, isDeleted=False)
 
             api_data = dict()
             api_data['name'] = scholarship.name
@@ -296,10 +296,10 @@ class ScholarshipStudentApi(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Scholarship.objects.filter(name__icontains=name, isDeleted=False).order_by('-id')[
+            data = Scholarship.objects.filter(name__icontains=name, isApprove=True, isDeleted=False).order_by('-id')[
                    lim_start:lim_end]
 
-            filtered_count = Scholarship.objects.filter(name__icontains=name, isDeleted=False).count()
+            filtered_count = Scholarship.objects.filter(name__icontains=name, isApprove=True, isDeleted=False).count()
             arr = []
             for x in data:
                 api_data = dict()
