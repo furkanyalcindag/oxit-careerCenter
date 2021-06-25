@@ -3,9 +3,10 @@ import traceback
 from django.contrib.auth.models import User, Group
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.validators import UniqueValidator
 
-from career.models import Profile, Company, City, District
+from career.models import Profile, Company, City, District, CompanySocialMedia, SocialMedia
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 from oxiterp.serializers import UserSerializer
 
@@ -165,3 +166,39 @@ class CompanyLogoSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pass
+
+
+class CompanySocialMediaSerializer(serializers.Serializer):
+    link = serializers.CharField(required=True)
+    socialMediaId = serializers.IntegerField(write_only=True, required=True)
+    socialMedia = SelectSerializer(read_only=True)
+
+    def update(self, instance, validated_data):
+        try:
+            user = self.context['request'].user
+            company = Company.objects.get(profile__user=user)
+            instance.company = company
+            instance.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
+            instance.link = validated_data.get('link')
+            instance.save()
+            return instance
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('lütfen tekrar deneyiniz')
+
+    def create(self, validated_data):
+        try:
+            user = self.context['request'].user
+            company = Company.objects.get(profile__user=user)
+
+            social_media = CompanySocialMedia()
+            social_media.company = company
+            social_media.socialMedia = SocialMedia.objects.get(id=validated_data.get('socialMediaId'))
+            social_media.link = validated_data.get('link')
+            social_media.save()
+            return social_media
+
+        except:
+            traceback.print_exc()
+            raise serializers.ValidationError('Lütfen tekrar deneyiniz')

@@ -13,7 +13,7 @@ from accounts.models import GroupUrlMethod
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
     ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant, \
-    Category, CategoryDescription
+    Category, CategoryDescription, SocialMedia
 from career.models.APIObject import APIObject
 from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
@@ -521,6 +521,31 @@ class ConsultantCategorySelectApi(APIView):
                 api_data = dict()
                 api_data['value'] = x.uuid
                 api_data['label'] = blog_translation.name
+
+                arr.append(api_data)
+
+            serializer = SelectSerializer(
+                arr, many=True, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            traceback.print_exc()
+            return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class SocialMediaSelectApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            data = SocialMedia.objects.all()
+            arr = []
+            for x in data:
+                api_data = dict()
+                api_data['value'] = x.id
+                api_data['label'] = x.name
 
                 arr.append(api_data)
 

@@ -14,7 +14,7 @@ from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistri
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
     ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi, GroupSelectApi, \
-    ConsultantCategorySelectApi
+    ConsultantCategorySelectApi, SocialMediaSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -73,6 +73,7 @@ urlpatterns = [
     path('student-select-api/', StudentSelectApi.as_view(), name='student-select-api'),
     path('instructor-select-api/', InstructorSelectApi.as_view(), name='instructor-select-api'),
     path('category-select-api/', ConsultantCategorySelectApi.as_view(), name='category-select-api'),
+    path('social-media-select-api/', SocialMediaSelectApi.as_view(), name='social-media-select-api'),
 
     # -------------public api--------------------------------
 

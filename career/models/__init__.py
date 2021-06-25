@@ -50,3 +50,4 @@ from .MenuConsultant import MenuConsultant
 from .MenuCompany import MenuCompany
 from .MenuStudent import MenuStudent
 from .ConsultantCategory import ConsultantCategory
+from .CompanySocialMedia import CompanySocialMedia
