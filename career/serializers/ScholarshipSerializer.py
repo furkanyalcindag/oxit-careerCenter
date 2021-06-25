@@ -15,6 +15,7 @@ class ScholarshipSerializer(serializers.Serializer):
     companyLogo = serializers.CharField(read_only=True, required=False)
     companyId = serializers.UUIDField(write_only=True, required=True)
     isApprove = serializers.BooleanField()
+    isApplied = serializers.BooleanField(required=False,read_only=True)
 
     def update(self, instance, validated_data):
         try:

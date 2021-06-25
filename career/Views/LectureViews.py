@@ -352,24 +352,24 @@ class LectureStudentApplicants(APIView):
                 api_data['description'] = lecture_translation.description
                 api_data['uuid'] = x.uuid
                 api_data['image'] = lecture_translation.image
-                api_data['room'] = x.room
-                api_data['capacity'] = x.capacity
+                api_data['room'] = x.lecture.room
+                api_data['capacity'] = x.lecture.capacity
 
                 select_instructor = dict()
                 select_instructor[
-                    'label'] = x.instructor.person.firstName + ' ' + x.instructor.person.lastName
-                select_instructor['value'] = x.instructor.uuid
+                    'label'] = x.lecture.instructor.person.firstName + ' ' + x.lecture.instructor.person.lastName
+                select_instructor['value'] = x.lecture.instructor.uuid
 
                 select_location = dict()
-                select_location['label'] = x.location.name
-                select_location['value'] = x.location.uuid
+                select_location['label'] = x.lecture.location.name
+                select_location['value'] = x.lecture.location.uuid
 
                 api_data['instructor'] = select_instructor
                 api_data['location'] = select_location
-                api_data['date'] = str(x.date)
-                api_data['time'] = str(x.time)
-                api_data['isPaid'] = x.isPaid
-                api_data['price'] = x.price
+                api_data['date'] = str(x.lecture.date)
+                api_data['time'] = str(x.lecture.time)
+                api_data['isPaid'] = x.lecture.isPaid
+                api_data['price'] = x.lecture.price
                 arr.append(api_data)
 
             api_object = APIObject()

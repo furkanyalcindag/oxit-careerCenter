@@ -267,6 +267,15 @@ class ScholarshipStudentApi(APIView):
             api_data['amount'] = scholarship.amount
             api_data['isApprove'] = scholarship.isApprove
 
+            if len(ScholarshipApplication.objects.filter(student__profile__user=request.user, scholarShip=scholarship))>0:
+                api_data['isApplied'] = True
+            else:
+                api_data['isApplied'] = False
+
+
+
+
+
             select_company = dict()
             select_company[
                 'label'] = scholarship.company.name
@@ -315,6 +324,13 @@ class ScholarshipStudentApi(APIView):
 
                 api_data['company'] = select_company
                 api_data['companyLogo'] = x.company.logo
+
+                if len(ScholarshipApplication.objects.filter(student__profile__user=request.user,
+                                                             scholarShip=x)) > 0:
+                    api_data['isApplied'] = True
+                else:
+                    api_data['isApplied'] = False
+
                 arr.append(api_data)
 
             api_object = APIObject()
@@ -379,7 +395,7 @@ class ScholarshipApplicants(APIView):
             api_data['isApprove'] = x.scholarShip.isApprove
             select_company = dict()
             select_company[
-                'label'] = x.company.name
+                'label'] = x.scholarShip.company.name
             select_company['value'] = x.scholarShip.company.uuid
 
             api_data['company'] = select_company
