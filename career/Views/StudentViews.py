@@ -1253,68 +1253,74 @@ class StudentCVExportPDFApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-        lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
-        api_dict = dict()
-        student = Student.objects.get(profile__user=request.user)
+        try:
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+            api_dict = dict()
+            student = Student.objects.get(profile__user=request.user)
 
-        api_dict['email'] = student.profile.user.email
-        api_dict['firstName'] = student.profile.user.first_name
-        api_dict['lastName'] = student.profile.user.last_name
-        api_dict['telephoneNumber'] = student.profile.mobilePhone
-        api_dict['birthDate'] = student.profile.birthDate
-        api_dict['address'] = student.profile.address
-        api_dict['profileImage'] = student.profile.profileImage
-        api_dict['gender'] = GenderDescription.objects.filter(gender=student.profile.gender, language__code=lang_code)
-        api_dict['nationality'] = student.profile.nationality
-        api_dict['militaryStatus'] = MilitaryStatusDescription.objects.filter(
-            militaryStatus=student.profile.militaryStatus, language__code=lang_code)
-        api_dict['maritalStatus'] = MaritalStatusDescription.objects.filter(maritalStatus=student.profile.maritalStatus,
-                                                                            language__code=lang_code)
-        api_dict['experiments'] = JobInfo.objects.filter(student=student)
-        api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
-        fls = StudentForeignLanguage.objects.filter(student=student)
+            api_dict['email'] = student.profile.user.email
+            api_dict['firstName'] = student.profile.user.first_name
+            api_dict['lastName'] = student.profile.user.last_name
+            api_dict['telephoneNumber'] = student.profile.mobilePhone
+            api_dict['birthDate'] = student.profile.birthDate
+            api_dict['address'] = student.profile.address
+            api_dict['profileImage'] = student.profile.profileImage
+            api_dict['gender'] = GenderDescription.objects.filter(gender=student.profile.gender,
+                                                                  language__code=lang_code)
+            api_dict['nationality'] = student.profile.nationality
+            api_dict['militaryStatus'] = MilitaryStatusDescription.objects.filter(
+                militaryStatus=student.profile.militaryStatus, language__code=lang_code)
+            api_dict['maritalStatus'] = MaritalStatusDescription.objects.filter(
+                maritalStatus=student.profile.maritalStatus,
+                language__code=lang_code)
+            api_dict['experiments'] = JobInfo.objects.filter(student=student)
+            api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
+            fls = StudentForeignLanguage.objects.filter(student=student)
 
-        arr = []
-        for fl in fls:
-            fl_data = dict()
+            arr = []
+            for fl in fls:
+                fl_data = dict()
 
-            fl_data['language'] = ForeignLanguageDescription.objects.get(language__code=lang_code,
-                                                                         foreignLanguage=fl.foreignLanguage).name
-            fl_data['reading'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
-                                                                             foreignLanguageLevel=fl.readingLevel).name
-            fl_data['writing'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
-                                                                             foreignLanguageLevel=fl.writingLevel).name
-            fl_data['listening'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
-                                                                               foreignLanguageLevel=fl.listeningLevel).name
-            fl_data['speaking'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
-                                                                              foreignLanguageLevel=fl.speakingLevel).name
-            arr.append(fl_data)
+                fl_data['language'] = ForeignLanguageDescription.objects.get(language__code=lang_code,
+                                                                             foreignLanguage=fl.foreignLanguage).name
+                fl_data['reading'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                                 foreignLanguageLevel=fl.readingLevel).name
+                fl_data['writing'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                                 foreignLanguageLevel=fl.writingLevel).name
+                fl_data['listening'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                                   foreignLanguageLevel=fl.listeningLevel).name
+                fl_data['speaking'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                                  foreignLanguageLevel=fl.speakingLevel).name
+                arr.append(fl_data)
 
-        api_dict['foreignLanguages'] = arr
-        api_dict['exams'] = StudentExam.objects.filter(student=student)
-        api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
-        api_dict['references'] = Reference.objects.filter(student=student)
-        api_dict['certificates'] = Certificate.objects.filter(student=student)
-        api_dict['range'] = range(1,6)
+            api_dict['foreignLanguages'] = arr
+            api_dict['exams'] = StudentExam.objects.filter(student=student)
+            api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
+            api_dict['references'] = Reference.objects.filter(student=student)
+            api_dict['certificates'] = Certificate.objects.filter(student=student)
+            api_dict['range'] = range(1, 6)
 
-        # Rendered
-        # html_string = render_to_string('cv-print.html', {'data': api_dict})
+            # Rendered
+            # html_string = render_to_string('cv-print.html', {'data': api_dict})
 
-        # html_string = html_string.encode('utf-8').strip()
-        # html = HTML(string=html_string)
-        # result = html.write_pdf('tmp/report.pdf')
+            # html_string = html_string.encode('utf-8').strip()
+            # html = HTML(string=html_string)
+            # result = html.write_pdf('tmp/report.pdf')
 
-        # pdf = render_to_pdf('resume.html', api_dict)
+            # pdf = render_to_pdf('resume.html', api_dict)
 
-        html = loader.render_to_string('resume.html', {'data': api_dict})
-        options = {
-            "enable-local-file-access": None
-        }
-        output = pdfkit.from_string(html, output_path=False, options=options)
-        response = HttpResponse(content_type="application/pdf")
-        response.write(output)
+            html = loader.render_to_string('resume.html', {'data': api_dict})
+            options = {
+                "enable-local-file-access": None
+            }
+            output = pdfkit.from_string(html, output_path=False, options=options)
+            response = HttpResponse(content_type="application/pdf")
+            response.write(output)
 
-        return response
+            return response
+        except:
+            traceback.print_exc()
+
 
 
 class StudentSelectApi(APIView):
