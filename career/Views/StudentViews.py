@@ -1272,7 +1272,20 @@ class StudentCVExportPDFApi(APIView):
                                                                             language__code=lang_code)
         api_dict['experiments'] = JobInfo.objects.filter(student=student)
         api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
-        api_dict['foreignLanguages'] = StudentForeignLanguage.objects.filter(student=student)
+        fls = StudentForeignLanguage.objects.filter(student=student)
+
+        '''arr =[]
+
+        for fl in fls:
+            fl_data ='''
+
+
+
+
+
+
+
+
         api_dict['exams'] = StudentExam.objects.filter(student=student)
         api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
         api_dict['references'] = Reference.objects.filter(student=student)

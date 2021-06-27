@@ -10,3 +10,4 @@ drf-api-logger
 gunicorn
 python-slugify
 xhtml2pdf
+pdfkit
