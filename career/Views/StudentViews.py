@@ -1331,7 +1331,7 @@ class StudentCVExportPDFApi(APIView):
             options = {
                 "enable-local-file-access": None
             }
-            output = pdfkit.from_string(html, output_path=False, configuration=_get_pdfkit_config(), options=options)
+            output = pdfkit.from_string(html, output_path=False,options=options)
             response = HttpResponse(content_type="application/pdf")
             response.write(output)
 
