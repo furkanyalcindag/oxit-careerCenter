@@ -402,7 +402,7 @@ class CompanySocialMediaApi(APIView):
 
     def get(self, request, format=None):
         try:
-            if request.GET.get(id) is None:
+            if request.GET.get('id') is None:
                 company_social_medias = CompanySocialMedia.objects.filter(company__profile__user=request.user)
                 arr = []
                 for sm in company_social_medias:
@@ -424,7 +424,7 @@ class CompanySocialMediaApi(APIView):
 
             else:
                 company_social_media = CompanySocialMedia.objects.get(company__profile__user=request.user,
-                                                                      uuid=request.GET.get(id))
+                                                                      uuid=request.GET.get('id'))
 
                 api_data = dict()
                 api_data['link'] = company_social_media.link
