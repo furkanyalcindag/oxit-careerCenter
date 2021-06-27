@@ -11,4 +11,3 @@ gunicorn
 python-slugify
 xhtml2pdf
 pdfkit
-wkhtmltopdf-pack==0.12.3.0
