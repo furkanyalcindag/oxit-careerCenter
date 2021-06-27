@@ -408,6 +408,7 @@ class CompanySocialMediaApi(APIView):
                 for sm in company_social_medias:
                     api_data = dict()
                     api_data['link'] = sm.link
+                    api_data['uuid'] = sm.uuid
 
                     api_select = dict()
                     api_select['label'] = sm.socialMedia.name

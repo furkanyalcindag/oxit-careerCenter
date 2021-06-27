@@ -68,6 +68,7 @@ class CompanySocialMediaSerializer(serializers.Serializer):
     link = serializers.CharField(required=True)
     socialMediaId = serializers.IntegerField(write_only=True, required=True)
     socialMedia = SelectSerializer(read_only=True)
+    uuid = serializers.UUIDField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         try:
