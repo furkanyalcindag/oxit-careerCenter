@@ -475,7 +475,7 @@ class CompanySocialMediaApi(APIView):
 
     def delete(self, request, format=None):
         try:
-            instance = CompanySocialMedia.objects.get(profile__user=request.user, uuid=request.GET.get('id'))
+            instance = CompanySocialMedia.objects.get(company__profile__user=request.user, uuid=request.GET.get('id'))
             instance.delete()
             instance.save()
         except:
