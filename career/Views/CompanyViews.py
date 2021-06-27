@@ -461,7 +461,7 @@ class CompanySocialMediaApi(APIView):
 
     def put(self, request, format=None):
         try:
-            instance = CompanySocialMedia.objects.get(profile__user=request.user, uuid=request.GET.get('id'))
+            instance = CompanySocialMedia.objects.get(company__profile__user=request.user, uuid=request.GET.get('id'))
             serializer = CompanySocialMediaSerializer(data=request.data, instance=instance,
                                                       context={'request': request})
             if serializer.is_valid():
