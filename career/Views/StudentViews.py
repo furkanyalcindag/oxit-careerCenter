@@ -1,6 +1,8 @@
 import traceback
 
-from django.http import FileResponse
+import pdfkit
+from django.http import FileResponse, HttpResponse
+from django.template import loader
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -1253,9 +1255,8 @@ class StudentCVExportPDFApi(APIView):
     def get(self, request, format=None):
         lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
         api_dict = dict()
-        '''student = Student.objects.get(profile__user=request.user)
+        student = Student.objects.get(profile__user=request.user)
 
-       
         api_dict['email'] = student.profile.user.email
         api_dict['firstName'] = student.profile.user.first_name
         api_dict['lastName'] = student.profile.user.last_name
@@ -1263,19 +1264,19 @@ class StudentCVExportPDFApi(APIView):
         api_dict['birthDate'] = student.profile.birthDate
         api_dict['address'] = student.profile.address
         api_dict['profileImage'] = student.profile.profileImage
-        api_dict['gender'] = GenderDescription.objects.get(gender=student.profile.gender, language__code=lang_code).name
+        api_dict['gender'] = GenderDescription.objects.filter(gender=student.profile.gender, language__code=lang_code)
         api_dict['nationality'] = student.profile.nationality
-        api_dict['militaryStatus'] = MilitaryStatusDescription.objects.get(
-            militaryStatus=student.profile.militaryStatus, language__code=lang_code).name
-        api_dict['maritalStatus'] = MaritalStatusDescription.objects.get(maritalStatus=student.profile.maritalStatus,
-                                                                         language__code=lang_code).name
+        api_dict['militaryStatus'] = MilitaryStatusDescription.objects.filter(
+            militaryStatus=student.profile.militaryStatus, language__code=lang_code)
+        api_dict['maritalStatus'] = MaritalStatusDescription.objects.filter(maritalStatus=student.profile.maritalStatus,
+                                                                            language__code=lang_code)
         api_dict['experiments'] = JobInfo.objects.filter(student=student)
         api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
         api_dict['foreignLanguages'] = StudentForeignLanguage.objects.filter(student=student)
         api_dict['exams'] = StudentExam.objects.filter(student=student)
         api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
         api_dict['references'] = Reference.objects.filter(student=student)
-        api_dict['certificate'] = Certificate.objects.filter(student=student)'''
+        api_dict['certificate'] = Certificate.objects.filter(student=student)
 
         # Rendered
         # html_string = render_to_string('cv-print.html', {'data': api_dict})
@@ -1284,10 +1285,17 @@ class StudentCVExportPDFApi(APIView):
         # html = HTML(string=html_string)
         # result = html.write_pdf('tmp/report.pdf')
 
-        pdf = render_to_pdf('resume.html', api_dict)
+        # pdf = render_to_pdf('resume.html', api_dict)
 
-        return FileResponse(pdf, status=status.HTTP_200_OK,
-                            content_type='application/pdf')
+        html = loader.render_to_string('resume.html', {'data': api_dict})
+        options = {
+            "enable-local-file-access": None
+        }
+        output = pdfkit.from_string(html, output_path=False,options=options)
+        response = HttpResponse(content_type="application/pdf")
+        response.write(output)
+
+        return response
 
 
 class StudentSelectApi(APIView):
