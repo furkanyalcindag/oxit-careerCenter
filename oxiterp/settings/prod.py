@@ -17,7 +17,7 @@ DATABASES = {
     }'''
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'career',
+        'NAME': 'oxit_career',
         'USER': 'postgres',
         'PASSWORD': 'oxit2016',
         'HOST': 'localhost',
