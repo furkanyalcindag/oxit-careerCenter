@@ -1274,22 +1274,28 @@ class StudentCVExportPDFApi(APIView):
         api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
         fls = StudentForeignLanguage.objects.filter(student=student)
 
-        '''arr =[]
-
+        arr = []
         for fl in fls:
-            fl_data ='''
+            fl_data = dict()
 
+            fl_data['language'] = ForeignLanguageDescription.objects.get(language__code=lang_code,
+                                                                         foreignLanguage=fl.foreignLanguage).name
+            fl_data['reading'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                             foreignLanguageLevel=fl.readingLevel).name
+            fl_data['writing'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                             foreignLanguageLevel=fl.writingLevel).name
+            fl_data['listening'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                               foreignLanguageLevel=fl.listeningLevel).name
+            fl_data['speaking'] = ForeignLanguageLevelDescription.objects.get(language__code=lang_code,
+                                                                              foreignLanguageLevel=fl.speakingLevel).name
+            arr.append(fl_data)
 
-
-
-
-
-
-
+        api_dict['foreignLanguages'] = arr
         api_dict['exams'] = StudentExam.objects.filter(student=student)
         api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
         api_dict['references'] = Reference.objects.filter(student=student)
-        api_dict['certificate'] = Certificate.objects.filter(student=student)
+        api_dict['certificates'] = Certificate.objects.filter(student=student)
+        api_dict['range'] = range(1,6)
 
         # Rendered
         # html_string = render_to_string('cv-print.html', {'data': api_dict})
@@ -1304,7 +1310,7 @@ class StudentCVExportPDFApi(APIView):
         options = {
             "enable-local-file-access": None
         }
-        output = pdfkit.from_string(html, output_path=False,options=options)
+        output = pdfkit.from_string(html, output_path=False, options=options)
         response = HttpResponse(content_type="application/pdf")
         response.write(output)
 
