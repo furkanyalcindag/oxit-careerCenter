@@ -83,6 +83,7 @@ class BlogApi(APIView):
                 api_data['article'] = blog_translation.article
                 api_data['uuid'] = x.uuid
                 api_data['image'] = blog_translation.image
+                api_data['publishDate'] = x.creationDate
 
                 api_select_blog_type = dict()
 

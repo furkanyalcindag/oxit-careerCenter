@@ -304,9 +304,6 @@ class AppointmentsOfStudent(APIView):
         student = Student.objects.get(profile__user=request.user)
         try:
 
-            date_start = request.GET.get('startDate').split(' ')[0]
-            date_end = request.GET.get('endDate').split(' ')[0]
-
             active_page = 1
             count = 10
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
@@ -321,8 +318,8 @@ class AppointmentsOfStudent(APIView):
 
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
-            appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end,
-                                                      isDeleted=False, student=student)[lim_start:lim_end]
+            appointments = Appointment.objects.filter(isDeleted=False, student=student).order_by('-id')[
+                           lim_start:lim_end]
 
             arr = []
             for app in appointments:

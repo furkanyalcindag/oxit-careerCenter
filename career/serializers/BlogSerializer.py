@@ -18,6 +18,7 @@ class BlogSerializer(serializers.Serializer):
     typeId = serializers.CharField(required=True, write_only=True)
     type = SelectSerializer(read_only=True)
     creationDate = serializers.DateField(read_only=True, required=False)
+    publishDate = serializers.DateField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
 
