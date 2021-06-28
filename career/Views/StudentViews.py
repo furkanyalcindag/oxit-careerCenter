@@ -4,6 +4,7 @@ import subprocess
 import traceback
 
 import pdfkit
+from django.db.models import Q
 from django.http import FileResponse, HttpResponse
 from django.template import loader
 from rest_framework import status
@@ -1267,6 +1268,7 @@ def _get_pdfkit_config():
                                            stdout=subprocess.PIPE).communicate()[0].strip()
         return pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
 
+
 class StudentCVExportPDFApi(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -1292,7 +1294,14 @@ class StudentCVExportPDFApi(APIView):
                 maritalStatus=student.profile.maritalStatus,
                 language__code=lang_code)
             api_dict['experiments'] = JobInfo.objects.filter(student=student)
-            api_dict['educations'] = StudentEducationInfo.objects.filter(student=student)
+            api_dict['educations'] = StudentEducationInfo.objects.filter(student=student,
+                                                                         educationType__name__in=['Lisans',
+                                                                                                  'Yüksek Lisans',
+                                                                                                  'Doktora',
+                                                                                                  'Ön Lisans'])
+            api_dict['educationHighSchools'] = StudentEducationInfo.objects.filter(student=student,
+                                                                                  educationType__name='Lise')
+
             fls = StudentForeignLanguage.objects.filter(student=student)
 
             arr = []
@@ -1331,14 +1340,13 @@ class StudentCVExportPDFApi(APIView):
             options = {
                 "enable-local-file-access": None
             }
-            output = pdfkit.from_string(html, output_path=False,options=options)
+            output = pdfkit.from_string(html, output_path=False, options=options)
             response = HttpResponse(content_type="application/pdf")
             response.write(output)
 
             return response
         except:
             traceback.print_exc()
-
 
 
 class StudentSelectApi(APIView):

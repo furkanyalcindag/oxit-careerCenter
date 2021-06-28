@@ -658,42 +658,42 @@ design and code by: thingsthatarebrown.com
             height: 100px;
         }
 
-      .container {
-    /* Used to position the watermark */
-    position: relative;
-}
+        .container {
+            /* Used to position the watermark */
+            position: relative;
+        }
 
-.container__wrapper {
-    /* Center the content */
-    align-items: center;
-    display: flex;
-    justify-content: center;
+        .container__wrapper {
+            /* Center the content */
+            align-items: center;
+            display: flex;
+            justify-content: center;
 
-    /* Absolute position */
+            /* Absolute position */
 
-    position: absolute;
+            position: absolute;
 
 
-    /* Take full size */
-    height: 100%;
-    width: 100%;
-}
+            /* Take full size */
+            height: 100%;
+            width: 100%;
+        }
 
-.container__watermark {
-    /* Text color */
-    color: rgba(0, 0, 0, 0.2);
+        .container__watermark {
+            /* Text color */
+            color: rgba(0, 0, 0, 0.2);
 
-    /* Text styles */
-    font-size: 3rem;
-    font-weight: bold;
-    text-transform: uppercase;
+            /* Text styles */
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
 
-    /* Rotate the text */
-    transform: rotate(-45deg);
+            /* Rotate the text */
+            transform: rotate(-45deg);
 
-    /* Disable the selection */
-    user-select: none;
-}
+            /* Disable the selection */
+            user-select: none;
+        }
 
 
     </style>
@@ -710,86 +710,158 @@ design and code by: thingsthatarebrown.com
     <div class="container__wrapper">
         <!-- The watermark -->
         <div class="container__watermark">
-            Draft
+            AYBU KAR-MER
         </div>
     </div>
 
 
-<div id="doc2" class="yui-t7">
-    <div id="inner">
+    <div id="doc2" class="yui-t7">
+        <div id="inner">
 
-        <div id="hd">
-            <div class="yui-gc">
-                <div class="yui-u first">
-                    <img src="{{ data.profileImage }}" alt="Avatar">
-
-
-                </div>
-
-                <div class="yui-u">
-                    <div class="contact-info">
-                        <h3>{{ data.firstName }} {{ data.lastName }}</h3>
-                        {% if data.gender.all %}
-                            <h3>Cinsiyet:{{ data.gender.0.name }}</h3>
-                        {% endif %}
-                        {% if data.birthDate is not None %}
-                            <h3>Doğum Tarihi:{{ data.birthDate }}</h3>
-                        {% endif %}
-                        <h3><a href="mailto:name@yourdomain.com">Email:{{ data.email }}</a></h3>
-                        {% if data.telephoneNumber is not None %}
-                            <h3>Telefon: {{ data.telephoneNumber }}</h3>
-                        {% endif %}
-                        {% if data.nationality.all %}
-                            <h3>Milliyet :{{ data.nationality.0.name }}</h3>
-                        {% endif %}
-                        {% if data.militaryStatus.all %}
-                            <h3>Askerlik Durumu:{{ data.militaryStatus.0.name }}</h3>
-                        {% endif %}
-                    </div><!--// .contact-info -->
-                </div>
-            </div><!--// .yui-gc -->
-        </div><!--// hd -->
-
-        <div id="bd">
-            <div id="yui-main">
-                <div class="yui-b">
+            <div id="hd">
+                <div class="yui-gc">
+                    <div class="yui-u first">
+                        <img src="{{ data.profileImage }}" alt="Avatar">
 
 
-                    <div class="yui-gf">
-                        <div class="yui-u first">
-                            <h2>Eğitim Bilgileri</h2>
-                        </div>
-                        {% for education in data.educations %}
-                            <div class="yui-u">
-                                <h2>{{ education.university.name }}</h2>
-                                <h3>{{ education.faculty.name }}, {{ education.department.name }} </h3>
-                                <h3>{{ education.educationType.name }}</h3>
-                                <h3>{{ education.startDate }} - {{ education.graduationDate }} &mdash; <strong>4.0
-                                    GPA</strong></h3>
+                    </div>
+
+                    <div class="yui-u">
+                        <div class="contact-info">
+                            <h3>{{ data.firstName }} {{ data.lastName }}</h3>
+                            {% if data.gender.all %}
+                                <h3>Cinsiyet:{{ data.gender.0.name }}</h3>
+                            {% endif %}
+                            {% if data.birthDate is not None %}
+                                <h3>Doğum Tarihi:{{ data.birthDate }}</h3>
+                            {% endif %}
+                            <h3><a href="mailto:name@yourdomain.com">Email:{{ data.email }}</a></h3>
+                            {% if data.telephoneNumber is not None %}
+                                <h3>Telefon: {{ data.telephoneNumber }}</h3>
+                            {% endif %}
+                            {% if data.nationality.all %}
+                                <h3>Milliyet :{{ data.nationality.0.name }}</h3>
+                            {% endif %}
+                            {% if data.militaryStatus.all %}
+                                <h3>Askerlik Durumu:{{ data.militaryStatus.0.name }}</h3>
+                            {% endif %}
+                        </div><!--// .contact-info -->
+                    </div>
+                </div><!--// .yui-gc -->
+            </div><!--// hd -->
+
+            <div id="bd">
+                <div id="yui-main">
+                    <div class="yui-b">
+
+
+                        <div class="yui-gf">
+                            <div class="yui-u first">
+                                <h2>Eğitim Bilgileri</h2>
                             </div>
+                            {% for education in data.educations %}
+                                <div class="yui-u">
+                                    <h2>{{ education.university.name }}</h2>
+                                    <h3>{{ education.faculty.name }}, {{ education.department.name }} </h3>
+                                    <h3>{{ education.educationType.name }}</h3>
+                                    <h3>{{ education.startDate }} - {{ education.graduationDate }} &mdash;
+                                        <strong>{{ education.gpa }}</strong></h3>
+                                </div>
 
-                        {% endfor %}
-                    </div><!--// .yui-gf -->
+                            {% endfor %}
+
+
+                            {% for education in data.educationHighSchools %}
+                                <div class="yui-u">
+                                    <h2>{{ education.highSchool }}</h2>
+                                    <h3>{{ education.educationType.name }}</h3>
+                                    <h3>{{ education.startDate }} - {{ education.graduationDate }} &mdash;
+                                        <strong>{{ education.gpa }}</strong></h3>
+                                </div>
+
+                            {% endfor %}
+                        </div><!--// .yui-gf -->
+
+
+                        <div class="yui-gf">
+
+                            <div class="yui-u first">
+                                <h2>İş Deneyimleri</h2>
+                            </div><!--// .yui-u -->
+
+                            <div class="yui-u">
+
+
+                                {% for experiment in data.experiments %}
+
+
+                                    <div {% if forloop.last %} class="job last" {% else %} class="job"{% endif %} >
+                                        <h2>{{ experiment.company }}</h2>
+                                        <h3>{{ experiment.title }}</h3>
+                                        <h5>{{ experiment.jobType.name }} </h5>
+                                        <h5>{{ experiment.startDate }}-{{ experiment.finishDate }}</h5>
+                                        <p>{{ experiment.description }}</p>
+                                    </div>
+
+                                {% endfor %}
+
+
+                            </div><!--// .yui-u -->
+                        </div><!--// .yui-gf -->
+
+
+                        <div class="yui-gf">
+                            <div class="yui-u first">
+                                <h2>Yabancı Dil Bilgisi</h2>
+                            </div>
+                            <table class="yui-u">
+
+
+                                <tr class=""
+                                >
+                                    <td><b>Dil</b></td>
+                                    <td><b>Okuma</b></td>
+                                    <td><b>Yazma</b></td>
+                                    <td><b>Dinleme</b></td>
+                                    <td class="last"><b>Konuşma</b></td>
+                                </tr>
+
+
+
+                                {% for fl in data.foreignLanguages %}
+
+                                    <tr class="" style="border-top: 1px solid #ccc; height: 30px;">
+                                        <td>{{ fl.language }}</td>
+                                        <td>{{ fl.reading }}</td>
+                                        <td>{{ fl.writing }}</td>
+                                        <td>{{ fl.listening }}</td>
+                                        <td class="last">{{ fl.speaking }}</td>
+                                    </tr>
+
+                                {% endfor %}
+                            </table>
+
+                        </div>
+                    </div><!--// .yui-gf-->
 
 
                     <div class="yui-gf">
 
                         <div class="yui-u first">
-                            <h2>İş Deneyimleri</h2>
+                            <h2>Sertifika Bilgileri</h2>
                         </div><!--// .yui-u -->
 
                         <div class="yui-u">
 
 
-                            {% for experiment in data.experiments %}
+                            {% for cert in data.certificates %}
 
 
                                 <div {% if forloop.last %} class="job last" {% else %} class="job"{% endif %} >
-                                    <h2>{{ experiment.company }}</h2>
-                                    <h3>{{ experiment.title }}</h3>
-                                    <h5>{{ experiment.jobType.name }} </h5>
-                                    <h5>{{ experiment.startDate }}-{{ experiment.finishDate }}</h5>
-                                    <p>{{ experiment.description }}</p>
+                                    <h2>{{ cert.name }}</h2>
+                                    <h3>Kurum: {{ cert.institutionName }}</h3>
+                                    <h5>Sertifika No: {{ cert.certificateNumber }} Yıl:{{ cert.year }}</h5>
+                                    <p>{{ cert.description }}</p>
                                 </div>
 
                             {% endfor %}
@@ -801,30 +873,28 @@ design and code by: thingsthatarebrown.com
 
                     <div class="yui-gf">
                         <div class="yui-u first">
-                            <h2>Yabancı Dil Bilgisi</h2>
+                            <h2>Sınav Bilgisi</h2>
                         </div>
                         <table class="yui-u">
 
 
                             <tr class=""
                             >
-                                <td><b>Dil</b></td>
-                                <td><b>Okuma</b></td>
-                                <td><b>Yazma</b></td>
-                                <td><b>Dinleme</b></td>
-                                <td class="last"><b>Konuşma</b></td>
+                                <td><b>Sınav Adı</b></td>
+                                <td><b>Yıl</b></td>
+                                <td><b>Puan</b></td>
+
                             </tr>
 
 
 
-                            {% for fl in data.foreignLanguages %}
+                            {% for fl in data.exams %}
 
                                 <tr class="" style="border-top: 1px solid #ccc; height: 30px;">
-                                    <td>{{ fl.language }}</td>
-                                    <td>{{ fl.reading }}</td>
-                                    <td>{{ fl.writing }}</td>
-                                    <td>{{ fl.listening }}</td>
-                                    <td class="last">{{ fl.speaking }}</td>
+                                    <td>{{ fl.name }}</td>
+                                    <td>{{ fl.year }}</td>
+                                    <td>{{ fl.point }}</td>
+
                                 </tr>
 
                             {% endfor %}
@@ -835,54 +905,63 @@ design and code by: thingsthatarebrown.com
 
 
                 <div class="yui-gf">
-
                     <div class="yui-u first">
-                        <h2>Sertifika Bilgileri</h2>
-                    </div><!--// .yui-u -->
-
+                        <h2>Yetkinlikler</h2>
+                    </div>
                     <div class="yui-u">
 
+                        {% for q in data.qualifications %}
+                            <ul class="talent">
+                                <li>{{ q.name }}
 
-                        {% for cert in data.certificates %}
+                                    {% for i in data.range %}
 
 
-                            <div {% if forloop.last %} class="job last" {% else %} class="job"{% endif %} >
-                                <h2>{{ cert.name }}</h2>
-                                <h3>Kurum: {{ cert.institutionName }}</h3>
-                                <h5>Sertifika No: {{ cert.certificateNumber }} Yıl:{{ cert.year }}</h5>
-                                <p>{{ cert.description }}</p>
-                            </div>
+                                        {% if i <= q.rating %}
+                                            <span class="fa fa-star" style="color: orange"></span>
+
+                                        {% else %}
+                                            <span class="fa fa-star"></span>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+
+                                </li>
+
+                            </ul>
 
                         {% endfor %}
-
-
-                    </div><!--// .yui-u -->
-                </div><!--// .yui-gf -->
+                        </ul>
+                    </div>
+                </div><!--// .yui-gf-->
 
 
                 <div class="yui-gf">
                     <div class="yui-u first">
-                        <h2>Sınav Bilgisi</h2>
+                        <h2>Referans</h2>
                     </div>
                     <table class="yui-u">
 
 
                         <tr class=""
                         >
-                            <td><b>Sınav Adı</b></td>
-                            <td><b>Yıl</b></td>
-                            <td><b>Puan</b></td>
+                            <td><b>Adı</b></td>
+                            <td><b>Soyadı</b></td>
+                            <td><b>Ünvan</b></td>
+                            <td><b>Telefon</b></td>
 
                         </tr>
 
 
 
-                        {% for fl in data.exams %}
+                        {% for fl in data.references %}
 
                             <tr class="" style="border-top: 1px solid #ccc; height: 30px;">
-                                <td>{{ fl.name }}</td>
-                                <td>{{ fl.year }}</td>
-                                <td>{{ fl.point }}</td>
+                                <td>{{ fl.firstName }}</td>
+                                <td>{{ fl.lastName }}</td>
+                                <td>{{ fl.title }}</td>
+                                <td>{{ fl.telephoneNumber }}</td>
 
                             </tr>
 
@@ -893,76 +972,8 @@ design and code by: thingsthatarebrown.com
             </div><!--// .yui-gf-->
 
 
-            <div class="yui-gf">
-                <div class="yui-u first">
-                    <h2>Yetkinlikler</h2>
-                </div>
-                <div class="yui-u">
-
-                    {% for q in data.qualifications %}
-                        <ul class="talent">
-                            <li>{{ q.name }}
-
-                                {% for i in data.range %}
-
-
-                                    {% if i <= q.rating %}
-                                        <span class="fa fa-star" style="color: orange"></span>
-
-                                    {% else %}
-                                        <span class="fa fa-star"></span>
-                                    {% endif %}
-
-                                {% endfor %}
-
-
-                            </li>
-
-                        </ul>
-
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div><!--// .yui-gf-->
-
-
-            <div class="yui-gf">
-                <div class="yui-u first">
-                    <h2>Referans</h2>
-                </div>
-                <table class="yui-u">
-
-
-                    <tr class=""
-                    >
-                        <td><b>Adı</b></td>
-                        <td><b>Soyadı</b></td>
-                        <td><b>Ünvan</b></td>
-                        <td><b>Telefon</b></td>
-
-                    </tr>
-
-
-
-                    {% for fl in data.references %}
-
-                        <tr class="" style="border-top: 1px solid #ccc; height: 30px;">
-                            <td>{{ fl.firstName }}</td>
-                            <td>{{ fl.lastName }}</td>
-                            <td>{{ fl.title }}</td>
-                            <td>{{ fl.telephoneNumber }}</td>
-
-                        </tr>
-
-                    {% endfor %}
-                </table>
-
-            </div>
-        </div><!--// .yui-gf-->
-
-
-    </div><!--// .yui-b -->
-</div><!--// yui-main -->
+        </div><!--// .yui-b -->
+    </div><!--// yui-main -->
 </div><!--// bd -->
 
 <!--<div id="ft">
@@ -976,8 +987,6 @@ design and code by: thingsthatarebrown.com
 </div><!--// doc -->
 
 </div>
-
-
 
 
 </body>
