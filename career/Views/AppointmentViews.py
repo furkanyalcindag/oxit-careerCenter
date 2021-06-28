@@ -32,8 +32,12 @@ class AppointmentApi(APIView):
             for appointment in appointments:
                 api_object = dict()
                 api_object['uuid'] = appointment.uuid
-                api_object[
-                    'title'] = appointment.consultant.profile.user.first_name + ' ' + appointment.consultant.profile.user.last_name
+                if appointment.student is not None:
+                    api_object[
+                        'title'] = appointment.student.profile.user.first_name + ' ' + appointment.student.profile.user.last_name
+                else:
+                    api_object['title'] = '-'
+
                 api_object['start'] = str(appointment.date) + ' ' + str(appointment.startTime)
                 api_object['end'] = str(appointment.date) + ' ' + str(appointment.finishTime)
                 if appointment.student is None:
