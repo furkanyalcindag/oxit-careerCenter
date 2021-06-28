@@ -232,6 +232,8 @@ class AppointmentStudentApi(APIView):
                             api_object['uuid'] = appointment.uuid
                             api_object['price'] = appointment.price
                             api_object['isPaid'] = appointment.isPaid
+                            api_object[
+                                'consultant'] = appointment.consultant.profile.user.first_name + ' ' + appointment.consultant.profile.user.last_name
                             api_object['date'] = appointment.date
                             api_object['startTime'] = appointment.startTime
                             api_object['finishTime'] = appointment.finishTime
@@ -292,3 +294,53 @@ class AppointmentStudentApi(APIView):
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class AppointmentsOfStudent(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        student = Student.objects.get(profile__user=request.user)
+        try:
+
+            date_start = request.GET.get('startDate').split(' ')[0]
+            date_end = request.GET.get('endDate').split(' ')[0]
+
+            active_page = 1
+            count = 10
+            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+            if request.GET.get('page') is not None:
+                active_page = int(request.GET.get('page'))
+
+            if request.GET.get('type') is not None:
+                blog_type = request.GET.get('type')
+
+            if request.GET.get('count') is not None:
+                count = int(request.GET.get('count'))
+
+            lim_start = count * (int(active_page) - 1)
+            lim_end = lim_start + int(count)
+            appointments = Appointment.objects.filter(date__gte=date_start, date__lte=date_end,
+                                                      isDeleted=False, student=student)[lim_start:lim_end]
+
+            arr = []
+            for app in appointments:
+                api_data = dict()
+                api_data['date'] = app.date
+                api_data['startTime'] = app.startTime
+                api_data['finishTime'] = app.finishTime
+
+                api_data[
+                    'consultant'] = app.consultant.profile.user.first_name + ' ' + app.consultant.profile.user.last_name
+                api_data['room'] = app.room
+                select_location = dict()
+                select_location['label'] = app.location.name
+                select_location['value'] = app.location.uuid
+                api_data['location'] = select_location
+                arr.append(api_data)
+
+            return Response(arr, status=status.HTTP_200_OK)
+        except Exception as e:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
