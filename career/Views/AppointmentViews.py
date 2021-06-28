@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from career.exceptions import AppointmentValidationException
 from career.models import Appointment, Consultant, Student
 from career.serializers.AppointmentSerializer import AppointmentSerializer, AppointmentCalendarSerializer
 from career.services import GeneralService
@@ -83,22 +84,33 @@ class AppointmentApi(APIView):
             return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, request, format=None):
-        serializer = AppointmentSerializer(data=request.data, context={'request': request})
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "appointment is created"}, status=status.HTTP_200_OK)
-        else:
-            errors_dict = dict()
-            for key, value in serializer.errors.items():
-                if key == 'studentNumber':
-                    errors_dict['Öğrenci Numarası'] = value
+        try:
+            serializer = AppointmentSerializer(data=request.data, context={'request': request})
 
-            if serializer.errors['0'] == 'Lütfen geçerli bir tarih ve zaman giriniz':
-                return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "appointment is created"}, status=status.HTTP_200_OK)
+            else:
+                errors_dict = dict()
+                for key, value in serializer.errors.items():
+                    if key == 'studentNumber':
+                        errors_dict['Öğrenci Numarası'] = value
+
+                if serializer.errors['0'] == 'Lütfen geçerli bir tarih ve zaman giriniz':
+                    return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except AppointmentValidationException as e:
+            return Response("", status=status.HTTP_406_NOT_ACCEPTABLE)
+        except Exception as e:
+
+            if e.args[0] == 'Lütfen geçerli bir tarih ve zaman giriniz':
+                return Response("", status=status.HTTP_406_NOT_ACCEPTABLE)
 
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response("", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, format=None):
 
