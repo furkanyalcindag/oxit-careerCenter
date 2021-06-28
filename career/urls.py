@@ -22,7 +22,7 @@ from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDat
 from career.Views.InstructorViews import InstructorApi, InstructorSelectApi
 from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplicationsApi, \
     JobPostApplicationStudentCoverLetterApi
-from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdminApi
+from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdminApi, JobPostAdminDashboardApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi, LectureStudentApplicants
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
@@ -87,6 +87,8 @@ urlpatterns = [
 
     # dashboard
     path('admin-dashboard-api/', AdminDashboardApi.as_view(), name='admin-dashboard-api'),
+    path('admin-dashboard-job-post-api/', JobPostAdminDashboardApi.as_view(), name='admin-dashboard-job-post-api'),
+
 
     # company
     path('company-api/', CompanyApi.as_view(), name='admin-company-api'),
