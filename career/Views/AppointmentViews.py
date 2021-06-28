@@ -94,7 +94,11 @@ class AppointmentApi(APIView):
                 if key == 'studentNumber':
                     errors_dict['Öğrenci Numarası'] = value
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.errors[0] == 'Lütfen geçerli bir tarih ve zaman giriniz':
+                return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
 
