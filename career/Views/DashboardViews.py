@@ -19,8 +19,7 @@ class AdminDashboardApi(APIView):
         api_data['graduatedCount'] = Student.objects.filter(isDeleted=False, isGraduated=True).count()
         api_data['companyCount'] = Company.objects.filter(isDeleted=False).count()
         api_data['consultantCount'] = Consultant.objects.filter(isDeleted=False).count()
-        api_data['jobPostCount'] = JobPost.objects.filter(isDeleted=False,
-                                                          finishDate__lte=datetime.datetime.today().date()).count()
+        api_data['jobPostCount'] = JobPost.objects.filter(isDeleted=False).count()
         api_data['lectureCount'] = Lecture.objects.filter(isDeleted=False).count()
         api_data['appointmentTotalCount'] = Appointment.objects.filter(isDeleted=False).count()
         api_data['appointmentDoneCount'] = Appointment.objects.filter(isDeleted=False, isCome=True).count()
