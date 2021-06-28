@@ -325,6 +325,7 @@ class AppointmentsOfStudent(APIView):
                 arr = []
                 for app in appointments:
                     api_data = dict()
+                    api_data['uuid'] = app.uuid
                     api_data['date'] = app.date
                     api_data['startTime'] = app.startTime
                     api_data['finishTime'] = app.finishTime
@@ -354,6 +355,7 @@ class AppointmentsOfStudent(APIView):
                 api_data['date'] = app.date
                 api_data['startTime'] = app.startTime
                 api_data['finishTime'] = app.finishTime
+                api_data['uuid'] = app.uuid
 
                 api_data[
                     'consultant'] = app.consultant.profile.user.first_name + ' ' + app.consultant.profile.user.last_name
