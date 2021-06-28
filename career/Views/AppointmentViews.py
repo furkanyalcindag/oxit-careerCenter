@@ -337,7 +337,13 @@ class AppointmentsOfStudent(APIView):
                 api_data['location'] = select_location
                 arr.append(api_data)
 
-            return Response(arr, status=status.HTTP_200_OK)
+            api_page = dict()
+            api_page['data'] = arr
+            api_page['recordsTotal'] = Appointment.objects.filter(isDeleted=False, student=student).count()
+            api_page['recordsFiltered'] = appointments.count()
+            api_page['activePage'] = active_page
+
+            return Response(api_page, status=status.HTTP_200_OK)
         except Exception as e:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
