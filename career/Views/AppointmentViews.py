@@ -303,26 +303,53 @@ class AppointmentsOfStudent(APIView):
 
         student = Student.objects.get(profile__user=request.user)
         try:
+            if request.GET.get('id') is None:
 
-            active_page = 1
-            count = 10
-            lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
-            if request.GET.get('page') is not None:
-                active_page = int(request.GET.get('page'))
+                active_page = 1
+                count = 10
+                lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+                if request.GET.get('page') is not None:
+                    active_page = int(request.GET.get('page'))
 
-            if request.GET.get('type') is not None:
-                blog_type = request.GET.get('type')
+                if request.GET.get('type') is not None:
+                    blog_type = request.GET.get('type')
 
-            if request.GET.get('count') is not None:
-                count = int(request.GET.get('count'))
+                if request.GET.get('count') is not None:
+                    count = int(request.GET.get('count'))
 
-            lim_start = count * (int(active_page) - 1)
-            lim_end = lim_start + int(count)
-            appointments = Appointment.objects.filter(isDeleted=False, student=student).order_by('-id')[
-                           lim_start:lim_end]
+                lim_start = count * (int(active_page) - 1)
+                lim_end = lim_start + int(count)
+                appointments = Appointment.objects.filter(isDeleted=False, student=student).order_by('-id')[
+                               lim_start:lim_end]
 
-            arr = []
-            for app in appointments:
+                arr = []
+                for app in appointments:
+                    api_data = dict()
+                    api_data['date'] = app.date
+                    api_data['startTime'] = app.startTime
+                    api_data['finishTime'] = app.finishTime
+
+                    api_data[
+                        'consultant'] = app.consultant.profile.user.first_name + ' ' + app.consultant.profile.user.last_name
+                    api_data['room'] = app.room
+                    select_location = dict()
+                    select_location['label'] = app.location.name
+                    select_location['value'] = app.location.uuid
+                    api_data['location'] = select_location
+                    arr.append(api_data)
+
+                api_page = dict()
+                api_page['data'] = arr
+                api_page['recordsTotal'] = Appointment.objects.filter(isDeleted=False, student=student).count()
+                api_page['recordsFiltered'] = appointments.count()
+                api_page['activePage'] = active_page
+
+                return Response(api_page, status=status.HTTP_200_OK)
+
+            else:
+
+                app = Appointment.objects.get(isDeleted=False, student=student, uuid=request.GET.get('id'))
+
                 api_data = dict()
                 api_data['date'] = app.date
                 api_data['startTime'] = app.startTime
@@ -335,15 +362,18 @@ class AppointmentsOfStudent(APIView):
                 select_location['label'] = app.location.name
                 select_location['value'] = app.location.uuid
                 api_data['location'] = select_location
-                arr.append(api_data)
 
-            api_page = dict()
-            api_page['data'] = arr
-            api_page['recordsTotal'] = Appointment.objects.filter(isDeleted=False, student=student).count()
-            api_page['recordsFiltered'] = appointments.count()
-            api_page['activePage'] = active_page
+                return Response(api_data, status=status.HTTP_200_OK)
 
-            return Response(api_page, status=status.HTTP_200_OK)
+
         except Exception as e:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def delete(self, request, format=None):
+        student = Student.objects.get(profile__user=request.user)
+        appointment = Appointment.objects.get(uuid=request.GET.get('id'), student=student)
+        appointment.student = None
+        appointment.isSuitable = True
+        appointment.save()
+        return Response("success", status=status.HTTP_200_OK)
