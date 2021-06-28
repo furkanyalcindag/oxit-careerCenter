@@ -94,7 +94,7 @@ class AppointmentApi(APIView):
                 if key == 'studentNumber':
                     errors_dict['Öğrenci Numarası'] = value
 
-            if serializer.errors[0] == 'Lütfen geçerli bir tarih ve zaman giriniz':
+            if serializer.errors['0'] == 'Lütfen geçerli bir tarih ve zaman giriniz':
                 return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
             else:
