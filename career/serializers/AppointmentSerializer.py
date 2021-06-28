@@ -1,3 +1,4 @@
+import datetime
 import traceback
 
 from django.db.models import Q
@@ -73,7 +74,7 @@ class AppointmentSerializer(serializers.Serializer):
             appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False,
                                                       startTime__lte=start_time,
                                                       finishTime__gt=start_time)
-            if len(appointments) > 0:
+            if len(appointments) > 0 or date < datetime.date.today():
                 raise AppointmentValidationException()
             else:
                 appointment.consultant = consultant
