@@ -10,6 +10,7 @@ from career.exceptions import AppointmentValidationException
 from career.models import Appointment, Consultant, Student
 from career.serializers.AppointmentSerializer import AppointmentSerializer, AppointmentCalendarSerializer
 from career.services import GeneralService
+from career.services.NotificationServices import create_notification
 
 
 class AppointmentApi(APIView):
@@ -304,6 +305,8 @@ class AppointmentStudentApi(APIView):
                 appointment.student = student
                 appointment.isSuitable = False
                 appointment.save()
+
+                create_notification(appointment.consultant.profile.user, 'consultant_student_take_appointment')
                 return Response("başarılı", status=status.HTTP_200_OK)
             else:
                 return Response("Dolu Randevu", status=status.HTTP_200_OK)
@@ -394,4 +397,5 @@ class AppointmentsOfStudent(APIView):
         appointment.student = None
         appointment.isSuitable = True
         appointment.save()
+        create_notification(appointment.consultant.profile.user, 'consultant_student_canceled_appointment')
         return Response("success", status=status.HTTP_200_OK)

@@ -51,3 +51,6 @@ from .MenuCompany import MenuCompany
 from .MenuStudent import MenuStudent
 from .ConsultantCategory import ConsultantCategory
 from .CompanySocialMedia import CompanySocialMedia
+from .Notification import Notification
+from .NotificationDescription import NotificationDescription
+from .NotificationUser import NotificationUser

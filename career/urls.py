@@ -24,6 +24,7 @@ from career.Views.JobApplicationViews import JopApplicantsApi, JopStudentApplica
     JobPostApplicationStudentCoverLetterApi
 from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdminApi, JobPostAdminDashboardApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi, LectureStudentApplicants
+from career.Views.NotificationViews import NotificationApi
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
     ScholarshipApplicants
@@ -75,6 +76,9 @@ urlpatterns = [
     path('instructor-select-api/', InstructorSelectApi.as_view(), name='instructor-select-api'),
     path('category-select-api/', ConsultantCategorySelectApi.as_view(), name='category-select-api'),
     path('social-media-select-api/', SocialMediaSelectApi.as_view(), name='social-media-select-api'),
+    path('notification-api/', NotificationApi.as_view(), name='notification-api'),
+
+
 
     # -------------public api--------------------------------
 

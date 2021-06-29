@@ -297,6 +297,8 @@ class JobPostStudentApi(APIView):
                 else:
                     api_data['isApplied'] = True
 
+                x.viewCount = x.viewCount + 1
+                x.save()
                 serializer = JobPostSerializer(api_data, context={'request': request})
 
                 return Response(serializer.data, status.HTTP_200_OK)

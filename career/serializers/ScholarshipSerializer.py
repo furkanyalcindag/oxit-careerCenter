@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from career.models import Scholarship, Company
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
+from career.services.NotificationServices import create_notification, create_notification_admin
 
 
 class ScholarshipSerializer(serializers.Serializer):
@@ -15,16 +16,24 @@ class ScholarshipSerializer(serializers.Serializer):
     companyLogo = serializers.CharField(read_only=True, required=False)
     companyId = serializers.UUIDField(write_only=True, required=True)
     isApprove = serializers.BooleanField()
-    isApplied = serializers.BooleanField(required=False,read_only=True)
+    isApplied = serializers.BooleanField(required=False, read_only=True)
 
     def update(self, instance, validated_data):
         try:
+            is_approve = instance.isApprove
             instance.name = validated_data.get('name')
             instance.description = validated_data.get('description')
             instance.company = Company.objects.get(uuid=validated_data.get('companyId'))
             instance.amount = validated_data.get('amount')
             instance.isApprove = validated_data.get('isApprove')
             instance.save()
+
+            if is_approve is False and instance.isApprove and instance.company is not None:
+                create_notification(instance.company.profile.user, 'company_admin_scholarship_approve')
+
+            elif is_approve is True and instance.isApprove is False and instance.company is not None:
+                create_notification(instance.company.profile.user, 'company_admin_scholarship_canceled')
+
             return instance
         except Exception:
             traceback.print_exc()
@@ -84,6 +93,7 @@ class CompanyScholarshipSerializer(serializers.Serializer):
             scholarship.company = Company.objects.get(profile__user=user)
             scholarship.amount = validated_data.get('amount')
             scholarship.save()
+            create_notification_admin('admin_company_scholarship_create')
             return scholarship
         except Exception:
             traceback.print_exc()
