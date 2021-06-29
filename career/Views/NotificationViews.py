@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from career.models import Notification, NotificationUser, NotificationDescription
 
 
+
 class NotificationApi(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -17,6 +18,7 @@ class NotificationApi(APIView):
             user = request.user
 
             notifications = NotificationUser.objects.filter(user=user, isRead=False)
+            api_notification = dict()
             arr = []
             for notify in notifications:
                 notification = notify.notification
@@ -28,7 +30,12 @@ class NotificationApi(APIView):
                 api_dict['message'] = notification_description.message
                 arr.append(api_dict)
 
-            return Response(arr, status=status)
+
+            api_notification['count'] = notifications.count()
+            api_notification['notifications'] = arr
+
+
+            return Response(api_notification, status=status.HTTP_200_OK)
         else:
 
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')

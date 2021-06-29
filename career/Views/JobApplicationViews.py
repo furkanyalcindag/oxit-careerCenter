@@ -66,6 +66,7 @@ class JopApplicantsApi(APIView):
             api_data['uuid'] = x.student.uuid
             api_data['studentNumber'] = x.student.studentNumber
             api_data['email'] = x.student.profile.user.username
+            api_data['isGraduated'] = x.student.isGraduated
             arr.append(api_data)
 
         api_object = APIObject()
