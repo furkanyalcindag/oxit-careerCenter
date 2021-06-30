@@ -24,6 +24,7 @@ class UnitApi(APIView):
             api_data['name'] = unit.name
             api_data['website'] = unit.website
             api_data['uuid'] = unit.uuid
+            api_data['order'] = unit.order
 
             serializer = UnitSerializer(
                 api_data, context={'request': request})
@@ -52,6 +53,7 @@ class UnitApi(APIView):
                 api_data = dict()
                 api_data['name'] = x.name
                 api_data['website'] = x.website
+                api_data['order'] = x.order
                 api_data['uuid'] = x.uuid
 
                 arr.append(api_data)
@@ -174,8 +176,6 @@ class UnitStaffApi(APIView):
             unit_staff = UnitStaff.objects.get(uuid=request.GET.get('id'))
             unit_staff.isDeleted = True
             unit_staff.save()
-
-
 
             person = Person.objects.get(uuid=unit_staff.person.uuid)
             person.isDeleted = True

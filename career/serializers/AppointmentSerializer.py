@@ -35,6 +35,8 @@ class AppointmentSerializer(serializers.Serializer):
             appointments = Appointment.objects.filter(date=date, consultant=consultant, isDeleted=False,
                                                       startTime__lte=start_time,
                                                       finishTime__gt=start_time).filter(~Q(uuid=instance.uuid))
+
+
             if len(appointments) > 0:
                 raise AppointmentValidationException()
             else:
@@ -112,6 +114,5 @@ class AppointmentCalendarSerializer(serializers.Serializer):
             'end': obj['end'],
             'title': obj['title'],
             'class': obj['id'],
-
 
         }

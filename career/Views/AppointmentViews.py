@@ -89,7 +89,10 @@ class AppointmentApi(APIView):
         try:
             serializer = AppointmentSerializer(data=request.data, context={'request': request})
 
-            if serializer.is_valid():
+            if request.data['date'] < datetime.datetime.today().date():
+                return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
+
+            elif serializer.is_valid():
                 serializer.save()
                 return Response({"message": "appointment is created"}, status=status.HTTP_200_OK)
             else:
@@ -297,7 +300,6 @@ class AppointmentStudentApi(APIView):
 
     def post(self, request, format=None):
         try:
-
             appointment_id = request.data['appointmentId']
             student = Student.objects.get(profile__user=request.user)
             appointment = Appointment.objects.get(uuid=appointment_id)
