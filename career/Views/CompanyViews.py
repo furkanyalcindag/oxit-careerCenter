@@ -477,6 +477,7 @@ class CompanySocialMediaApi(APIView):
         try:
             instance = CompanySocialMedia.objects.get(company__profile__user=request.user, uuid=request.GET.get('id'))
             instance.delete()
+            return Response("başarılı", status=status.HTTP_200_OK)
 
         except:
             traceback.print_exc()
