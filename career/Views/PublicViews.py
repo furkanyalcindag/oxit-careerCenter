@@ -124,7 +124,7 @@ class UnitPublicApi(APIView):
 
 
             data = Unit.objects.filter(isDeleted=False).order_by(
-                '-id')
+                'order')
 
             arr = []
             x = resolve(request.path_info).url_name
