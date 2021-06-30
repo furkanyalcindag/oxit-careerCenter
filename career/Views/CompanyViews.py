@@ -477,7 +477,7 @@ class CompanySocialMediaApi(APIView):
         try:
             instance = CompanySocialMedia.objects.get(company__profile__user=request.user, uuid=request.GET.get('id'))
             instance.delete()
-            instance.save()
+
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
