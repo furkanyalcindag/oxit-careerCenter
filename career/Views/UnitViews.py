@@ -43,7 +43,7 @@ class UnitApi(APIView):
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Unit.objects.filter(name__icontains=name, isDeleted=False).order_by('-id')[
+            data = Unit.objects.filter(name__icontains=name, isDeleted=False).order_by('order')[
                    lim_start:lim_end]
 
             filtered_count = Unit.objects.filter(name__icontains=name, isDeleted=False).count()

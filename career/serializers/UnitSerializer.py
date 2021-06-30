@@ -12,12 +12,14 @@ class UnitSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     website = serializers.CharField(required=False)
     uuid = serializers.UUIDField(read_only=True)
+    order = serializers.IntegerField(required=True)
 
     def update(self, instance, validated_data):
         try:
 
             instance.name = validated_data.get('name')
             instance.website = validated_data.get('website')
+            instance.order = int(validated_data.get('order'))
             instance.save()
             return instance
         except:
@@ -29,6 +31,7 @@ class UnitSerializer(serializers.Serializer):
             unit = Unit()
             unit.name = validated_data.get('name')
             unit.website = validated_data.get('website')
+            unit.order = validated_data.get('order')
             unit.save()
             return unit
         except:
