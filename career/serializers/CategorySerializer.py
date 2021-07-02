@@ -14,7 +14,7 @@ class CategorySerializer(serializers.Serializer):
     name = serializers.CharField(required=True, )
     languageCode = serializers.CharField(write_only=True, required=False)
     uuid = serializers.UUIDField(read_only=True)
-    isButton = serializers.BooleanField()
+    isButton = serializers.BooleanField(write_only=True)
 
     def update(self, instance, validated_data):
         try:
