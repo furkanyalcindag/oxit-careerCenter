@@ -520,7 +520,6 @@ class ConsultantCategorySelectApi(APIView):
             if request.GET.get('isButton') is not None:
                 kwargs['isButton'] = request.GET.get('isButton')
 
-
             data = Category.objects.filter(**kwargs).order_by('-id')
 
             arr = []
