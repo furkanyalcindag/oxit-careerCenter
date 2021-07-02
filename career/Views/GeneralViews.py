@@ -512,7 +512,16 @@ class ConsultantCategorySelectApi(APIView):
             title = ''
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
 
-            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by('-id')
+            kwargs = dict()
+            kwargs['keyword__icontains'] = title
+            kwargs['isDeleted'] = title
+            kwargs['type'] = 'Consultant'
+
+            if request.GET.get('isButton') is not None:
+                kwargs['isButton'] = request.GET.get('isButton')
+
+
+            data = Category.objects.filter(**kwargs).order_by('-id')
 
             arr = []
             for x in data:

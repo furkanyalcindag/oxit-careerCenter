@@ -312,7 +312,7 @@ class CompanyGeneralInformationStudentApi(APIView):
 
                 api_data['link'] = sm.link
                 api_data['socialMedia'] = api_select
-                arr.append(api_data)
+                sm_arr.append(api_data)
 
             api_object['socialMedias'] = sm_arr
 
