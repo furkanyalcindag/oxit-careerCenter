@@ -128,7 +128,7 @@ class LectureApi(APIView):
                 api_object.data = arr
                 api_object.recordsFiltered = filtered_count
                 api_object.recordsTotal = Lecture.objects.filter(isDeleted=False).count()
-                api_object.activePage = 1
+                api_object.activePage = active_page
 
                 serializer = LecturePageableSerializer(
                     api_object, context={'request': request})
