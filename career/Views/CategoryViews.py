@@ -38,6 +38,10 @@ class ConsultantCategoryView(APIView):
 
             title = ''
             lang_code = request.META.get('HTTP_ACCEPT_LANGUAGE')
+            is_button = None
+
+            kwargs = dict()
+
             if request.GET.get('page') is not None:
                 active_page = int(request.GET.get('page'))
 
@@ -47,14 +51,20 @@ class ConsultantCategoryView(APIView):
             if request.GET.get('count') is not None:
                 count = int(request.GET.get('count'))
 
+            kwargs['keyword__icontains'] = title
+            kwargs['isDeleted'] = False
+            kwargs['type'] = 'Consultant'
+            if request.GET.get('isButton') is not None:
+                kwargs['isButton'] = True
+
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
-            data = Category.objects.filter(keyword__icontains=title, isDeleted=False, type='Consultant').order_by(
+            data = Category.objects.filter(**kwargs).order_by(
                 '-id')[
                    lim_start:lim_end]
 
-            filtered_count = Category.objects.filter(keyword__icontains=title, type='Consultant').count()
+            filtered_count = Category.objects.filter(**kwargs).count()
             arr = []
             for x in data:
                 blog_translation = CategoryDescription.objects.get(category=x,
@@ -69,8 +79,8 @@ class ConsultantCategoryView(APIView):
             api_object = APIObject()
             api_object.data = arr
             api_object.recordsFiltered = filtered_count
-            api_object.recordsTotal = Category.objects.filter(isDeleted=False, type='Consultant').count()
-            api_object.activePage = 1
+            api_object.recordsTotal = Category.objects.filter(**kwargs).count()
+            api_object.activePage = active_page
 
             serializer = CategoryPageableSerializer(
                 api_object, context={'request': request})

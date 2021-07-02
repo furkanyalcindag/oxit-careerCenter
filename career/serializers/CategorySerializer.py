@@ -14,6 +14,7 @@ class CategorySerializer(serializers.Serializer):
     name = serializers.CharField(required=True, )
     languageCode = serializers.CharField(write_only=True, required=False)
     uuid = serializers.UUIDField(read_only=True)
+    isButton = serializers.BooleanField()
 
     def update(self, instance, validated_data):
         try:
@@ -23,6 +24,7 @@ class CategorySerializer(serializers.Serializer):
             category_description.name = validated_data.get('name')
 
             category_description.save()
+            instance.isButton = validated_data.get('isButton')
             return category_description
 
         except Exception:
@@ -38,6 +40,7 @@ class CategorySerializer(serializers.Serializer):
                 category = Category()
                 category.type = 'Consultant'
                 category.keyword = r
+                category.isButton = validated_data.get('isButton')
                 category.save()
 
                 category_description = CategoryDescription()
