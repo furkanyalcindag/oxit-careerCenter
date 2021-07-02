@@ -71,6 +71,7 @@ class ConsultantCategoryView(APIView):
                                                                    language=Language.objects.get(code=lang_code))
                 api_data = dict()
                 api_data['name'] = blog_translation.name
+                api_data['isButton'] = x.isButton
 
                 api_data['uuid'] = x.uuid
 
