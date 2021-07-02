@@ -1,22 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
 
-    <title>Jonathan Doe | Web Designer, Director | name@yourdomain.com</title>
+    <title>cv</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-
-    <meta name="keywords" content=""/>
-    <meta name="description" content=""/>
 
 
     <style type="text/css">
 
-        /*
-Copyright (c) 2009, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.net/yui/license.txt
-version: 2.7.0
-*/
         html {
             color: #000;
             background: #FFF;
@@ -93,7 +83,7 @@ version: 2.7.0
         body {
             font: 13px/1.231 arial, helvetica, clean, sans-serif;
             *font-size: small;
-            *font: x-small;
+            /*font: x-small; */
         }
 
         select, input, button, textarea, button {
@@ -102,7 +92,7 @@ version: 2.7.0
 
         table {
             font-size: inherit;
-            font: 100%;
+            /*font: 100%;*/
         }
 
         pre, code, kbd, samp, tt {
@@ -420,18 +410,6 @@ version: 2.7.0
     </style>
     <style type="text/css">
 
-        /*
----------------------------------------------------------------------------------
-STRIPPED DOWN RESUME TEMPLATE
-html resume
-
-v0.9: 5/28/09
-
-design and code by: thingsthatarebrown.com
-                    (matt brown)
----------------------------------------------------------------------------------
-*/
-
 
         .msg {
             padding: 10px;
@@ -721,7 +699,10 @@ design and code by: thingsthatarebrown.com
             <div id="hd">
                 <div class="yui-gc">
                     <div class="yui-u first">
-                        <img src="{{ data.profileImage }}" alt="Avatar">
+                        {% if data.profileImage %}
+                            <img src="{{ data.profileImage }}" alt="Avatar">
+
+                        {% endif %}
 
 
                     </div>
