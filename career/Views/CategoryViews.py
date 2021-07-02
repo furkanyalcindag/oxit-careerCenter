@@ -25,6 +25,7 @@ class ConsultantCategoryView(APIView):
 
             api_data = dict()
             api_data['name'] = category_translation.name
+            api_data['isButton'] = category.isButton
 
             serializer = CategorySerializer(
                 api_data, context={'request': request})
@@ -72,7 +73,6 @@ class ConsultantCategoryView(APIView):
                 api_data = dict()
                 api_data['name'] = blog_translation.name
                 api_data['isButton'] = x.isButton
-
                 api_data['uuid'] = x.uuid
 
                 arr.append(api_data)
