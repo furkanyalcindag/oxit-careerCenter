@@ -1,5 +1,6 @@
 from django.db import models
 
+from career.models import Company
 from career.models.BaseModel import BaseModel
 from career.models.Instructor import Instructor
 from career.models.Location import Location
@@ -15,3 +16,4 @@ class Lecture(BaseModel):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     room = models.CharField(max_length=256, null=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)

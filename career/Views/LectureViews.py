@@ -30,6 +30,15 @@ class LectureApi(APIView):
             api_data['description'] = lecture_translation.description
             api_data['uuid'] = lecture.uuid
             api_data['languageCode'] = lang.code
+            select_company = dict()
+
+            if lecture.company is not None:
+                select_company['label'] = lecture.company.name
+                select_company['value'] = lecture.company.uuid
+            else:
+                select_company = None
+
+            api_data['company'] = select_company
 
             select_instructor = dict()
             select_instructor['label'] = lecture.instructor.person.firstName + ' ' + lecture.instructor.person.lastName
@@ -97,6 +106,14 @@ class LectureApi(APIView):
                 select_location = dict()
                 select_location['label'] = x.location.name
                 select_location['value'] = x.location.uuid
+                select_company = dict()
+                if x.company is not None:
+                    select_company['label'] = x.company.name
+                    select_company['value'] = x.company.uuid
+                else:
+                    select_company = None
+
+                api_data['company'] = select_company
 
                 api_data['instructor'] = select_instructor
                 api_data['location'] = select_location
@@ -298,8 +315,6 @@ class LectureStudentApi(APIView):
             traceback.print_exc()
             return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-
     def post(self, request, format=None):
         try:
             scholarship_id = request.data['lectureId']
@@ -386,7 +401,3 @@ class LectureStudentApplicants(APIView):
         except:
             traceback.print_exc()
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-

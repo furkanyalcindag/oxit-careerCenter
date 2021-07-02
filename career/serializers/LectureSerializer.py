@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework import serializers
 from slugify import slugify
 
-from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription, Instructor
+from career.models import Blog, BlogDescription, Language, Lecture, LectureDescription, Instructor, Company
 from career.models.Location import Location
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
 
@@ -26,6 +26,8 @@ class LectureSerializer(serializers.Serializer):
     room = serializers.CharField()
     date = serializers.DateField(required=True, format="%DD-%MM-%YYYY")
     time = serializers.TimeField(required=True)
+    companyId = serializers.UUIDField(write_only=True, required=False)
+    company = SelectSerializer(read_only=True, required=False)
 
     def update(self, instance, validated_data):
 
@@ -38,6 +40,8 @@ class LectureSerializer(serializers.Serializer):
             lecture_description.name = validated_data.get('name')
             lecture_description.description = validated_data.get('description')
             lecture_description.image = validated_data.get('image')
+            if validated_data.get('companyId') is not None:
+                lecture.company = Company.objects.get(uuid=validated_data.get('companyId'))
 
             lecture_description.save()
             return lecture_description
@@ -60,6 +64,8 @@ class LectureSerializer(serializers.Serializer):
                 lecture.room = validated_data.get('room')
                 lecture.date = validated_data.get('date')
                 lecture.time = validated_data.get('time')
+                if validated_data.get('companyId') is not None:
+                    lecture.company = Company.objects.get(uuid=validated_data.get('companyId'))
                 lecture.save()
 
                 lecture_tr = LectureDescription()
