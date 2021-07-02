@@ -514,7 +514,7 @@ class ConsultantCategorySelectApi(APIView):
 
             kwargs = dict()
             kwargs['keyword__icontains'] = title
-            kwargs['isDeleted'] = title
+            kwargs['isDeleted'] = False
             kwargs['type'] = 'Consultant'
 
             if request.GET.get('isButton') is not None:
