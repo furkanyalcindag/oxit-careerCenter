@@ -218,8 +218,8 @@ class CompanyCommunicationInformationApi(APIView):
             else:
                 select_district = None
 
-            api_object['city'] = select_city
-            api_object['district'] = select_district
+            api_object['city'] = select_city['label']
+            api_object['district'] = select_district['label']
 
             serializer = CompanyCommunicationInformationSerializer(api_object, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
