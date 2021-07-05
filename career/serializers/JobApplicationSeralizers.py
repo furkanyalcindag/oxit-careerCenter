@@ -24,7 +24,7 @@ class JobApplicationSerializer(serializers.Serializer):
 
 class StudentJobApplicationSerializer(serializers.Serializer):
     jobPostId = serializers.UUIDField(required=True)
-    coverLetter = serializers.CharField(required=False, write_only=True, allow_null=True)
+    coverLetter = serializers.CharField(required=False,  allow_null=True)
     jobPost = JobPostSerializer(read_only=True)
     title = serializers.CharField(read_only=True)
     companyName = serializers.CharField(read_only=True)
