@@ -209,14 +209,14 @@ class CompanyCommunicationInformationApi(APIView):
                 select_city['label'] = company.city.name
                 select_city['value'] = company.city.id
             else:
-                select_city = None
+                select_city['label'] = '-'
 
             select_district = dict()
             if company.district is not None:
                 select_district['label'] = company.district.name
                 select_district['value'] = company.district.id
             else:
-                select_district = None
+                select_district['label'] = '-'
 
             api_object['city'] = select_city['label']
             api_object['district'] = select_district['label']
