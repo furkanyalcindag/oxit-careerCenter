@@ -332,7 +332,7 @@ class LectureStudentApi(APIView):
                 lecture_application.save()
                 return Response("başarılı", status=status.HTTP_200_OK)
             else:
-                return Response("Başvurulamaz", status=status.HTTP_200_OK)
+                return Response("Başvurulamaz", status=status.HTTP_406_NOT_ACCEPTABLE)
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
