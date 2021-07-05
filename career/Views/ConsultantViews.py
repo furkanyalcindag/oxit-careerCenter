@@ -9,6 +9,7 @@ from career.models import Consultant, ConsultantCategory, CategoryDescription, C
 from career.models.APIObject import APIObject
 from career.serializers.ConsultantSerializer import ConsultantPageableSerializer, ConsultantSerializer, \
     ConsultantStudentPageableSerializer, ConsultantStudentSerializer
+from career.serializers.StudentSerializer import StudentProfileImageSerializer
 
 
 class ConsultantApi(APIView):
@@ -203,3 +204,35 @@ class ConsultantStudentApi(APIView):
                 api_data, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ConsultantProfileImageApi(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        try:
+            student = Consultant.objects.get(profile__user=request.user)
+            api_data = dict()
+            api_data['profileImage'] = student.profile.profileImage
+
+            serializer = StudentProfileImageSerializer(api_data, context={'request': request})
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        try:
+            instance = Consultant.objects.get(profile__user=request.user)
+            serializer = StudentProfileImageSerializer(data=request.data, instance=instance,
+                                                       context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "profile image is updated"}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

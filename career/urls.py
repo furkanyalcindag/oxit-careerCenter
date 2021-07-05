@@ -8,7 +8,7 @@ from career.Views.CategoryViews import ConsultantCategoryView
 from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, CompanyAboutInformationApi, \
     CompanyCommunicationInformationApi, CompanySelectApi, CompanyGeneralInformationStudentApi, CompanyListApi, \
     CompanyLogoApi, CompanySocialMediaApi
-from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi
+from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi, ConsultantProfileImageApi
 from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi, \
     StudentDashboardApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
@@ -79,8 +79,6 @@ urlpatterns = [
     path('social-media-select-api/', SocialMediaSelectApi.as_view(), name='social-media-select-api'),
     path('notification-api/', NotificationApi.as_view(), name='notification-api'),
 
-
-
     # -------------public api--------------------------------
 
     path('public/announcement-api/', AnnouncementPublicApi.as_view(), name='public-announcement-api'),
@@ -93,7 +91,6 @@ urlpatterns = [
     # dashboard
     path('admin-dashboard-api/', AdminDashboardApi.as_view(), name='admin-dashboard-api'),
     path('admin-dashboard-job-post-api/', JobPostAdminDashboardApi.as_view(), name='admin-dashboard-job-post-api'),
-
 
     # company
     path('company-api/', CompanyApi.as_view(), name='admin-company-api'),
@@ -149,6 +146,8 @@ urlpatterns = [
 
     # -----------------------------consultant api----------------------------------------
     path('consultant/appointment-api/', AppointmentApi.as_view(), name='consultant-appointment-api'),
+    path('consultant/consultant-profile-image-api/', ConsultantProfileImageApi.as_view(),
+         name='consultant-profile-image-api'),
 
     # -----------------------------dashboard api------------------------------------------------------
     path('consultant-dashboard-api/', ConsultantDashboardApi.as_view(), name='consultant-dashboard-api'),
