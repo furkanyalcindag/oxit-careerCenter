@@ -92,6 +92,9 @@ class AppointmentApi(APIView):
             if datetime.datetime.strptime(request.data['date'], '%Y-%m-%d').date() < datetime.datetime.today().date():
                 return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
 
+            elif request.data['startTime'] == request.data['finishTime']:
+                return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
+
             elif serializer.is_valid():
                 serializer.save()
                 return Response({"message": "appointment is created"}, status=status.HTTP_200_OK)
