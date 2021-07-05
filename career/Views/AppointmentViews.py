@@ -93,7 +93,7 @@ class AppointmentApi(APIView):
                 return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
 
             elif request.data['startTime'] == request.data['finishTime']:
-                return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
+                return Response({"message": "error"}, status=status.HTTP_301_MOVED_PERMANENTLY)
 
             elif serializer.is_valid():
                 serializer.save()
