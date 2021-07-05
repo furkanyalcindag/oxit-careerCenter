@@ -165,7 +165,6 @@ class CompanyScholarshipApi(APIView):
             if request.GET.get('count') is not None:
                 count = int(request.GET.get('count'))
 
-
             if request.GET.get('page') is not None:
                 active_page = int(request.GET.get('page'))
 
@@ -271,14 +270,11 @@ class ScholarshipStudentApi(APIView):
             api_data['amount'] = scholarship.amount
             api_data['isApprove'] = scholarship.isApprove
 
-            if len(ScholarshipApplication.objects.filter(student__profile__user=request.user, scholarShip=scholarship))>0:
+            if len(ScholarshipApplication.objects.filter(student__profile__user=request.user,
+                                                         scholarShip=scholarship)) > 0:
                 api_data['isApplied'] = True
             else:
                 api_data['isApplied'] = False
-
-
-
-
 
             select_company = dict()
             select_company[
@@ -361,7 +357,7 @@ class ScholarshipStudentApi(APIView):
                 scholarship_application.save()
                 return Response("başarılı", status=status.HTTP_200_OK)
             else:
-                return Response("Başvurulamaz", status=status.HTTP_200_OK)
+                return Response("Başvurulamaz", status=status.HTTP_406_NOT_ACCEPTABLE)
         except:
             traceback.print_exc()
             return Response("hatalı", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

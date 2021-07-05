@@ -89,7 +89,7 @@ class AppointmentApi(APIView):
         try:
             serializer = AppointmentSerializer(data=request.data, context={'request': request})
 
-            if request.data['date'] < datetime.datetime.today().date():
+            if datetime.datetime.strptime(request.data['date'], '%Y-%m-%d').date() < datetime.datetime.today().date():
                 return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
 
             elif serializer.is_valid():
@@ -109,6 +109,8 @@ class AppointmentApi(APIView):
         except AppointmentValidationException as e:
             return Response("", status=status.HTTP_406_NOT_ACCEPTABLE)
         except Exception as e:
+
+            traceback.print_exc()
 
             if e.args[0] == 'Lütfen geçerli bir tarih ve zaman giriniz':
                 return Response("", status=status.HTTP_406_NOT_ACCEPTABLE)
