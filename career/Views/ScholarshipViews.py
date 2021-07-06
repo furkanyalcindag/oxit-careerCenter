@@ -312,6 +312,7 @@ class ScholarshipStudentApi(APIView):
             arr = []
             for x in data:
                 api_data = dict()
+                api_data['uuid'] = x.uuid
                 api_data['name'] = x.name
                 api_data['description'] = x.description
                 api_data['uuid'] = x.uuid
