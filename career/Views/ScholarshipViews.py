@@ -391,7 +391,7 @@ class ScholarshipApplicants(APIView):
             api_data = dict()
             api_data['name'] = x.scholarShip.name
             api_data['description'] = x.scholarShip.description
-            api_data['uuid'] = x.uuid
+            api_data['uuid'] = x.scholarShip.uuid
             api_data['amount'] = x.scholarShip.amount
             api_data['isApprove'] = x.scholarShip.isApprove
             select_company = dict()
