@@ -15,7 +15,7 @@ from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistri
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
     ForeignLanguageSelectApi, DriverLicenseSelectApi, BlogTypeSelectApi, UnitSelectApi, MenuApi, GroupSelectApi, \
-    ConsultantCategorySelectApi, SocialMediaSelectApi
+    ConsultantCategorySelectApi, SocialMediaSelectApi, DepartmentSelectApi
 from career.Views.InitViews import InitDataApi, LocationDataApi, CityDistrictDataApi, UniversityDataApi, \
     EducationTypeDataApi, MaritalStatusDataApi, MilitaryStatusDataApi, NationalityDataApi, LanguageLevelDesc, \
     BlogTypeApi
@@ -59,7 +59,7 @@ urlpatterns = [
     path('company-select-api/', CompanySelectApi.as_view(), name='company-select-api'),
     path('university-select-api/', UniversitySelectApi.as_view(), name='university-select-api'),
     path('faculty-select-api/', FacultySelectApi.as_view(), name='faculty-select-api'),
-    path('department-select-api/', FacultySelectApi.as_view(), name='department-select-api'),
+    path('department-select-api/', DepartmentSelectApi.as_view(), name='department-select-api'),
     path('education-type-select-api/', EducationTypeSelectApi.as_view(), name='education-type-select-api'),
     path('marital-status-select-api/', MaritalStatusSelectApi.as_view(), name='marital-status-select-api'),
     path('military-status-select-api/', MilitaryStatusSelectApi.as_view(), name='military-status-select-api'),
