@@ -153,7 +153,10 @@ class AppointmentApi(APIView):
                 return Response({"message": "error"}, status=status.HTTP_301_MOVED_PERMANENTLY)
 
 
-            elif request.data['startTime'] < request.data['finishTime']:
+
+            elif datetime.datetime.strptime(request.data['startTime'], '%H:%M').time() > datetime.datetime.strptime(
+                    request.data['finishTime'], '%H:%M').time():
+
                 return Response({"message": "error"}, status=status.HTTP_411_LENGTH_REQUIRED)
 
             if serializer.is_valid():
