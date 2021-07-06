@@ -95,6 +95,9 @@ class AppointmentApi(APIView):
             elif request.data['startTime'] == request.data['finishTime']:
                 return Response({"message": "error"}, status=status.HTTP_301_MOVED_PERMANENTLY)
 
+            elif request.data['startTime'] < request.data['finishTime']:
+                return Response({"message": "error"}, status=status.HTTP_411_LENGTH_REQUIRED)
+
             elif serializer.is_valid():
                 serializer.save()
                 return Response({"message": "appointment is created"}, status=status.HTTP_200_OK)
@@ -141,6 +144,16 @@ class AppointmentApi(APIView):
             instance = Appointment.objects.get(consultant__profile__user=request.user, uuid=request.GET.get('id'))
             serializer = AppointmentSerializer(data=request.data, instance=instance,
                                                context={'request': request})
+
+            if datetime.datetime.strptime(request.data['date'], '%Y-%m-%d').date() < datetime.datetime.today().date():
+                return Response({"message": "error"}, status=status.HTTP_417_EXPECTATION_FAILED)
+
+            elif request.data['startTime'] == request.data['finishTime']:
+                return Response({"message": "error"}, status=status.HTTP_301_MOVED_PERMANENTLY)
+
+
+            elif request.data['startTime'] < request.data['finishTime']:
+                return Response({"message": "error"}, status=status.HTTP_411_LENGTH_REQUIRED)
 
             if serializer.is_valid():
                 serializer.save()

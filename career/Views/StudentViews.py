@@ -1300,7 +1300,7 @@ class StudentCVExportPDFApi(APIView):
                                                                                                   'Doktora',
                                                                                                   'Ön Lisans'])
             api_dict['educationHighSchools'] = StudentEducationInfo.objects.filter(student=student,
-                                                                                  educationType__name='Lise')
+                                                                                   educationType__name='Lise')
 
             fls = StudentForeignLanguage.objects.filter(student=student)
 
@@ -1347,6 +1347,7 @@ class StudentCVExportPDFApi(APIView):
             return response
         except:
             traceback.print_exc()
+            return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class StudentSelectApi(APIView):
