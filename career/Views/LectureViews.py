@@ -369,7 +369,7 @@ class LectureStudentApplicants(APIView):
                 api_data = dict()
                 api_data['name'] = lecture_translation.name
                 api_data['description'] = lecture_translation.description
-                api_data['uuid'] = x.uuid
+                api_data['uuid'] = x.lecture.uuid
                 api_data['image'] = lecture_translation.image
                 api_data['room'] = x.lecture.room
                 api_data['capacity'] = x.lecture.capacity
