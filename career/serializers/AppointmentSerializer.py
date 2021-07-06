@@ -53,7 +53,7 @@ class AppointmentSerializer(serializers.Serializer):
                     instance.isSuitable = False
                 else:
                     instance.student = None
-                    instance.isSuitable = False
+                    instance.isSuitable = True
                 instance.save()
                 return instance
         except AppointmentValidationException:
