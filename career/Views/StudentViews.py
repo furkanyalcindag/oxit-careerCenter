@@ -1346,6 +1346,7 @@ class StudentCVExportPDFApi(APIView):
 
             return response
         except:
+            print("furkan")
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
