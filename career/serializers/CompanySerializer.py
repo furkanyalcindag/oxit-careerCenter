@@ -142,8 +142,8 @@ class CompanyAboutInformationSerializer(serializers.Serializer):
 
 
 class CompanyCommunicationInformationSerializer(serializers.Serializer):
-    city = SelectSerializer(read_only=True)
-    district = SelectSerializer(read_only=True)
+    city = serializers.CharField(read_only=True)
+    district = serializers.CharField(read_only=True)
     cityId = serializers.CharField(write_only=True, required=False, allow_null=True)
     districtId = serializers.CharField(write_only=True, required=False, allow_null=True)
     address = serializers.CharField(required=False, allow_null=True)
