@@ -258,6 +258,7 @@ class JobPostStudentApi(APIView):
 
                 api_data = dict()
                 api_data['uuid'] = x.uuid
+                api_data['companyUUID'] = x.company.uuid
                 api_data['title'] = x.title
                 api_data['logo'] = x.company.logo
                 api_data['quality'] = x.quality

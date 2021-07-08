@@ -9,6 +9,7 @@ from career.serializers.GeneralSerializers import SelectSerializer, PageSerializ
 
 class JobPostSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(read_only=True)
+    companyUUID = serializers.UUIDField(required=False)
     title = serializers.CharField(required=True)
     quality = serializers.CharField(required=True)
     jobDescription = serializers.CharField(required=True)
