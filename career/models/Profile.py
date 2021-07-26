@@ -24,3 +24,4 @@ class Profile(BaseModel):
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     isSendMail = models.BooleanField(default=False)
+    militaryDelayedDate = models.DateField(null=True)

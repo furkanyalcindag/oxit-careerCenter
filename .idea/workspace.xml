@@ -3,18 +3,28 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c972ec9-8c54-4dfe-a63e-e6d519b90ddf" name="Default Changelist" comment="created initial models">
-      <change afterPath="$PROJECT_DIR$/career/Views/CVViews.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/career/Views/InitViews.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/career/models/ForeignLanguageDescription.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/career/models/GenderDescription.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/career/models/MaritalStatusDescription.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/career/serializers/CVSerializer.py" afterDir="false" />
+    <list default="true" id="0c972ec9-8c54-4dfe-a63e-e6d519b90ddf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/Views/StudentViews.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/Views/StudentViews.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/models/BlogDescription.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/models/BlogDescription.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/career/serializers/StudentSerializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/career/serializers/StudentSerializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +37,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -48,45 +57,31 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="JupyterTrust" id="07f163de-8e2e-4898-9883-65ce18e80e27" />
   <component name="ProjectId" id="1pSsQvQAFGJP6SjWscHDfG3zCpo" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../front-carService" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/career/models" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Django Server.career-center">
-    <configuration name="wsgi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="src2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/oxiterp" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/oxiterp/wsgi.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/career/models" />
+      <recent name="$PROJECT_DIR$/career/templates" />
+      <recent name="$PROJECT_DIR$/tmp" />
+      <recent name="$PROJECT_DIR$/accounts" />
+      <recent name="$PROJECT_DIR$/career/serializers" />
+    </key>
+  </component>
+  <component name="RunManager">
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <module name="src2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -111,7 +106,7 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="career-center" type="Python.DjangoServer" factoryName="Django server">
+    <configuration name="career" type="Python.DjangoServer" factoryName="Django server">
       <module name="src2" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -135,11 +130,6 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.wsgi" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -165,27 +155,365 @@
       <workItem from="1615618872803" duration="2220000" />
       <workItem from="1615788306894" duration="16236000" />
       <workItem from="1615818583181" duration="5000" />
-      <workItem from="1618038471600" duration="20781000" />
-      <workItem from="1618645485142" duration="23845000" />
-      <workItem from="1619720434146" duration="5938000" />
-      <workItem from="1619850741157" duration="10264000" />
-      <workItem from="1619880150014" duration="4672000" />
+      <workItem from="1618155050740" duration="1485000" />
+      <workItem from="1619339570497" duration="4457000" />
+      <workItem from="1620072431112" duration="18754000" />
+      <workItem from="1620239735667" duration="126822000" />
+      <workItem from="1621515415542" duration="90081000" />
+      <workItem from="1622182985295" duration="177000" />
+      <workItem from="1622183235703" duration="843000" />
+      <workItem from="1622187432677" duration="77064000" />
+      <workItem from="1622569319383" duration="26821000" />
+      <workItem from="1623148609728" duration="11997000" />
+      <workItem from="1623215899719" duration="105389000" />
+      <workItem from="1624095176588" duration="13660000" />
+      <workItem from="1624274047098" duration="4000" />
+      <workItem from="1624274080897" duration="9979000" />
     </task>
-    <task id="LOCAL-00001" summary="created initial models">
-      <created>1618065224252</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00167" summary="select student api for appointment">
+      <created>1623601026948</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
       <option name="project" value="LOCAL" />
-      <updated>1618065224252</updated>
+      <updated>1623601026948</updated>
     </task>
-    <task id="LOCAL-00002" summary="created initial models">
-      <created>1619729062672</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00168" summary="announcement creatinDate">
+      <created>1623613089571</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
       <option name="project" value="LOCAL" />
-      <updated>1619729062672</updated>
+      <updated>1623613089571</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00169" summary="bug fix">
+      <created>1623657657545</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1623657657545</updated>
+    </task>
+    <task id="LOCAL-00170" summary="bug fix">
+      <created>1623658908155</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1623658908155</updated>
+    </task>
+    <task id="LOCAL-00171" summary="bug fix">
+      <created>1623665351919</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1623665351919</updated>
+    </task>
+    <task id="LOCAL-00172" summary="admin dashboard">
+      <created>1623671418384</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1623671418385</updated>
+    </task>
+    <task id="LOCAL-00173" summary="consultant dashboard">
+      <created>1623674227693</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1623674227693</updated>
+    </task>
+    <task id="LOCAL-00174" summary="company dashboard">
+      <created>1623676815278</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1623676815278</updated>
+    </task>
+    <task id="LOCAL-00175" summary="admin appointment">
+      <created>1623679440015</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1623679440015</updated>
+    </task>
+    <task id="LOCAL-00176" summary="bug fix">
+      <created>1623680535160</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1623680535160</updated>
+    </task>
+    <task id="LOCAL-00177" summary="bug fix">
+      <created>1623684724201</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1623684724201</updated>
+    </task>
+    <task id="LOCAL-00178" summary="consultant api with speciality">
+      <created>1623685287649</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1623685287649</updated>
+    </task>
+    <task id="LOCAL-00179" summary="student consultant api">
+      <created>1623688015015</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1623688015016</updated>
+    </task>
+    <task id="LOCAL-00180" summary="bug fix">
+      <created>1623690409708</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1623690409708</updated>
+    </task>
+    <task id="LOCAL-00181" summary="bug fix">
+      <created>1623690673673</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1623690673673</updated>
+    </task>
+    <task id="LOCAL-00182" summary="bug fix">
+      <created>1623690952803</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1623690952804</updated>
+    </task>
+    <task id="LOCAL-00183" summary="bug fix">
+      <created>1623691352091</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1623691352091</updated>
+    </task>
+    <task id="LOCAL-00184" summary="bug fix">
+      <created>1623693047683</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1623693047683</updated>
+    </task>
+    <task id="LOCAL-00185" summary="bug fix">
+      <created>1623693269334</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1623693269334</updated>
+    </task>
+    <task id="LOCAL-00186" summary="bug fix">
+      <created>1623742241708</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1623742241710</updated>
+    </task>
+    <task id="LOCAL-00187" summary="bug fix">
+      <created>1623745288354</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1623745288355</updated>
+    </task>
+    <task id="LOCAL-00188" summary="bug fix">
+      <created>1623745655299</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1623745655299</updated>
+    </task>
+    <task id="LOCAL-00189" summary="bug fix">
+      <created>1623746084285</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1623746084285</updated>
+    </task>
+    <task id="LOCAL-00190" summary="student get appointment by uuid">
+      <created>1623760470611</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1623760470611</updated>
+    </task>
+    <task id="LOCAL-00191" summary="bug fix">
+      <created>1623760958706</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1623760958706</updated>
+    </task>
+    <task id="LOCAL-00192" summary="bug fix">
+      <created>1623761999457</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1623761999457</updated>
+    </task>
+    <task id="LOCAL-00193" summary="isSuitable == True : appointment.save()">
+      <created>1623762471149</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1623762471149</updated>
+    </task>
+    <task id="LOCAL-00194" summary="student lecture api">
+      <created>1623763393195</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1623763393195</updated>
+    </task>
+    <task id="LOCAL-00195" summary="bug fix">
+      <created>1623769094430</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1623769094430</updated>
+    </task>
+    <task id="LOCAL-00196" summary="bug fix">
+      <created>1623769677651</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1623769677651</updated>
+    </task>
+    <task id="LOCAL-00197" summary="bug fix">
+      <created>1623770590048</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1623770590048</updated>
+    </task>
+    <task id="LOCAL-00198" summary="lecture and schoalrship student applications">
+      <created>1623771085340</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1623771085340</updated>
+    </task>
+    <task id="LOCAL-00199" summary="api bug fix">
+      <created>1623773022431</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1623773022432</updated>
+    </task>
+    <task id="LOCAL-00200" summary="bf">
+      <created>1623773456193</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1623773456193</updated>
+    </task>
+    <task id="LOCAL-00201" summary="bf">
+      <created>1623773618816</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1623773618816</updated>
+    </task>
+    <task id="LOCAL-00202" summary="isapply">
+      <created>1623829785994</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1623829785994</updated>
+    </task>
+    <task id="LOCAL-00203" summary="active page api">
+      <created>1623844736603</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1623844736604</updated>
+    </task>
+    <task id="LOCAL-00204" summary="consultant api">
+      <created>1624103233056</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1624103233057</updated>
+    </task>
+    <task id="LOCAL-00205" summary="bug fix">
+      <created>1624262597984</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1624262597984</updated>
+    </task>
+    <task id="LOCAL-00206" summary="bf">
+      <created>1624262929055</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1624262929055</updated>
+    </task>
+    <task id="LOCAL-00207" summary="yeter artık sena">
+      <created>1624272750849</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1624272750849</updated>
+    </task>
+    <task id="LOCAL-00208" summary="category select api">
+      <created>1624273520029</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1624273520030</updated>
+    </task>
+    <task id="LOCAL-00209" summary="bf">
+      <created>1624280352804</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1624280352804</updated>
+    </task>
+    <task id="LOCAL-00210" summary="bug fix">
+      <created>1624280818046</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1624280818046</updated>
+    </task>
+    <task id="LOCAL-00211" summary="düzelicez be baba">
+      <created>1624282708887</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1624282708887</updated>
+    </task>
+    <task id="LOCAL-00212" summary="bf">
+      <created>1624283531984</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1624283531984</updated>
+    </task>
+    <task id="LOCAL-00213" summary="bf">
+      <created>1624284276288</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1624284276289</updated>
+    </task>
+    <task id="LOCAL-00214" summary="bug fix">
+      <created>1624347973533</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1624347973533</updated>
+    </task>
+    <task id="LOCAL-00215" summary="bf">
+      <created>1624349008543</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1624349008543</updated>
+    </task>
+    <option name="localTasksCounter" value="216" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +532,267 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created initial models" />
-    <option name="LAST_COMMIT_MESSAGE" value="created initial models" />
+    <MESSAGE value="user delete" />
+    <MESSAGE value="group delete" />
+    <MESSAGE value="select student api for appointment" />
+    <MESSAGE value="announcement creatinDate" />
+    <MESSAGE value="admin dashboard" />
+    <MESSAGE value="consultant dashboard" />
+    <MESSAGE value="company dashboard" />
+    <MESSAGE value="admin appointment" />
+    <MESSAGE value="consultant api with speciality" />
+    <MESSAGE value="consultant student api" />
+    <MESSAGE value="student consultan api" />
+    <MESSAGE value="student consultant api" />
+    <MESSAGE value="student get appointment by uuid" />
+    <MESSAGE value="isSuitable == True : appointment.save()" />
+    <MESSAGE value="student lecture api" />
+    <MESSAGE value="lecture and schoalrship student applications" />
+    <MESSAGE value="api bug fix" />
+    <MESSAGE value="isapply" />
+    <MESSAGE value="active page api" />
+    <MESSAGE value="consultant api" />
+    <MESSAGE value="yeter artık sena" />
+    <MESSAGE value="category select api" />
+    <MESSAGE value="düzelicez be baba" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="bf" />
+    <option name="LAST_COMMIT_MESSAGE" value="bf" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
+          <line>100</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>51</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InstructorViews.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/BlogViews.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/LectureSerializer.py</url>
+          <line>57</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/LectureViews.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/LectureSerializer.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/LectureViews.py</url>
+          <line>136</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/LectureSerializer.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/LectureViews.py</url>
+          <line>70</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/LectureSerializer.py</url>
+          <line>143</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/BlogSerializer.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/CompanyViews.py</url>
+          <line>198</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/CompanySerializer.py</url>
+          <line>118</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/AppointmentViews.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/AppointmentSerializer.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>154</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/serializers.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/JobPostSerializer.py</url>
+          <line>55</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>190</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
+          <line>370</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/InitViews.py</url>
+          <line>403</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>248</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>392</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>379</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>472</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/StudentViews.py</url>
+          <line>977</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>319</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/StudentSerializer.py</url>
+          <line>583</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/oxiterp/views.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/services/GeneralService.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/oxiterp/views.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/PublicViews.py</url>
+          <line>129</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>402</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/GeneralViews.py</url>
+          <line>478</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/serializers/AppointmentSerializer.py</url>
+          <line>107</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/AppointmentViews.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/career/Views/AppointmentViews.py</url>
+          <line>276</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>205</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/views.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -8,4 +8,5 @@ class Scholarship(BaseModel):
     name = models.CharField(max_length=256, null=True)
     description = models.TextField(null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    isApprove = models.BooleanField(default=False)

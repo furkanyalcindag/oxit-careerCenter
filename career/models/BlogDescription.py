@@ -10,3 +10,4 @@ class BlogDescription(BaseModel):
     article = models.TextField()
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    image = models.TextField(null=True, blank=True)

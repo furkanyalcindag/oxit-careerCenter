@@ -5,9 +5,14 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from career.models import Language, Gender, ForeignLanguage, JobType
+from career.models import Language, Gender, ForeignLanguage, JobType, City, District, University, Faculty, Department, \
+    EducationType, MaritalStatus, MilitaryStatusDescription, Nationality, ForeignLanguageLevel, \
+    ForeignLanguageLevelDescription, BlogType
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
 from career.models.GenderDescription import GenderDescription
+from career.models.Location import Location
+from career.models.MaritalStatusDescription import MaritalStatusDescription
+from career.models.MilitaryStatus import MilitaryStatus
 
 
 class InitDataApi(APIView):
@@ -160,5 +165,324 @@ class InitDataApi(APIView):
         job_type = JobType()
         job_type.name = 'Remote'
         job_type.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class LanguageLevelDesc(APIView):
+
+    def get(self, request, format=None):
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'beginner'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Beginner'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Başlangıç'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'elementary'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Elementary'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Orta'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'intermediate'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Intermediate'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'İyi'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        # --------------------------------------------------
+
+        language_level = ForeignLanguageLevel()
+        language_level.keyword = 'advanced'
+        language_level.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Advanced'
+        language_level_desc.language = Language.objects.get(code='en')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        language_level_desc = ForeignLanguageLevelDescription()
+        language_level_desc.name = 'Çok İyi'
+        language_level_desc.language = Language.objects.get(code='tr')
+        language_level_desc.foreignLanguageLevel = language_level
+        language_level_desc.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class LocationDataApi(APIView):
+
+    def get(self, request, format=None):
+        location = Location()
+        location.name = 'Şehit Ömer Halis Demir Yerleşkesi'
+        location.address = ' Etlik'
+        location.phoneNumber = ' 03123123232'
+        location.save()
+
+        location2 = Location()
+        location2.name = '15 Temmuz Yerleşkesi'
+        location2.address = ' Etlik'
+        location2.phoneNumber = ' 03123123232'
+        location2.save()
+
+        location3 = Location()
+        location3.name = 'Çubuk Yerleşkesi'
+        location3.address = ' Çubuk'
+        location3.phoneNumber = ' 03123123232'
+        location3.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class CityDistrictDataApi(APIView):
+
+    def get(self, request, format=None):
+        city = City()
+        city.name = 'Malatya'
+        city.code = '44'
+        city.save()
+
+        district_m1 = District()
+        district_m1.name = 'Battalgazi'
+        district_m1.city = city
+        district_m1.save()
+
+        district_m2 = District()
+        district_m2.name = 'Yeşilyurt'
+        district_m2.city = city
+        district_m2.save()
+
+        city_ankara = City()
+        city_ankara.name = 'Ankara'
+        city_ankara.code = '06'
+        city_ankara.save()
+
+        district_a1 = District()
+        district_a1.name = 'Keçiören'
+        district_a1.city = city_ankara
+        district_a1.save()
+
+        district_a2 = District()
+        district_a2.name = 'Sincan'
+        district_a2.city = city_ankara
+        district_a2.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class UniversityDataApi(APIView):
+
+    def get(self, request, format=None):
+        university = University()
+        university.name = 'Ankara Yıldırım Beyazıt Üniversitesi'
+        university.save()
+
+        faculty = Faculty()
+        faculty.name = 'Mühendislik ve Doğa Bilimleri Fakültesi'
+        faculty.save()
+
+        faculty2 = Faculty()
+        faculty2.name = 'İşletme Fakültesi'
+        faculty2.save()
+
+        department = Department()
+        department.name = 'Bilgisayar Mühendisliği'
+        department.save()
+
+        department2 = Department()
+        department2.name = 'Makine Mühendisliği'
+        department2.save()
+
+        department3 = Department()
+        department3.name = 'Uluslararası İlişkiler'
+        department3.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class EducationTypeDataApi(APIView):
+    def get(self, request, format=None):
+        type = EducationType()
+        type.name = "Lisans"
+        type.save()
+
+        type2 = EducationType()
+        type2.name = "Yüksek Lisans"
+        type2.save()
+
+        type3 = EducationType()
+        type3.name = "Doktora"
+        type3.save()
+
+        type4 = EducationType()
+        type4.name = "Ön Lisans"
+        type4.save()
+
+        type5 = EducationType()
+        type5.name = "Lise"
+        type5.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class MaritalStatusDataApi(APIView):
+
+    def get(self, request, format=None):
+        marital_status = MaritalStatus()
+        marital_status.keyword = 'single'
+        marital_status.save()
+
+        marital_status_description = MaritalStatusDescription()
+        marital_status_description.language = Language.objects.get(code='en')
+        marital_status_description.maritalStatus = marital_status
+        marital_status_description.name = 'Single'
+        marital_status_description.save()
+
+        marital_status_description2 = MaritalStatusDescription()
+        marital_status_description2.language = Language.objects.get(code='tr')
+        marital_status_description2.maritalStatus = marital_status
+        marital_status_description2.name = 'Bekar'
+        marital_status_description2.save()
+
+        marital_status2 = MaritalStatus()
+        marital_status2.keyword = 'married'
+        marital_status2.save()
+
+        marital_status_description3 = MaritalStatusDescription()
+        marital_status_description3.language = Language.objects.get(code='en')
+        marital_status_description3.maritalStatus = marital_status2
+        marital_status_description3.name = 'Married'
+        marital_status_description3.save()
+
+        marital_status_description4 = MaritalStatusDescription()
+        marital_status_description4.language = Language.objects.get(code='tr')
+        marital_status_description4.maritalStatus = marital_status2
+        marital_status_description4.name = 'Evli'
+        marital_status_description4.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class MilitaryStatusDataApi(APIView):
+
+    def get(self, request, format=None):
+        military_status = MilitaryStatus()
+        military_status.keyword = 'delayed'
+        military_status.save()
+
+        military_status_description = MilitaryStatusDescription()
+        military_status_description.language = Language.objects.get(code='en')
+        military_status_description.militaryStatus = military_status
+        military_status_description.name = 'Delayed'
+        military_status_description.save()
+
+        military_status_description2 = MilitaryStatusDescription()
+        military_status_description2.language = Language.objects.get(code='tr')
+        military_status_description2.militaryStatus = military_status
+        military_status_description2.name = 'Tecilli'
+        military_status_description2.save()
+
+        military_status2 = MilitaryStatus()
+        military_status2.keyword = 'done'
+        military_status2.save()
+
+        military_status_description3 = MilitaryStatusDescription()
+        military_status_description3.language = Language.objects.get(code='en')
+        military_status_description3.militaryStatus = military_status2
+        military_status_description3.name = 'Done'
+        military_status_description3.save()
+
+        military_status_description4 = MilitaryStatusDescription()
+        military_status_description4.language = Language.objects.get(code='tr')
+        military_status_description4.militaryStatus = military_status2
+        military_status_description4.name = 'Yapıldı'
+        military_status_description4.save()
+
+        military_status3 = MilitaryStatus()
+        military_status3.keyword = 'exempt'
+        military_status3.save()
+
+        military_status_description5 = MilitaryStatusDescription()
+        military_status_description5.language = Language.objects.get(code='en')
+        military_status_description5.militaryStatus = military_status3
+        military_status_description5.name = 'Exempt'
+        military_status_description5.save()
+
+        military_status_description6 = MilitaryStatusDescription()
+        military_status_description6.language = Language.objects.get(code='tr')
+        military_status_description6.militaryStatus = military_status3
+        military_status_description6.name = 'Muaf'
+        military_status_description6.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class NationalityDataApi(APIView):
+
+    def get(self, request, format=None):
+        nationality = Nationality()
+        nationality.name = 'Türkiye'
+        nationality.save()
+
+        nationality2 = Nationality()
+        nationality2.name = 'Almanya'
+        nationality2.save()
+
+        nationality3 = Nationality()
+        nationality3.name = 'İsviçre'
+        nationality3.save()
+
+        nationality4 = Nationality()
+        nationality4.name = 'A.B.D'
+        nationality4.save()
+
+        return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)
+
+
+class BlogTypeApi(APIView):
+
+    def get(self, request, format=None):
+        blog_type = BlogType()
+        blog_type.name = 'Blog'
+        blog_type.save()
+
+        blog_type1 = BlogType()
+        blog_type1.name = 'Duyuru'
+        blog_type1.save()
 
         return Response({"message": "initial datas added"}, status=status.HTTP_200_OK)

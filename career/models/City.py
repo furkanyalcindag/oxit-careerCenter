@@ -1,7 +1,6 @@
 from django.db import models
 
-from career.models.BaseModel import BaseModel
 
-
-class City(BaseModel):
+class City(models.Model):
     name = models.CharField(max_length=64)
+    code = models.CharField(max_length=3, null=True)

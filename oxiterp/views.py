@@ -1,6 +1,8 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from career.models import Profile
+
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -11,6 +13,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['username'] = self.user.username
         data['fullName'] = self.user.first_name + ' ' + self.user.last_name
         data['group'] = self.user.groups.values_list('name', flat=True)[0]
+        if len(Profile.objects.filter(user=self.user)) > 0:
+            data['avatar'] = Profile.objects.get(user=self.user).profileImage
+        else:
+            data['avatar'] = None
         return data
 
 

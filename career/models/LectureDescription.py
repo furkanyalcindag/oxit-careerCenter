@@ -9,4 +9,5 @@ class LectureDescription(BaseModel):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     name = models.CharField(max_length=256, null=False)
     description = models.TextField(null=False)
+    image = models.TextField(null=True, blank=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
