@@ -530,14 +530,10 @@ class StudentCommunicationApi(APIView):
 
         try:
             student = Student.objects.get(profile__user=request.user)
-
             api_data = dict()
-
             api_data['mobilePhone'] = student.profile.mobilePhone
             api_data['address'] = student.profile.address
-
             serializer = StudentCommunicationSerializer(api_data, context={'request': request})
-
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
@@ -664,7 +660,6 @@ class StudentJobInfoApi(APIView):
                 else:
                     job_type_select['label'] = ''
                     job_type_select['value'] = ''
-
                 api_data['jobType'] = job_type_select
 
                 serializer = StudentJobInformationSerializer(api_data, context={"request": request})
@@ -1079,7 +1074,6 @@ class StudentQualificationApi(APIView):
                                                              student__profile__user=request.user)
             qualification.isDeleted = True
             qualification.save()
-
             return Response(status=status.HTTP_200_OK)
         except Exception:
             traceback.print_exc()
@@ -1090,7 +1084,6 @@ class StudentExamApi(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
-
         try:
             if request.GET.get('id') is not None:
                 qualification = StudentExam.objects.get(student__profile__user=request.user,
