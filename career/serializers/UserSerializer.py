@@ -66,7 +66,7 @@ class GroupSerializer(serializers.Serializer):
             group.name = validated_data.get('groupName')
             group.save()
 
-            show_urls_by_group(urls.urlpatterns, group, depth=0)
+            # show_urls_by_group(urls.urlpatterns, group, depth=0)
             return group
         except:
             traceback.print_exc()
