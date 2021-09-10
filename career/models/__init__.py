@@ -54,3 +54,5 @@ from .CompanySocialMedia import CompanySocialMedia
 from .Notification import Notification
 from .NotificationDescription import NotificationDescription
 from .NotificationUser import NotificationUser
+from .FAQ import FAQ
+from .FAQDescription import FAQDescription
