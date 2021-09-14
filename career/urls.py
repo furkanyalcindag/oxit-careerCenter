@@ -11,6 +11,7 @@ from career.Views.CompanyViews import CompanyApi, CompanyGeneralInformationApi, 
 from career.Views.ConsultantViews import ConsultantApi, ConsultantStudentApi, ConsultantProfileImageApi
 from career.Views.DashboardViews import AdminDashboardApi, ConsultantDashboardApi, CompanyDashboardApi, \
     StudentDashboardApi
+from career.Views.FAQViews import FAQApi
 from career.Views.GeneralViews import LanguageApi, LocationSelectApi, CityDistrictSelectApi, JobTypeSelectApi, \
     UniversitySelectApi, FacultySelectApi, EducationTypeSelectApi, DeleteLog, MaritalStatusSelectApi, \
     MilitaryStatusSelectApi, NationalitySelectApi, GenderSelectApi, ForeignLanguageLevelSelectApi, \
@@ -26,7 +27,7 @@ from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdmi
     JobPostStudentCompanyApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi, LectureStudentApplicants
 from career.Views.NotificationViews import NotificationApi
-from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi
+from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi, BlogPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
     ScholarshipApplicants
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
@@ -82,6 +83,7 @@ urlpatterns = [
     # -------------public api--------------------------------
 
     path('public/announcement-api/', AnnouncementPublicApi.as_view(), name='public-announcement-api'),
+    path('public/blog-api/', BlogPublicApi.as_view(), name='public-blog-api'),
     path('public/unit-staff-api/', UnitPublicApi.as_view(), name="public-unit-staff-api"),
 
     # ----------------admin api---------------------------
@@ -115,6 +117,9 @@ urlpatterns = [
 
     # blog
     path('blog-api/', BlogApi.as_view(), name='admin-blog-api'),
+
+    # faq
+    path('faq-api/', FAQApi.as_view(), name='admin-faq-api'),
 
     # lecture
     path('lecture-api/', LectureApi.as_view(), name='admin-lecture-api'),
