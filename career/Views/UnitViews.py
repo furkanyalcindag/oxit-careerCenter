@@ -41,6 +41,9 @@ class UnitApi(APIView):
             if request.GET.get('count') is not None:
                 count = int(request.GET.get('count'))
 
+            if request.GET.get('page') is not None:
+                active_page = int(request.GET.get('page'))
+
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
 
@@ -124,6 +127,9 @@ class UnitStaffApi(APIView):
 
             if request.GET.get('count') is not None:
                 count = int(request.GET.get('count'))
+
+            if request.GET.get('page') is not None:
+                active_page = int(request.GET.get('page'))
 
             lim_start = count * (int(active_page) - 1)
             lim_end = lim_start + int(count)
