@@ -127,6 +127,7 @@ class ConsultantCategoryView(APIView):
             instance = Category.objects.get(uuid=request.GET.get('id'))
             if ConsultantCategory.objects.filter(category=instance, consultant__isDeleted=False).count() == 0:
                 instance.isDeleted=True
+                instance.save()
                 return Response({"message": "category is deleted"}, status=status.HTTP_200_OK)
             else:
                 return Response({"message": "category can not delete"}, status=status.HTTP_406_NOT_ACCEPTABLE)
