@@ -41,12 +41,12 @@ class ConsultantApi(APIView):
 
         data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
                                          profile__user__last_name__icontains=consultant_surname,
-                                         speciality__icontains=consultant_speciality).order_by('-id')[
+                                         speciality__icontains=consultant_speciality, isDeleted=False).order_by('-id')[
                lim_start:lim_end]
 
         filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
                                                    profile__user__last_name__icontains=consultant_surname,
-                                                   speciality__icontains=consultant_speciality).count()
+                                                   speciality__icontains=consultant_speciality, isDeleted=False).count()
         arr = []
         for x in data:
             api_data = dict()
