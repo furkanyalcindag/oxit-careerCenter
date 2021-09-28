@@ -38,7 +38,7 @@ class ConsultantSerializer(serializers.Serializer):
                 user.first_name = validated_data.get("firstName")
                 user.last_name = validated_data.get("lastName")
                 # user.set_password(validated_data.get('password'))
-                user.set_password('oxit2016')
+                user.set_password('aybu2021')
                 user.save()
 
                 group = Group.objects.get(name='Consultant')
