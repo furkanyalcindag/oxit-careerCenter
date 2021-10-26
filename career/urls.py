@@ -30,7 +30,7 @@ from career.Views.NotificationViews import NotificationApi
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi, BlogPublicApi, LecturePublicApi, \
     ContractPublicApi, EducationPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
-    ScholarshipApplicants
+    ScholarshipApplicants, ScholarshipApplicantsForAdmin
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
@@ -131,6 +131,8 @@ urlpatterns = [
 
     # scholarship
     path('scholarship-api/', ScholarshipApi.as_view(), name='admin-scholarship-api'),
+    path('scholarship-api-applicants/', ScholarshipApplicantsForAdmin.as_view(),
+         name='admin-scholarship-applicants-api'),
 
     # user
     path('user-api/', UserAPI.as_view(), name='admin-user-api'),

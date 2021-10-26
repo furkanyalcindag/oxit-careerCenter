@@ -98,3 +98,27 @@ class CompanyScholarshipSerializer(serializers.Serializer):
         except Exception:
             traceback.print_exc()
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
+class ScholarshipApplicantSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(read_only=True)
+    firstName = serializers.CharField()
+    lastName = serializers.CharField()
+    studentNumber = serializers.CharField()
+    email = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass
+
+
+class ScholarshipApplicantsPageableSerializer(PageSerializer):
+    data = ScholarshipApplicantSerializer(many=True)
+
+    def update(self, instance, validated_data):
+        pass
+
+    def create(self, validated_data):
+        pass

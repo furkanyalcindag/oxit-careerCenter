@@ -36,17 +36,28 @@ class ConsultantApi(APIView):
         if request.GET.get('specialityName') is not None:
             consultant_speciality = str(request.GET.get('specialityName'))
 
+        kwargs = dict()
+        if request.GET.get('categoryId') is not None:
+            category = Category.objects.get(uuid=request.GET.get('categoryId'))
+            consultant_category = ConsultantCategory.objects.filter(category=category)
+            arr = []
+            for con_cat in consultant_category:
+                arr.append(con_cat.consultant.uuid)
+            kwargs['uuid__in'] = arr
+
+        kwargs['isDeleted'] = False
+        kwargs['profile__user__first_name__icontains'] = consultant_name
+        kwargs['profile__user__last_name__icontains'] = consultant_surname
+
+        kwargs['speciality__icontains'] = consultant_speciality
+
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                         profile__user__last_name__icontains=consultant_surname,
-                                         speciality__icontains=consultant_speciality, isDeleted=False).order_by('-id')[
+        data = Consultant.objects.filter(**kwargs).order_by('-id')[
                lim_start:lim_end]
 
-        filtered_count = Consultant.objects.filter(profile__user__first_name__icontains=consultant_name,
-                                                   profile__user__last_name__icontains=consultant_surname,
-                                                   speciality__icontains=consultant_speciality, isDeleted=False).count()
+        filtered_count = Consultant.objects.filter(**kwargs).count()
         arr = []
         for x in data:
             api_data = dict()

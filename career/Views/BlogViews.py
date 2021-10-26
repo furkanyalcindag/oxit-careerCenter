@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from slugify import slugify
 
 from career.exceptions import LanguageCodeException
-from career.models import Blog, BlogDescription, Language
+from career.models import Blog, BlogDescription, Language, Setting
 from career.models.APIObject import APIObject
 from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer, BlogUpdateSerializer
 
@@ -228,5 +228,17 @@ class BlogStudentApi(APIView):
 
             serializer = BlogPageableSerializer(
                 api_object, context={'request': request})
+
+            setting = Setting.objects.filter(key='viewCountStudent')
+
+            if len(setting) == 0:
+                new_setting = Setting(key='viewCountStudent', value='0')
+                new_setting.save()
+
+            else:
+                count = int(setting[0].value) + 1
+
+                setting[0].value = str(count)
+                setting[0].save()
 
             return Response(serializer.data, status.HTTP_200_OK)
