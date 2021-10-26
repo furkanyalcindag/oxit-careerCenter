@@ -27,9 +27,10 @@ from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdmi
     JobPostStudentCompanyApi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi, LectureStudentApplicants
 from career.Views.NotificationViews import NotificationApi
-from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi, BlogPublicApi
+from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi, BlogPublicApi, LecturePublicApi, \
+    ContractPublicApi, EducationPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
-    ScholarshipApplicants
+    ScholarshipApplicants, ScholarshipApplicantsForAdmin
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
     StudentProfileImageApi, StudentGeneralInformationApi, StudentMilitaryStatusApi, StudentCommunicationApi, \
     StudentCertificateApi, StudentJobInfoApi, StudentReferenceApi, \
@@ -84,7 +85,10 @@ urlpatterns = [
 
     path('public/announcement-api/', AnnouncementPublicApi.as_view(), name='public-announcement-api'),
     path('public/blog-api/', BlogPublicApi.as_view(), name='public-blog-api'),
+    path('public/lecture-api/', LecturePublicApi.as_view(), name='public-lecture-api'),
     path('public/unit-staff-api/', UnitPublicApi.as_view(), name="public-unit-staff-api"),
+    path('public/contract-api/', ContractPublicApi.as_view(), name="public-contract-api"),
+    path('public/education-api/', EducationPublicApi.as_view(), name="public-education-api"),
 
     # ----------------admin api---------------------------
     # student
@@ -127,6 +131,8 @@ urlpatterns = [
 
     # scholarship
     path('scholarship-api/', ScholarshipApi.as_view(), name='admin-scholarship-api'),
+    path('scholarship-api-applicants/', ScholarshipApplicantsForAdmin.as_view(),
+         name='admin-scholarship-applicants-api'),
 
     # user
     path('user-api/', UserAPI.as_view(), name='admin-user-api'),

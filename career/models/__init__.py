@@ -56,3 +56,4 @@ from .NotificationDescription import NotificationDescription
 from .NotificationUser import NotificationUser
 from .FAQ import FAQ
 from .FAQDescription import FAQDescription
+from .Setting import Setting

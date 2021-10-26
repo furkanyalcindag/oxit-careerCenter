@@ -10,7 +10,7 @@ from career.models import Scholarship, Student
 from career.models.APIObject import APIObject
 from career.models.ScholarshipApplication import ScholarshipApplication
 from career.serializers.ScholarshipSerializer import ScholarshipSerializer, ScholarshipPageableSerializer, \
-    CompanyScholarshipSerializer
+    CompanyScholarshipSerializer, ScholarshipApplicantsPageableSerializer
 
 
 class ScholarshipApi(APIView):
@@ -410,6 +410,51 @@ class ScholarshipApplicants(APIView):
         api_object.activePage = active_page
 
         serializer = ScholarshipPageableSerializer(
+            api_object, context={'request': request})
+
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class ScholarshipApplicantsForAdmin(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+
+        active_page = 1
+        count = 10
+
+        if request.GET.get('page') is not None:
+            active_page = int(request.GET.get('page'))
+
+        if request.GET.get('count') is not None:
+            count = int(request.GET.get('count'))
+
+        id = request.GET.get('id')
+
+        lim_start = int(count) * (int(active_page) - 1)
+        lim_end = lim_start + int(count)
+
+        data = ScholarshipApplication.objects.filter(scholarShip__uuid=id).order_by('-id')[lim_start:lim_end]
+
+        filtered_count = ScholarshipApplication.objects.filter(scholarShip__uuid=id).count()
+        arr = []
+        for x in data:
+            api_data = dict()
+            api_data['firstName'] = x.student.profile.user.first_name
+            api_data['lastName'] = x.student.profile.user.last_name
+            api_data['uuid'] = x.student.uuid
+            api_data['studentNumber'] = x.student.studentNumber
+            api_data['email'] = x.student.profile.user.email
+
+            arr.append(api_data)
+
+        api_object = APIObject()
+        api_object.data = arr
+        api_object.recordsFiltered = filtered_count
+        api_object.recordsTotal = ScholarshipApplication.objects.filter(scholarShip__uuid=id).count()
+        api_object.activePage = active_page
+
+        serializer = ScholarshipApplicantsPageableSerializer(
             api_object, context={'request': request})
 
         return Response(serializer.data, status.HTTP_200_OK)
