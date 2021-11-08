@@ -8,6 +8,7 @@ from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Consultant, Appointment, Category, ConsultantCategory
 from career.serializers.GeneralSerializers import PageSerializer
+from career.services import GeneralService
 from oxiterp.serializers import UserSerializer
 
 
@@ -38,7 +39,8 @@ class ConsultantSerializer(serializers.Serializer):
                 user.first_name = validated_data.get("firstName")
                 user.last_name = validated_data.get("lastName")
                 # user.set_password(validated_data.get('password'))
-                user.set_password('aybu2021')
+                password = User.objects.make_random_password()
+                user.set_password(password)
                 user.save()
 
                 group = Group.objects.get(name='Consultant')
@@ -57,6 +59,7 @@ class ConsultantSerializer(serializers.Serializer):
                     consultant_category.category = category
                     consultant_category.save()
 
+                GeneralService.send_password_email_confirmation(user, password)
                 return consultant
 
         except Exception as e:

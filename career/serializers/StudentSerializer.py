@@ -14,6 +14,7 @@ from career.models.Reference import Reference
 from career.models.StudentDriverLicense import StudentDriverLicense
 from career.models.StudentExam import StudentExam
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
+from career.services import GeneralService
 from career.services.GeneralService import is_integer
 
 from oxiterp.serializers import UserSerializer
@@ -43,7 +44,8 @@ class StudentSerializer(serializers.Serializer):
                 user.first_name = validated_data.get("firstName")
                 user.last_name = validated_data.get("lastName")
                 # user.set_password(validated_data.get('password'))
-                user.set_password('oxit2016')
+                password = User.objects.make_random_password()
+                user.set_password(password)
                 user.save()
                 group = Group.objects.get(name='Student')
                 user.groups.add(group)
@@ -54,6 +56,9 @@ class StudentSerializer(serializers.Serializer):
                 student.studentNumber = validated_data.get("studentNumber")
                 student.isGraduated = validated_data.get('isGraduated')
                 student.save()
+
+                GeneralService.send_password_email_confirmation(user, password)
+
                 return student
         except Exception as e:
             traceback.print_exc()

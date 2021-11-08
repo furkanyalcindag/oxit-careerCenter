@@ -8,6 +8,7 @@ from rest_framework.validators import UniqueValidator
 
 from career.models import Profile, Company, City, District, CompanySocialMedia, SocialMedia
 from career.serializers.GeneralSerializers import PageSerializer, SelectSerializer
+from career.services import GeneralService
 from oxiterp.serializers import UserSerializer
 
 
@@ -35,7 +36,9 @@ class CompanySerializer(serializers.Serializer):
                 user.first_name = validated_data.get("firstName")
                 user.last_name = validated_data.get("lastName")
                 # user.set_password(validated_data.get('password'))
-                user.set_password('oxit2016')
+                # user.set_password('oxit2016')
+                password = User.objects.make_random_password()
+                user.set_password(password)
                 user.save()
 
                 group = Group.objects.get(name='Company')
@@ -47,6 +50,8 @@ class CompanySerializer(serializers.Serializer):
                 company.name = validated_data.get("companyName")
                 company.isInstitution = bool(validated_data.get("isInstitution"))
                 company.save()
+
+                GeneralService.send_password_email_confirmation(user, password)
                 return company
 
         except Exception as e:
