@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from accounts.models import GroupUrlMethod
 from career.models import Profile
-from career.serializers.UserSerializer import UserSerializer, GroupSerializer
+from career.serializers.UserSerializer import UserSerializer, GroupSerializer, StudentRegisterSerializer
 
 
 class UserAPI(APIView):
@@ -157,3 +157,20 @@ class GroupAPI(APIView):
         except:
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class StudentRegisterApi(APIView):
+
+    def post(self, request, format=None):
+        serializer = StudentRegisterSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "student is created"}, status=status.HTTP_200_OK)
+        else:
+            errors_dict = dict()
+            for key, value in serializer.errors.items():
+                if key == 'studentNumber':
+                    errors_dict['Öğrenci Numarası'] = value
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

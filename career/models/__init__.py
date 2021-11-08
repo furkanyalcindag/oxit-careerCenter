@@ -57,3 +57,5 @@ from .NotificationUser import NotificationUser
 from .FAQ import FAQ
 from .FAQDescription import FAQDescription
 from .Setting import Setting
+from .Contract import Contract
+from .UserContract import UserContract

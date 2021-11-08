@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.db.models import Q
 from drf_api_logger.models import APILogsModel
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from slugify import slugify
@@ -13,7 +13,7 @@ from accounts.models import GroupUrlMethod
 from career.models import Language, District, City, JobType, University, Faculty, EducationType, Department, \
     MaritalStatus, MilitaryStatusDescription, Nationality, Gender, ForeignLanguage, \
     ForeignLanguageLevel, ForeignLanguageLevelDescription, BlogType, Unit, MenuStudent, MenuCompany, MenuConsultant, \
-    Category, CategoryDescription, SocialMedia
+    Category, CategoryDescription, SocialMedia, Contract
 from career.models.APIObject import APIObject
 from career.models.DriverLicenseEnum import DriverLicenseEnum
 from career.models.ForeignLanguageDescription import ForeignLanguageDescription
@@ -561,6 +561,20 @@ class SocialMediaSelectApi(APIView):
                 arr, many=True, context={'request': request})
 
             return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            traceback.print_exc()
+            return Response("", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ContractApiView(APIView):
+    permission_classes = (AllowAny,)
+    def get(self, request, format=None):
+        try:
+            contract = Contract.objects.get(name='KVKK_Student', isActive=True)
+            data = dict()
+            data['contract'] = contract.text
+            return Response(data, status.HTTP_200_OK)
 
         except Exception as e:
             traceback.print_exc()

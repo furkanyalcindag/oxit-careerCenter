@@ -13,17 +13,16 @@ DATABASES = {
         'PORT': '5432',
     }
 
-
-
 }
 
 GCM_APIKEY = "AAAAEgdR9KM:APA91bGJbWnT6MzzKIxRi9aAkfgyWCCRKxMNypBgpVjiM0ywTTU3xUyyK4_8Q3O8j-vVeY_k_genzinOnul2wDJKWQa3cnhuaHvG-3BVmdnjq3H1da1DHeKGjbF9ykimR-DlsC2ktnUw"
-EMAIL_HOST = "smtp.yandex.com.tr"
-EMAIL_HOST_USER = "test@kulmer.com.tr"
-EMAIL_HOST_PASSWORD ="Test2021"
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'aybukarmer@ybu.edu.tr'
+EMAIL_HOST_PASSWORD = 'Kariyer2020'
 
 try:
     from oxiterp.settings.local import *
