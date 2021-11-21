@@ -30,9 +30,9 @@ class CompanyApi(APIView):
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Company.objects.filter(name__icontains=company_name).order_by('-id')[lim_start:lim_end]
+        data = Company.objects.filter(name__icontains=company_name, isDeleted=False).order_by('-id')[lim_start:lim_end]
 
-        filtered_count = Company.objects.filter(name__icontains=company_name).order_by('-id').count()
+        filtered_count = Company.objects.filter(name__icontains=company_name, isDeleted=False).order_by('-id').count()
         arr = []
         for x in data:
             api_data = dict()
@@ -75,7 +75,17 @@ class CompanyApi(APIView):
             company = Company.objects.get(uuid=request.GET.get('id'))
             profile = company.profile
             user = profile.user
-            if request.GET.get('makeActive') == 'true':
+
+            user.username = 'old-user-' + str(user.id) + '-' + user.username
+            user.email = 'old-user-' + str(user.id) + '-' + user.email
+            user.is_active = False
+            company.isDeleted = True
+            profile.isDeleted = True
+            company.save()
+            profile.save()
+            user.save()
+
+            '''if request.GET.get('makeActive') == 'true':
                 company.isDeleted = False
                 user.is_active = True
                 profile.isDeleted = False
@@ -90,10 +100,9 @@ class CompanyApi(APIView):
                 company.save()
                 profile.save()
                 user.save()
-                return Response(status=status.HTTP_200_OK)
+                return Response(status=status.HTTP_200_OK)'''
 
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_200_OK)
         except:
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -569,6 +569,7 @@ class SocialMediaSelectApi(APIView):
 
 class ContractApiView(APIView):
     permission_classes = (AllowAny,)
+
     def get(self, request, format=None):
         try:
             contract = Contract.objects.get(name='KVKK_Student', isActive=True)

@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from accounts.models import GroupUrlMethod
 from career.models import Profile
+from career.serializers.StudentSerializer import StudentForgetPasswordSerializer
 from career.serializers.UserSerializer import UserSerializer, GroupSerializer, StudentRegisterSerializer
 
 
@@ -174,3 +175,27 @@ class StudentRegisterApi(APIView):
                     errors_dict['Öğrenci Numarası'] = value
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentForgetPasswordApi(APIView):
+
+    def post(self, request, format=None):
+
+        try:
+            serializer = StudentForgetPasswordSerializer(data=request.data, context={'request': request})
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "password info sended"}, status=status.HTTP_200_OK)
+            else:
+                errors_dict = dict()
+                for key, value in serializer.errors.items():
+                    if key == 'studentNumber':
+                        errors_dict['Öğrenci Numarası'] = value
+
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+
+            traceback.print_exc()
+            return Response("hata", status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -38,7 +38,7 @@ from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHi
     StudentForeignLanguageApi, StudentQualificationApi, StudentExamApi, StudentDriverLicenseApi, StudentCVExportPDFApi, \
     StudentSelectApi
 from career.Views.UnitViews import UnitApi, UnitStaffApi
-from career.Views.UserViews import UserAPI, GroupAPI, StudentRegisterApi
+from career.Views.UserViews import UserAPI, GroupAPI, StudentRegisterApi, StudentForgetPasswordApi
 
 app_name = 'career'
 
@@ -92,6 +92,7 @@ urlpatterns = [
     path('public/education-api/', EducationPublicApi.as_view(), name="public-education-api"),
     path('public/student-contract/', ContractApiView.as_view(), name="public-student-contract"),
     path('public/register/', StudentRegisterApi.as_view(), name="public-register"),
+    path('public/forgot-password/', StudentForgetPasswordApi.as_view(), name="public-register"),
 
     path('karmer-activation/<uuid:operation>/<uuid:activation>/', activate_account, name="student-register"),
     # ----------------admin api---------------------------

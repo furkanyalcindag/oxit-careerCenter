@@ -128,7 +128,7 @@ def send_order_email_confirmation(student):
     Send email to customer with order details.
     """
     random_uuid = str(uuid.uuid4())
-    activation_link = 'https://api-karmer.aybu.edu.tr/career-service/karmer-activation/'
+    activation_link = 'https://api-karmer.aybu.edu.tr:8080/career-service/karmer-activation/'
     activation_link = activation_link + random_uuid + '/' + str(student.uuid) + '/'
     message = get_template("activation-mail.html").render({
         'link': activation_link
@@ -149,6 +149,35 @@ def send_order_email_confirmation(student):
 
 
 def send_password_email_confirmation(user, password):
+    """
+    Send email to customer with order details.
+    """
+    random_uuid = str(uuid.uuid4())
+    activation_link = 'https://karmer.aybu.edu.tr/portal/'
+
+    message = get_template("password-mail.html").render({
+        'link': activation_link,
+        'password': password
+    })
+
+    html_message = render_to_string('password-mail.html', {'link': activation_link,
+                                                           'email': user.email,
+                                                           'password': password})
+    plain_message = strip_tags(html_message)
+    mail = EmailMultiAlternatives(
+        subject="AYBU Karmer Kullanıcı Giriş Bilgileri",
+        body=plain_message,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[user.email],
+        reply_to=[settings.EMAIL_HOST_USER],
+    )
+    mail.attach_alternative(html_message, 'text/html')
+    mail.content_subtype = 'html'
+    return mail.send()
+
+
+
+def send_forget_password(user, password):
     """
     Send email to customer with order details.
     """

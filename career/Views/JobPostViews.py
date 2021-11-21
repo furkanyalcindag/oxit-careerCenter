@@ -471,6 +471,16 @@ class JobPostAdminApi(APIView):
             traceback.print_exc()
             return Response("error", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def delete(self, request, format=None):
+        try:
+            job_post = JobPost.objects.get(uuid=request.GET.get('id'))
+            job_post.isDeleted = True
+            job_post.save()
+
+            return Response(status=status.HTTP_200_OK)
+        except:
+            traceback.print_exc()
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class JobPostStudentCompanyApi(APIView):
     permission_classes = (IsAuthenticated,)
