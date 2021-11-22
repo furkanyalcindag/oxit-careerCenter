@@ -65,6 +65,30 @@ class StudentSerializer(serializers.Serializer):
             raise serializers.ValidationError("lütfen tekrar deneyiniz")
 
 
+class StudentForgetPasswordSerializer(serializers.Serializer):
+    # TODO: Student serializer
+    email = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+
+        try:
+            users = User.objects.filter(email=validated_data.get('email'))
+
+            if len(users) > 0:
+                user = users[0]
+                password = User.objects.make_random_password()
+                user.set_password(password)
+                user.save()
+                GeneralService.send_password_email_confirmation(user, password)
+                return user
+            else:
+                raise Exception('This is the exception you expect to handle')
+
+        except Exception as e:
+            traceback.print_exc()
+            raise serializers.ValidationError("lütfen tekrar deneyiniz")
+
+
 class StudentPageableSerializer(PageSerializer):
     data = StudentSerializer(many=True)
 
