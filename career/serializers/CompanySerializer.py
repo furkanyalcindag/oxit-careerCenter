@@ -24,6 +24,10 @@ class CompanySerializer(serializers.Serializer):
     companyName = serializers.CharField(required=True)
     isInstitution = serializers.BooleanField(required=True)
     isActive = serializers.BooleanField(read_only=True)
+    logo = serializers.CharField(read_only=True, required=False)
+    website = serializers.CharField(read_only=True, required=False)
+    city = serializers.CharField(read_only=True, required=False)
+
 
     def update(self, instance, validated_data):
         pass

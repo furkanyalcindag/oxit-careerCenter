@@ -29,7 +29,7 @@ from career.Views.JobPostViews import JobPostApi, JobPostStudentApi, JobPostAdmi
 from career.Views.LectureViews import LectureApi, LectureInfoApi, LectureStudentApi, LectureStudentApplicants
 from career.Views.NotificationViews import NotificationApi
 from career.Views.PublicViews import AnnouncementPublicApi, UnitPublicApi, BlogPublicApi, LecturePublicApi, \
-    ContractPublicApi, EducationPublicApi
+    ContractPublicApi, EducationPublicApi, CompanyPublicApi
 from career.Views.ScholarshipViews import ScholarshipApi, CompanyScholarshipApi, ScholarshipStudentApi, \
     ScholarshipApplicants, ScholarshipApplicantsForAdmin
 from career.Views.StudentViews import StudentApi, StudentEducationApi, StudentHighSchoolEducationApi, \
@@ -90,6 +90,7 @@ urlpatterns = [
     path('public/unit-staff-api/', UnitPublicApi.as_view(), name="public-unit-staff-api"),
     path('public/contract-api/', ContractPublicApi.as_view(), name="public-contract-api"),
     path('public/education-api/', EducationPublicApi.as_view(), name="public-education-api"),
+    path('public/company-api/', CompanyPublicApi.as_view(), name="public-company-api"),
     path('public/student-contract/', ContractApiView.as_view(), name="public-student-contract"),
     path('public/register/', StudentRegisterApi.as_view(), name="public-register"),
     path('public/forgot-password/', StudentForgetPasswordApi.as_view(), name="public-register"),

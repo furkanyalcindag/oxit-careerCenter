@@ -6,9 +6,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from slugify import slugify
 
-from career.models import Blog, Language, BlogDescription, Unit, UnitStaff, Lecture, LectureDescription, Setting
+from career.models import Blog, Language, BlogDescription, Unit, UnitStaff, Lecture, LectureDescription, Setting, \
+    Company
 from career.models.APIObject import APIObject
 from career.serializers.BlogSerializer import BlogSerializer, BlogPageableSerializer
+from career.serializers.CompanySerializer import CompanySerializer
 from career.serializers.LectureSerializer import LectureSerializer
 from career.serializers.UnitSerializer import UnitStaffPublicSerializer
 
@@ -113,8 +115,6 @@ class AnnouncementPublicApi(APIView):
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
 class EducationPublicApi(APIView):
 
     def get(self, request, format=None):
@@ -213,14 +213,6 @@ class EducationPublicApi(APIView):
         except:
             traceback.print_exc()
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-
-
-
-
-
-
 
 
 class BlogPublicApi(APIView):
@@ -324,7 +316,6 @@ class BlogPublicApi(APIView):
 
 
 class LecturePublicApi(APIView):
-
 
     def get(self, request, format=None):
         try:
@@ -463,7 +454,6 @@ class UnitPublicApi(APIView):
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
 class ContractPublicApi(APIView):
 
     def get(self, request, format=None):
@@ -477,3 +467,34 @@ class ContractPublicApi(APIView):
             return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class CompanyPublicApi(APIView):
+
+    def get(self, request, format=None):
+        try:
+
+            data = Company.objects.filter(isDeleted=False).order_by(
+                'name')
+            arr = []
+            for x in data:
+                api_data = dict()
+                api_data['companyName'] = x.name
+
+                api_data['logo'] = x.logo
+                api_data['firstName'] = "Anonymous"
+                api_data['lastName'] = "Anonymous"
+                api_data['email'] = "Anonymous"
+                api_data['isInstitution'] = False
+                api_data['uuid'] = x.uuid
+                api_data['website'] = x.website
+                api_data['city'] = x.city
+
+                arr.append(api_data)
+
+            serializer = CompanySerializer(
+                arr, many=True, context={'request': request})
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except:
+            traceback.print_exc()
+            return Response("error", status.HTTP_500_INTERNAL_SERVER_ERROR)
