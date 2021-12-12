@@ -11,3 +11,4 @@ gunicorn
 python-slugify
 xhtml2pdf
 pdfkit
+sentry-sdk
