@@ -127,6 +127,7 @@ def send_order_email_confirmation(student):
     """
     Send email to customer with order details.
     """
+
     random_uuid = str(uuid.uuid4())
     activation_link = 'https://api-karmer.aybu.edu.tr:8080/career-service/karmer-activation/'
     activation_link = activation_link + random_uuid + '/' + str(student.uuid) + '/'
@@ -134,17 +135,21 @@ def send_order_email_confirmation(student):
         'link': activation_link
     })
 
+    text_content = 'Aşağıda ki linke tıklayarak aktivasyon işleminizi gerçekleştirin.'
+    html_content = '<p> <strong>aktivasyon linki :</strong> <a href="'+activation_link+'">'+activation_link+'</a></p>'
+
     html_message = render_to_string('activation-mail.html', {'link': activation_link})
     plain_message = strip_tags(html_message)
     mail = EmailMultiAlternatives(
         subject="AYBU Karmer Kullanıcı Aktivasyonu",
-        body=plain_message,
+
+        body=text_content,
         from_email=settings.EMAIL_HOST_USER,
         to=[student.profile.user.email],
         reply_to=[settings.EMAIL_HOST_USER],
     )
-    mail.attach_alternative(html_message, 'text/html')
-    mail.content_subtype = 'html'
+    mail.attach_alternative(html_content, 'text/html')
+    #mail.content_subtype = 'html'
     return mail.send()
 
 
@@ -160,19 +165,31 @@ def send_password_email_confirmation(user, password):
         'password': password
     })
 
-    html_message = render_to_string('password-mail.html', {'link': activation_link,
-                                                           'email': user.email,
-                                                           'password': password})
-    plain_message = strip_tags(html_message)
+    #html_message = render_to_string('password-mail.html', {'link': activation_link,
+     #                                                      'email': user.email,
+      #                                                     'password': password})
+    #plain_message = strip_tags(html_message)
+
+    html_content = ''
+
+    text_content = 'Aşağıda ki bilgileri kullanarak sisteme giriş yapabilirsiniz.'
+    html_content = '<p> <strong>Site adresi:</strong> <a href="'+activation_link+'">'+activation_link+'</a></p>'
+    html_content = html_content + '<p><strong>Kullanıcı Adı:</strong>' + user.email + '</p>'
+    html_content = html_content + '<p><strong>Şifre:</strong>' + password + '</p>'
+    '''msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()'''
+
+
     mail = EmailMultiAlternatives(
         subject="AYBU Karmer Kullanıcı Giriş Bilgileri",
-        body=plain_message,
+        body=text_content,
         from_email=settings.EMAIL_HOST_USER,
         to=[user.email],
         reply_to=[settings.EMAIL_HOST_USER],
     )
-    mail.attach_alternative(html_message, 'text/html')
-    mail.content_subtype = 'html'
+    mail.attach_alternative(html_content, 'text/html')
+    #mail.content_subtype = 'html'
     return mail.send()
 
 
@@ -189,17 +206,25 @@ def send_forget_password(user, password):
         'password': password
     })
 
-    html_message = render_to_string('password-mail.html', {'link': activation_link,
+    '''html_message = render_to_string('password-mail.html', {'link': activation_link,
                                                            'email': user.email,
-                                                           'password': password})
-    plain_message = strip_tags(html_message)
+                                                           'password': password})'''
+
+    text_content = 'Aşağıda ki bilgileri kullanarak sisteme giriş yapabilirsiniz.'
+    html_content = '<p> <strong>Site adresi:</strong> <a href="' + activation_link + '">' + activation_link + '</a></p>'
+    html_content = html_content + '<p><strong>Kullanıcı Adı:</strong>' + user.email + '</p>'
+    html_content = html_content + '<p><strong>Şifre:</strong>' + password + '</p>'
+
+
+
+    #plain_message = strip_tags(html_message)
     mail = EmailMultiAlternatives(
-        subject="AYBU Karmer Kullanıcı Giriş Bilgileri",
-        body=plain_message,
+        subject="AYBU Karmer Şifre Hatırlatma Kullanıcı Giriş Bilgileri",
+        body=text_content,
         from_email=settings.EMAIL_HOST_USER,
         to=[user.email],
         reply_to=[settings.EMAIL_HOST_USER],
     )
-    mail.attach_alternative(html_message, 'text/html')
-    mail.content_subtype = 'html'
+    mail.attach_alternative(html_content, 'text/html')
+    #mail.content_subtype = 'html'
     return mail.send()
