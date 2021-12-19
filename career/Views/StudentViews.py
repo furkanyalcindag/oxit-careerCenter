@@ -53,7 +53,7 @@ class StudentApi(APIView):
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Student.objects.filter(studentNumber__icontains=student_number, isGraduated=is_graduated).order_by(
+        data = Student.objects.filter(studentNumber__icontains=student_number, isGraduated=is_graduated,isDeleted=False).order_by(
             '-id')[lim_start:lim_end]
         arr = []
         for x in data:
@@ -71,7 +71,7 @@ class StudentApi(APIView):
         api_object.data = arr
         api_object.recordsFiltered = data.count()
         api_object.recordsTotal = Student.objects.filter(studentNumber__icontains=student_number,
-                                                         isGraduated=is_graduated).count()
+                                                         isGraduated=is_graduated, isDeleted=False).count()
         api_object.activePage = active_page
 
         serializer = StudentPageableSerializer(
@@ -108,6 +108,8 @@ class StudentApi(APIView):
                 return Response(status=status.HTTP_200_OK)
             elif request.GET.get('makeActive') == 'false':
                 student.isDeleted = True
+                user.username = 'old-user-' + str(user.id) + '-' + user.username
+                user.email = 'old-user-' + str(user.id) + '-' + user.email
                 user.is_active = False
                 profile.isDeleted = True
                 student.save()
