@@ -50,6 +50,7 @@ STAICFILES_DIR = [
 
 ]
 
+WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
 sentry_sdk.init(
     dsn="https://b0aae20b07294bd78547bab08d59b988@o1089299.ingest.sentry.io/6104283",
     integrations=[DjangoIntegration()],
