@@ -40,7 +40,7 @@ EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'aybukarmer@ybu.edu.tr'
-EMAIL_HOST_PASSWORD = 'Kariyer2020'
+EMAIL_HOST_PASSWORD = 'Karmer2021.....'
 
 STATIC_ROOT = "/var/www/static/service"
 
