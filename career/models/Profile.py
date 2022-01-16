@@ -27,4 +27,4 @@ class Profile(BaseModel):
     militaryDelayedDate = models.DateField(null=True)
 
     def __str__(self):
-        return self.id + ' ' + self.user.first_name + ' ' + self.user.last_name
+        return str(self.id) + ' ' + self.user.first_name + ' ' + self.user.last_name
