@@ -25,3 +25,6 @@ class Profile(BaseModel):
     address = models.CharField(max_length=255, null=True, blank=True)
     isSendMail = models.BooleanField(default=False)
     militaryDelayedDate = models.DateField(null=True)
+
+    def __str__(self):
+        return self.id + ' ' + self.user.first_name + ' ' + self.user.last_name
