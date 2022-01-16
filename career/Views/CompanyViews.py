@@ -350,9 +350,9 @@ class CompanyListApi(APIView):
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Company.objects.filter(name__icontains=company_name).order_by('-id')[lim_start:lim_end]
+        data = Company.objects.filter(name__icontains=company_name, isDeleted=False).order_by('-id')[lim_start:lim_end]
 
-        filtered_count = Company.objects.filter(name__icontains=company_name).order_by('-id').count()
+        filtered_count = Company.objects.filter(name__icontains=company_name, isDeleted=False).order_by('-id').count()
         arr = []
         for x in data:
             api_data = dict()
