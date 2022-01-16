@@ -32,10 +32,11 @@ class JobPostApi(APIView):
                 lim_end = lim_start + int(request.GET.get('count'))
 
                 data = JobPost.objects.filter(company__profile__user=user, title__icontains=title,
-                                              isDeleted=False).order_by('-id')[lim_start:lim_end]
+                                              company__isDeleted=False, isDeleted=False).order_by('-id')[
+                       lim_start:lim_end]
 
                 filtered_count = JobPost.objects.filter(company__profile__user=user, title__icontains=title,
-                                                        isDeleted=False).count()
+                                                        company__isDeleted=False, isDeleted=False).count()
 
                 arr = []
                 for x in data:
@@ -77,7 +78,8 @@ class JobPostApi(APIView):
                 api_object = APIObject()
                 api_object.data = arr
                 api_object.recordsFiltered = filtered_count
-                api_object.recordsTotal = JobPost.objects.filter(company__profile__user=user, isDeleted=False).count()
+                api_object.recordsTotal = JobPost.objects.filter(company__profile__user=user, isDeleted=False,
+                                                                 company__isDeleted=False).count()
                 api_object.activePage = active_page
 
                 serializer = JobPostPageableSerializer(api_object, context={'request': request})
@@ -193,6 +195,8 @@ class JobPostStudentApi(APIView):
                 kwargs['title__icontains'] = title
 
                 kwargs['isDeleted'] = False
+
+                kwargs['company__isDeleted'] = False
 
                 data = JobPost.objects.filter(**kwargs).order_by('-id')[
                        lim_start:lim_end]
@@ -363,6 +367,7 @@ class JobPostAdminApi(APIView):
                     kwargs['company__uuid'] = request.GET.get('companyId')
 
                 kwargs['isDeleted'] = False
+                kwargs['company__isDeleted'] = False
 
                 data = JobPost.objects.filter(**kwargs).order_by('-id')[
                        lim_start:lim_end]
@@ -482,6 +487,7 @@ class JobPostAdminApi(APIView):
             traceback.print_exc()
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class JobPostStudentCompanyApi(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -505,6 +511,8 @@ class JobPostStudentCompanyApi(APIView):
                     kwargs['company__uuid'] = request.GET.get('companyId')
 
                 kwargs['isDeleted'] = False
+
+                kwargs['company__isDeleted'] = False
 
                 data = JobPost.objects.filter(**kwargs).order_by('-id')[
                        lim_start:lim_end]
@@ -575,7 +583,7 @@ class JobPostAdminDashboardApi(APIView):
 
             if request.GET.get('id') is None:
 
-                data = JobPost.objects.filter(isDeleted=False).order_by('-id')[
+                data = JobPost.objects.filter(company__isDeleted=False, isDeleted=False).order_by('-id')[
                        1:10]
 
                 arr = []

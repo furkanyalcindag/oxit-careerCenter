@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -28,7 +29,7 @@ from oxiterp.views import CustomTokenObtainPairView
 # Additionally, we include login URLs for the browsable API.
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
     path('accounts/', include('accounts.urls')),
     path('', views.login, name='index'),
