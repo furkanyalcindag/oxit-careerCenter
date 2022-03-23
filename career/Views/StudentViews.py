@@ -53,7 +53,8 @@ class StudentApi(APIView):
         lim_start = int(request.GET.get('count')) * (int(active_page) - 1)
         lim_end = lim_start + int(request.GET.get('count'))
 
-        data = Student.objects.filter(studentNumber__icontains=student_number, isGraduated=is_graduated,isDeleted=False).order_by(
+        data = Student.objects.filter(studentNumber__icontains=student_number, isGraduated=is_graduated,
+                                      isDeleted=False).order_by(
             '-id')[lim_start:lim_end]
         arr = []
         for x in data:
@@ -1293,11 +1294,12 @@ class StudentCVExportPDFApi(APIView):
                                                                          educationType__name__in=['Lisans',
                                                                                                   'Yüksek Lisans',
                                                                                                   'Doktora',
-                                                                                                  'Ön Lisans'])
+                                                                                                  'Ön Lisans'],
+                                                                         isDeleted=False)
             api_dict['educationHighSchools'] = StudentEducationInfo.objects.filter(student=student,
-                                                                                   educationType__name='Lise')
+                                                                                   educationType__name='Lise',isDeleted=False)
 
-            fls = StudentForeignLanguage.objects.filter(student=student)
+            fls = StudentForeignLanguage.objects.filter(student=student,isDeleted=False)
 
             arr = []
             for fl in fls:
@@ -1316,10 +1318,10 @@ class StudentCVExportPDFApi(APIView):
                 arr.append(fl_data)
 
             api_dict['foreignLanguages'] = arr
-            api_dict['exams'] = StudentExam.objects.filter(student=student)
-            api_dict['qualifications'] = StudentQualification.objects.filter(student=student)
-            api_dict['references'] = Reference.objects.filter(student=student)
-            api_dict['certificates'] = Certificate.objects.filter(student=student)
+            api_dict['exams'] = StudentExam.objects.filter(student=student,isDeleted=False)
+            api_dict['qualifications'] = StudentQualification.objects.filter(student=student,isDeleted=False)
+            api_dict['references'] = Reference.objects.filter(student=student,isDeleted=False)
+            api_dict['certificates'] = Certificate.objects.filter(student=student,isDeleted=False)
             api_dict['range'] = range(1, 6)
 
             # Rendered
