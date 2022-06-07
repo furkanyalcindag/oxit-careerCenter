@@ -12,8 +12,8 @@ DATABASES = {
         'NAME': 'oxit_career',
         'USER': 'postgres',
         'PASSWORD': 'oxit2016',
-        'HOST': '185.122.203.207',
-        #'HOST': 'localhost',
+        #'HOST': '185.122.203.207',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 

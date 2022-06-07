@@ -189,7 +189,7 @@ EMAIL_HOST_USER = 'register@eymo.net'
 EMAIL_HOST_PASSWORD = 'oxit21furkan'
 EMAIL_USE_TLS = True
 
-STATIC_ROOT = '/home/karmer/djng/static/'
+#STATIC_ROOT = '/home/karmer/djng/static/'
 
 STATIC_URL = '/static/'
 
