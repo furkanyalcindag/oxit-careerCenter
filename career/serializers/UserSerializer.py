@@ -85,6 +85,7 @@ class StudentRegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
     confirmPassword = serializers.CharField(write_only=True)
     studentNumber = serializers.CharField(required=True)
+    isGraduated = serializers.BooleanField(required=False)
 
     status = serializers.BooleanField()
 
@@ -112,7 +113,7 @@ class StudentRegisterSerializer(serializers.Serializer):
                     profile.save()
                     student = Student(profile=profile)
                     student.studentNumber = validated_data.get("studentNumber")
-                    # student.isGraduated = validated_data.get('isGraduated')
+                    student.isGraduated = validated_data.get('isGraduated')
 
                     student.save()
                     student_contract = UserContract()
