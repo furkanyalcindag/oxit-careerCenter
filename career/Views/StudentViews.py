@@ -58,6 +58,9 @@ class StudentApi(APIView):
             '-id')[lim_start:lim_end]
         arr = []
         for x in data:
+
+            education_infos = StudentEducationInfo.objects.filter(student=x)
+
             api_data = dict()
             api_data['firstName'] = x.profile.user.first_name
             api_data['lastName'] = x.profile.user.last_name
@@ -66,6 +69,17 @@ class StudentApi(APIView):
             api_data['email'] = x.profile.user.username
             api_data['isActive'] = x.profile.user.is_active
             api_data['isGraduated'] = x.isGraduated
+            api_data['mobilePhone'] = x.profile.mobilePhone if x.profile.mobilePhone is not None else '-'
+
+            if education_infos:
+                info = education_infos[0]
+                api_data['department'] = info.department
+                api_data['faculty'] = info.faculty
+
+            else:
+                api_data['department'] = '-'
+                api_data['faculty'] = '-'
+
             arr.append(api_data)
 
         api_object = APIObject()
@@ -1297,9 +1311,10 @@ class StudentCVExportPDFApi(APIView):
                                                                                                   'Ön Lisans'],
                                                                          isDeleted=False)
             api_dict['educationHighSchools'] = StudentEducationInfo.objects.filter(student=student,
-                                                                                   educationType__name='Lise',isDeleted=False)
+                                                                                   educationType__name='Lise',
+                                                                                   isDeleted=False)
 
-            fls = StudentForeignLanguage.objects.filter(student=student,isDeleted=False)
+            fls = StudentForeignLanguage.objects.filter(student=student, isDeleted=False)
 
             arr = []
             for fl in fls:
@@ -1318,10 +1333,10 @@ class StudentCVExportPDFApi(APIView):
                 arr.append(fl_data)
 
             api_dict['foreignLanguages'] = arr
-            api_dict['exams'] = StudentExam.objects.filter(student=student,isDeleted=False)
-            api_dict['qualifications'] = StudentQualification.objects.filter(student=student,isDeleted=False)
-            api_dict['references'] = Reference.objects.filter(student=student,isDeleted=False)
-            api_dict['certificates'] = Certificate.objects.filter(student=student,isDeleted=False)
+            api_dict['exams'] = StudentExam.objects.filter(student=student, isDeleted=False)
+            api_dict['qualifications'] = StudentQualification.objects.filter(student=student, isDeleted=False)
+            api_dict['references'] = Reference.objects.filter(student=student, isDeleted=False)
+            api_dict['certificates'] = Certificate.objects.filter(student=student, isDeleted=False)
             api_dict['range'] = range(1, 6)
 
             # Rendered
