@@ -73,8 +73,8 @@ class StudentApi(APIView):
 
             if education_infos:
                 info = education_infos[0]
-                api_data['department'] = info.department.name
-                api_data['faculty'] = info.faculty.name
+                api_data['department'] = info.department.name if info.department.name is not None else '-'
+                api_data['faculty'] = info.faculty.name if info.faculty.name is not None else '-'
 
             else:
                 api_data['department'] = '-'
