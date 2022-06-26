@@ -32,6 +32,9 @@ class StudentSerializer(serializers.Serializer):
     studentNumber = serializers.CharField(required=True)
     isGraduated = serializers.BooleanField(required=True)
     isActive = serializers.BooleanField(read_only=True)
+    mobilePhone = serializers.CharField(read_only=True, required=False)
+    faculty = serializers.CharField(read_only=True, required=False)
+    department = serializers.CharField(read_only=True, required=False)
 
     def update(self, instance, validated_data):
         pass
